@@ -1,0 +1,112 @@
+{
+  "name": "Checkmk - host lifecycle",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "9b7c1e10-2f3a-4b5c-8d9e-0a1b2c3d4e01",
+      "name": "When clicking 'Execute workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-220, 0]
+    },
+    {
+      "parameters": {
+        "resource": "hosts",
+        "operation": "cmk.gui.openapi.endpoints.host_config.create_host",
+        "body_cmk_gui_openapi_endpoints_host_config_create_host": "{\"host_name\":\"n8n-example.example.com\",\"folder\":\"/\",\"attributes\":{\"ipaddress\":\"192.0.2.10\",\"alias\":\"Created by n8n\"}}"
+      },
+      "id": "9b7c1e10-2f3a-4b5c-8d9e-0a1b2c3d4e02",
+      "name": "Create Host",
+      "type": "n8n-checkmk-connector.checkmkConnector",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "credentials": {
+        "checkmkConnectorApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Checkmk Connector API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "activateChanges",
+        "operation": "cmk.gui.openapi.endpoints.activate_changes.activate_changes",
+        "body_cmk_gui_openapi_endpoints_activate_changes_activate_changes": "{\"sites\":[\"cmk\"],\"force_foreign_changes\":true,\"redirect\":false}",
+        "ifMatch_cmk_gui_openapi_endpoints_activate_changes_activate_changes": "*"
+      },
+      "id": "9b7c1e10-2f3a-4b5c-8d9e-0a1b2c3d4e03",
+      "name": "Activate Changes",
+      "type": "n8n-checkmk-connector.checkmkConnector",
+      "typeVersion": 1,
+      "position": [220, 0],
+      "credentials": {
+        "checkmkConnectorApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Checkmk Connector API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "hosts",
+        "operation": "cmk.gui.openapi.endpoints.host_config.show_host",
+        "path_cmk_gui_openapi_endpoints_host_config_show_host_host_name": "n8n-example.example.com"
+      },
+      "id": "9b7c1e10-2f3a-4b5c-8d9e-0a1b2c3d4e04",
+      "name": "Read Host",
+      "type": "n8n-checkmk-connector.checkmkConnector",
+      "typeVersion": 1,
+      "position": [440, 0],
+      "credentials": {
+        "checkmkConnectorApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Checkmk Connector API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking 'Execute workflow'": {
+      "main": [
+        [
+          {
+            "node": "Create Host",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Host": {
+      "main": [
+        [
+          {
+            "node": "Activate Changes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Activate Changes": {
+      "main": [
+        [
+          {
+            "node": "Read Host",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0c3d5e2a-7b91-4a63-b2d4-1e0a1b2c3d4e",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

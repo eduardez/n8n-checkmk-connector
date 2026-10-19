@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Checkmk Connector">
+	<rect x="2" y="2" width="60" height="60" rx="12" fill="#1f2b21"/>
+	<rect x="12" y="16" width="40" height="26" rx="3" fill="none" stroke="#9fd4a0" stroke-width="2.5"/>
+	<path d="M27 48h10M32 42v6" stroke="#9fd4a0" stroke-width="2.5" stroke-linecap="round"/>
+	<path d="M20 29.5l6.5 7L44 21" fill="none" stroke="#4ec94e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
