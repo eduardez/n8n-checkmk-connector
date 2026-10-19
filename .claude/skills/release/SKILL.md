@@ -15,11 +15,11 @@ Versions are derived from Conventional Commits on `main`; do not bump `package.j
 | `feat: ...` | minor |
 | `feat!: ...` or `BREAKING CHANGE:` | major |
 
-`release-please-config.json` and `.release-please-manifest.json` drive the bot. On every push to `main`, `.github/workflows/release-please.yml` opens or updates a release PR that bumps `package.json`, prepends `CHANGELOG.md`, and — once merged — creates the git tag and GitHub release.
+`release-please-config.json` and `.release-please-manifest.json` drive the bot. On every push to `main`, `.github/workflows/release-please.yml` opens or updates a release PR that bumps `package.json`, prepends `CHANGELOG.md`, and — once merged — creates the git tag (`vX.Y.Z`) and GitHub release. It then calls `publish.yml` in the same run: a release created with `GITHUB_TOKEN` does not trigger other workflows.
 
 ## Publishing
 
-`.github/workflows/publish.yml` runs on `release: published` and on manual dispatch. It publishes to npm with provenance, skipping versions that already exist.
+`.github/workflows/publish.yml` is a reusable workflow called by `release-please.yml` when a release is created. It also accepts manual dispatch with a tag, and listens to `release: published` for releases created by a token with workflow-trigger rights. It publishes to npm with provenance, skipping versions that already exist.
 
 Required repository secret:
 

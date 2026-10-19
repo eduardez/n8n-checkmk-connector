@@ -168,9 +168,9 @@ Releases are automated with [release-please](https://github.com/googleapis/relea
 | `feat!:` or `BREAKING CHANGE:` | major |
 
 Release please opens a release PR that updates `package.json` and `CHANGELOG.md`; merging it tags
-the commit and creates the GitHub release. `.github/workflows/publish.yml` then publishes the
-tarball to npm with provenance, skipping versions that already exist. Do not edit the version or
-`CHANGELOG.md` by hand.
+the commit (`vX.Y.Z`) and creates the GitHub release. The same workflow run then calls
+`.github/workflows/publish.yml`, which publishes the tarball to npm with provenance and skips
+versions that already exist. Do not edit the version or `CHANGELOG.md` by hand.
 
 Required repository secret: `NPM_TOKEN` (npm automation token allowed to publish
 `n8n-checkmk-connector`).
