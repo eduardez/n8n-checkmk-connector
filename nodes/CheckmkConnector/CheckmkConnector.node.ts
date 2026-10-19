@@ -19,6 +19,7 @@ import {
 import {CheckmkClient} from './transport/CheckmkClient';
 import type {CheckmkCredentials} from './transport/CheckmkClient';
 import {toNodeApiError} from './transport/errors';
+import {warnAboutCheckmkVersion} from './transport/version';
 import {buildProperties, CUSTOM_API_RESOURCE, LIVE_STATUS_RESOURCE} from './ui/buildProperties';
 
 const LIVE_STATUS_OPERATIONS: Record<string, (context: IExecuteFunctions, client: CheckmkClient, itemIndex: number) => Promise<unknown>> = {
@@ -51,6 +52,7 @@ export class CheckmkConnector implements INodeType {
 			'checkmkConnectorApi',
 		)) as unknown as CheckmkCredentials;
 		const client = new CheckmkClient(this, credentials);
+		await warnAboutCheckmkVersion(this, client, credentials);
 		const returnData: INodeExecutionData[] = [];
 
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {

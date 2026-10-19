@@ -158,7 +158,7 @@ after(async () => {
 
 enabled('GET /version reports the expected Checkmk release', async () => {
 	const version = await client.request({method: 'GET', path: '/version'});
-	assert.equal(version.versions.checkmk, '2.4.0p37.cre');
+	assert.equal(version.versions.checkmk, process.env.CHECKMK_EXPECTED_VERSION ?? '2.4.0p37.cre');
 	assert.equal(version.site, SITE);
 });
 

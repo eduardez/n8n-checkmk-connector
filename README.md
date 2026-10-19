@@ -1,5 +1,8 @@
 # n8n Checkmk Connector
 
+[![CI](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml/badge.svg)](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/n8n-checkmk-connector.svg)](https://www.npmjs.com/package/n8n-checkmk-connector)
+
 Community n8n action node for the [Checkmk REST API](https://docs.checkmk.com/latest/en/rest_api.html).
 The operation catalog is generated from the Checkmk OpenAPI document, so the node exposes
 **189 operations across 40 resources** of Checkmk 2.4.0p37 (API versions `1.0` and `v1`)
@@ -129,6 +132,49 @@ status is preserved. Enable **Continue On Fail** to emit `{ "error": "…" }` pe
 Both workflows ship with a placeholder credential; select your own **Checkmk Connector API**
 credential after import.
 
+## Compatibility and versioning
+
+### Checkmk and REST API versions
+
+| Checkmk | Credential API version | Catalog | Verification |
+| --- | --- | --- | --- |
+| 2.4.x | `1.0`, or `v1` | Generated from 2.4.0p37 CRE (131 paths, 189 operations) | Full integration suite on `2.4.0p37.cre` |
+| 2.5.x | `v1` (recommended), `1.0` (legacy) | Same catalog | Full integration suite plus document diff on `2.5.0-2025.11.04.cre` |
+| 3.0.x | `v1` only | Same catalog | Not exercised; the node warns when `1.0` is selected |
+| < 2.4 | n/a | — | Unsupported; the node logs a warning |
+
+The Checkmk 2.5 document keeps all 131 paths and 189 operations. Two differences matter when
+considering regeneration:
+
+- **22 operation IDs were renamed** (LDAP connections, passwords, site connections, user roles).
+  Regenerating from 2.5 would rename UI fields and break saved workflows, so the shipped catalog
+  stays generated from 2.4.
+- **20 operations changed request bodies or parameter schemas** (password `owned_by`, site
+  connection models, user roles, quick setup `search`). The node sends exactly what you enter;
+  generated defaults for those operations reflect 2.4.
+
+The node probes `/version` at most once per workflow per hour and logs a warning when the site
+predates 2.4 or when API `1.0` is used against Checkmk 3.0. The probe never fails an execution.
+
+### Package versions
+
+Releases are automated with [release-please](https://github.com/googleapis/release-please) from
+[Conventional Commits](https://www.conventionalcommits.org/) on `main`:
+
+| Commit prefix | Version bump |
+| --- | --- |
+| `fix:` | patch |
+| `feat:` | minor |
+| `feat!:` or `BREAKING CHANGE:` | major |
+
+Release please opens a release PR that updates `package.json` and `CHANGELOG.md`; merging it tags
+the commit and creates the GitHub release. `.github/workflows/publish.yml` then publishes the
+tarball to npm with provenance, skipping versions that already exist. Do not edit the version or
+`CHANGELOG.md` by hand.
+
+Required repository secret: `NPM_TOKEN` (npm automation token allowed to publish
+`n8n-checkmk-connector`).
+
 ## Development
 
 ```bash
@@ -141,7 +187,9 @@ npm run generate       # regenerate catalog + docs/operations.md from Checkmk
 
 `npm run generate` fetches the document from `CHECKMK_OPENAPI_URL`, or from a local site at
 `http://localhost:8080/cmk/check_mk/api/1.0/openapi-doc.yaml` when the variable is unset. Pass
-`--input /path/to/openapi.yaml` to work offline.
+`--input /path/to/openapi.yaml` to work offline. See
+[`.claude/skills/catalog-regeneration/SKILL.md`](.claude/skills/catalog-regeneration/SKILL.md)
+for the regeneration checklist.
 
 Integration tests run against a real site and clean up after themselves:
 
@@ -150,16 +198,28 @@ CHECKMK_BASE_URL=https://checkmk.example.com \
 CHECKMK_SITE=production \
 CHECKMK_USERNAME=automation \
 CHECKMK_PASSWORD=secret \
+CHECKMK_EXPECTED_VERSION=2.4.0p37.cre \
 npm run test:integration
 ```
 
 They create a folder and a host, activate changes, verify ETag conflicts, and delete everything
-again (recursively). The test is skipped when any variable is missing.
+again (recursively). The test is skipped when the four connection variables are missing;
+`CHECKMK_EXPECTED_VERSION` defaults to `2.4.0p37.cre`.
 
-## Compatibility
+CI runs build, lint, unit tests, and `npm pack --dry-run` on Node 20 and 22
+(`.github/workflows/ci.yml`). The integration suite is a manual workflow that reads the
+`CHECKMK_*` repository secrets.
 
-- n8n `n8nNodesApiVersion` 1, Node.js >= 20.15
-- Checkmk 2.4 REST API `1.0` (catalog generated from 2.4.0p37; `v1` selectable in the credential)
+### Agent skills
+
+Repo-scoped skills for coding agents live in `.claude/skills/`:
+
+- [`checkmk-api`](.claude/skills/checkmk-api/SKILL.md) – URL construction, auth, status queries,
+  ETags, pagination, Custom API limits.
+- [`catalog-regeneration`](.claude/skills/catalog-regeneration/SKILL.md) – generator usage and
+  review checklist.
+- [`release`](.claude/skills/release/SKILL.md) – Conventional Commits, release-please, npm
+  publishing, required secrets.
 
 ## License
 
