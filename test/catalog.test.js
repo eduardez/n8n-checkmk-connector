@@ -21,7 +21,7 @@ test('operation ids are unique and stable strings', () => {
 		assert.ok(operation.id.length > 0, 'operation id must not be empty');
 		assert.ok(!ids.has(operation.id), `duplicate id ${operation.id}`);
 		ids.add(operation.id);
-		assert.equal(operation.label.length > 0, true);
+		assert.ok(operation.label.length > 0, `${operation.id} must have a label`);
 	}
 });
 
@@ -75,7 +75,6 @@ test('deprecated endpoints are flagged', () => {
 	assert.ok(deprecated.length > 0);
 	for (const operation of deprecated) {
 		assert.ok(operation.label.endsWith('(deprecated)'), `${operation.id} label`);
-		assert.ok(operation.queryParameters.length >= 0);
 	}
 	assert.ok(
 		deprecated.some(
