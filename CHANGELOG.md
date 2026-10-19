@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0](https://github.com/eduardez/n8n-checkmk-connector/compare/n8n-checkmk-connector-v0.1.1...n8n-checkmk-connector-v0.2.0) (2026-10-19)
+
+
+### Features
+
+* add clean-room Checkmk connector ([ef2a54b](https://github.com/eduardez/n8n-checkmk-connector/commit/ef2a54b63aa6976ed487d2b1d4e0a4306622d85a))
+* add version compatibility warnings and automated releases ([bb963a6](https://github.com/eduardez/n8n-checkmk-connector/commit/bb963a6705f913e71210a0647e8b8c19d576cc7e))
+
 ## [0.1.1] - 2026-10-19
 
 ### Fixed
