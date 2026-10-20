@@ -16,6 +16,9 @@ Beyond the generated catalog the node ships three convenience layers:
 
 ## Installation
 
+The npm package is `n8n-nodes-checkmk-connector`. Releases up to `0.2.0` were published as
+`n8n-checkmk-connector` and are deprecated.
+
 ### As a community node
 
 ```bash
