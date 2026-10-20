@@ -42,8 +42,9 @@ property builder, and a test. Keep the diff to those.
 
 1. Read the affected module end to end before editing; this repo has one convention per
    concern and no parallel abstractions.
-2. For catalog or label work: edit `scripts/generate-catalog.mjs`, regenerate, then review the
-   diff of `catalog/operations.generated.ts` and `docs/operations.md` — the diff is the proof.
+2. For catalog or label work: edit `scripts/generate-catalog.mjs` (labels live in
+   `humanizeSummary`, `RESOURCE_NOUNS` and `stripResourceNoun`), regenerate, then review the diff
+   of `catalog/operations.generated.ts` and `docs/operations.md` — the diff is the proof.
 3. For a new curated resource: add a module under `nodes/CheckmkConnector/<resource>/`, a
    selector block in `ui/buildProperties.ts`, a branch in the dispatch map, and a test.
 4. Add or extend tests in `test/` in the existing `node:test` + mock-context style; assert

@@ -279,6 +279,80 @@ function humanizeSummary(summary) {
 	return titleCase(withoutArticles.join(' '));
 }
 
+// Per-resource object nouns. Removing the trailing noun keeps labels short inside a
+// resource ("Create Host" -> "Create") without guessing from the summary text.
+const RESOURCE_NOUNS = {
+	acknowledgeProblems: ['host or service problem'],
+	activateChanges: ['pending change'],
+	auditLogs: ['audit log entry'],
+	auxTags: ['auxiliary tag', 'aux tag'],
+	backgroundJobs: ['background job'],
+	brokerConnection: ['peer to peer broker connection'],
+	comments: ['comment'],
+	configurationEntities: ['configuration entity'],
+	configurationEntitiesFolder: ['folder'],
+	configurationEntitiesNotificationParameter: ['notification parameter'],
+	configurationEntitiesPasswordstorePassword: ['passwordstore password'],
+	contactGroups: ['contact group'],
+	downtimes: ['scheduled downtime', 'downtime'],
+	eventConsole: ['event'],
+	folders: ['folder'],
+	hostGroups: ['host group'],
+	hostStatus: ['host'],
+	hostTagGroups: ['host tag group'],
+	hosts: ['host'],
+	hostsInternal: ['host'],
+	lDAPConnections: ['ldap connection'],
+	metrics: ['metric'],
+	notificationRules: ['notification rule'],
+	passwords: ['password'],
+	rules: ['rule'],
+	rulesets: ['rule set', 'ruleset'],
+	serviceGroups: ['service group'],
+	serviceStatus: ['monitored service'],
+	siteManagement: ['site connection'],
+	timePeriods: ['time period'],
+	userRoles: ['user role'],
+	users: ['user'],
+};
+const NOUN_CONNECTORS = new Set(['of', 'in', 'on', 'to', 'for', 'from', 'with', 'by', 'at']);
+const TRAILING_NOISE = new Set(['related', 'existing', 'current']);
+// A label must not end on these once the noun is gone.
+const DANGLING_TAIL = new Set([
+	...NOUN_CONNECTORS, ...TRAILING_NOISE, 'and', 'or', 'new', 'all', 'any', 'this', 'own', 'the',
+]);
+
+function escapePattern(text) {
+	return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function pluralize(noun) {
+	return noun.endsWith('y') ? `${noun.slice(0, -1)}ies` : `${noun}s`;
+}
+
+/** Drops the resource noun from a label: "Create Host" -> "Create". */
+function stripResourceNoun(label, resource) {
+	const nouns = RESOURCE_NOUNS[resource];
+	if (nouns === undefined) return {short: label, plural: false};
+	const forms = nouns
+		.flatMap(noun => [{form: pluralize(noun), plural: true}, {form: noun, plural: false}])
+		.sort((a, b) => b.form.length - a.form.length);
+	for (const {form, plural} of forms) {
+		const body = form.split(/\s+/).map(escapePattern).join('\\s+');
+		const pattern = new RegExp(`\\s+(?:(?:${[...NOUN_CONNECTORS].join('|')})\\s+)?${body}$`, 'i');
+		if (!pattern.test(label)) continue;
+		let rest = label.replace(pattern, '').trim();
+		for (const noise of TRAILING_NOISE) {
+			rest = rest.replace(new RegExp(`\\s+${noise}$`, 'i'), '').trim();
+		}
+		if (rest === '') continue;
+		const tail = rest.split(/\s+/).pop().toLowerCase();
+		if (DANGLING_TAIL.has(tail)) continue;
+		return {short: rest, plural};
+	}
+	return {short: label, plural: false};
+}
+
 function buildOperations(document) {
 	const resolver = createSchemaResolver(document.components?.schemas ?? {});
 	const operations = [];
@@ -361,9 +435,45 @@ function buildOperations(document) {
 		resources.set(operation.resource, operation.resourceLabel);
 	}
 
+	const labels = new Map();
 	for (const operation of operations) {
-		const baseLabel = humanizeSummary(operation.summary);
-		operation.label = operation.deprecated ? `${baseLabel} (deprecated)` : baseLabel;
+		const full = humanizeSummary(operation.summary);
+		labels.set(operation, {full, ...stripResourceNoun(full, operation.resource)});
+	}
+	// "Get Host" and "Get Hosts" both lose the noun; the listing keeps its "many".
+	for (const operation of operations) {
+		const entry = labels.get(operation);
+		if (!entry.plural || entry.short !== 'Get') continue;
+		const singularSibling = operations.some(other => {
+			const sibling = labels.get(other);
+			return other !== operation
+				&& other.resource === operation.resource
+				&& sibling.short === 'Get'
+				&& !sibling.plural;
+		});
+		if (singularSibling) entry.short = 'Get Many';
+	}
+	// Two active operations of one resource must not end up with the same label; the
+	// full summary wins for the whole collision group. Deprecated variants are exempt,
+	// their suffix already keeps them apart.
+	for (const resource of new Set(operations.map(operation => operation.resource))) {
+		const byLabel = new Map();
+		for (const operation of operations) {
+			if (operation.resource !== resource || operation.deprecated) continue;
+			const key = labels.get(operation).short;
+			byLabel.set(key, [...(byLabel.get(key) ?? []), operation]);
+		}
+		for (const group of byLabel.values()) {
+			if (group.length < 2) continue;
+			for (const operation of group) {
+				const entry = labels.get(operation);
+				entry.short = entry.full;
+			}
+		}
+	}
+	for (const operation of operations) {
+		const {short} = labels.get(operation);
+		operation.label = operation.deprecated ? `${short} (deprecated)` : short;
 	}
 	const labelCounts = new Map();
 	for (const operation of operations) {

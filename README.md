@@ -86,8 +86,11 @@ Names are long on purpose: they are stable across regenerations and never collid
 operations that share a parameter name. The n8n UI shows a readable label; the long key is
 only visible in expressions (`$parameter["path_…"]`) and exported JSON.
 
-Operation labels are humanized (`Show all hosts` becomes `Get Many Hosts`), so the HTTP method
-is no longer part of the name; the dropdown **description** carries `METHOD /path` instead.
+Operation labels are humanized and resource-scoped: `Show all hosts` becomes `Get Many`, and
+`Create Host` under **Hosts** is just `Create`, because the resource already names the object.
+Labels keep their noun when dropping it would be ambiguous (BI aggregations, packs and rules)
+and fall back to the full name when two operations of one resource would collide. The HTTP
+method never appears in the name; the dropdown **description** carries `METHOD /path`.
 
 ### Pagination and limits
 

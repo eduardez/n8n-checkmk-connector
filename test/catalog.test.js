@@ -94,13 +94,27 @@ test('operation labels are human names without the HTTP method prefix', () => {
 	}
 });
 
-test('operation labels are rendered from the OpenAPI summary', () => {
+test('operation labels drop the resource noun', () => {
 	const label = id => OPERATIONS.find(operation => operation.id === id).label;
-	assert.equal(label('cmk.gui.openapi.endpoints.host_config.list_hosts'), 'Get Many Hosts');
-	assert.equal(label('cmk.gui.openapi.endpoints.host_config.create_host'), 'Create Host');
-	assert.equal(label('cmk.gui.openapi.endpoints.downtime.show_downtime'), 'Get Downtime');
+	// The resource already says "Hosts", so the operation only names the verb.
+	assert.equal(label('cmk.gui.openapi.endpoints.host_config.list_hosts'), 'Get Many');
+	assert.equal(label('cmk.gui.openapi.endpoints.host_config.create_host'), 'Create');
+	assert.equal(label('cmk.gui.openapi.endpoints.host_config.update_nodes'), 'Update Nodes of Cluster');
+	// Singular and plural reads of one resource stay distinguishable.
+	assert.equal(label('cmk.gui.openapi.endpoints.aux_tags.show_aux_tag'), 'Get');
+	assert.equal(label('cmk.gui.openapi.endpoints.aux_tags.show_aux_tags'), 'Get Many');
+	// Resources whose operations name different objects keep the noun.
 	assert.equal(label('cmk.gui.bi._openapi.bi_aggregation_state_get'), 'Get State of BI Aggregations (GET)');
 	assert.equal(label('cmk.gui.bi._openapi.bi_aggregation_state_post'), 'Get State of BI Aggregations (POST)');
+});
+
+test('operation labels keep the noun when dropping it would leave a dangling word', () => {
+	const label = id => OPERATIONS.find(operation => operation.id === id).label;
+	assert.equal(
+		label('cmk.gui.openapi.endpoints.user_config.dismiss_user_warning'),
+		'Save Warning Dismissal for Current User',
+	);
+	assert.equal(label('cmk.gui.openapi.endpoints.downtime.show_downtime'), 'Get');
 });
 
 test('operation labels are unique within a resource', () => {

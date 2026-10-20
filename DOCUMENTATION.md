@@ -39,7 +39,7 @@ For every path/method pair the generator records:
 | --- | --- |
 | `id` | OpenAPI `operationId` |
 | `resource` | first tag, slugified (`host_config` → `hosts`) with a human label |
-| `label` | humanized summary: verb prefixes mapped (`Show all` → `Get Many`), articles dropped, title-cased; `" (deprecated)"` appended when `deprecated: true`, `" (METHOD)"` when two operations of a resource end up with the same label |
+| `label` | humanized summary: verb prefixes mapped (`Show all` → `Get Many`), articles dropped, title-cased, then the resource noun removed (`Create Host` → `Create`) via the `RESOURCE_NOUNS` table; plural reads become `Get Many`, labels whose noun cannot be dropped cleanly keep it, colliding active labels fall back to the full summary, `" (deprecated)"` is appended when `deprecated: true`, `" (METHOD)"` when two operations of a resource still collide |
 | `method`, `path` | operation verb and path template |
 | `pathParameters`, `queryParameters`, `headerParameters` | OpenAPI parameters, with kind, type, enum values, required flag, description, example and schema default |
 | `requestBody` | required flag, schema `$ref` name, first example (resolved through `components/schemas` when the example is schema-generated) |

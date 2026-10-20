@@ -25,7 +25,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Remove Acknowledgement on Host or Service Problems"
+		"label": "Remove Acknowledgement"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.acknowledgement.set_acknowledgement_on_hosts",
@@ -108,7 +108,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Activate Pending Changes"
+		"label": "Activate"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.activate_changes.show_activation",
@@ -134,6 +134,21 @@ export const OPERATIONS: ApiOperation[] = [
 		"label": "Get Activation Status"
 	},
 	{
+		"id": "cmk.gui.openapi.endpoints.activate_changes.list_pending_changes",
+		"resourceLabel": "Activate Changes",
+		"resource": "activateChanges",
+		"summary": "Show all pending changes",
+		"method": "GET",
+		"path": "/domain-types/activation_run/collections/pending_changes",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
+	},
+	{
 		"id": "cmk.gui.openapi.endpoints.activate_changes.list_activations",
 		"resourceLabel": "Activate Changes",
 		"resource": "activateChanges",
@@ -147,21 +162,6 @@ export const OPERATIONS: ApiOperation[] = [
 		"paginated": true,
 		"deprecated": false,
 		"label": "Get Many Currently Running Activations"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.activate_changes.list_pending_changes",
-		"resourceLabel": "Activate Changes",
-		"resource": "activateChanges",
-		"summary": "Show all pending changes",
-		"method": "GET",
-		"path": "/domain-types/activation_run/collections/pending_changes",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many Pending Changes"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.activate_changes.activate_changes_wait_for_completion",
@@ -273,7 +273,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Audit Log Entries"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.audit_log.archive_logs",
@@ -347,7 +347,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Auxiliary Tag"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.aux_tags.delete_aux_tag",
@@ -370,7 +370,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Auxiliary Tag"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.aux_tags.show_aux_tag",
@@ -393,7 +393,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Auxiliary Tag"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.aux_tags.show_aux_tags",
@@ -408,7 +408,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Auxiliary Tags"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.aux_tags.put_aux_tag",
@@ -440,7 +440,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Aux Tag"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.background_job.show_background_job_snapshot",
@@ -471,7 +471,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Last Status of Background Job"
+		"label": "Get Last Status"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.broker_connection.create_broker_connection",
@@ -501,7 +501,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Peer to Peer Broker Connection"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.broker_connection.delete_broker_connection",
@@ -524,22 +524,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Peer to Peer Broker Connection"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.broker_connection.show_broker_connections",
-		"resourceLabel": "Broker Connection",
-		"resource": "brokerConnection",
-		"summary": "Show all peer to peer broker connections",
-		"method": "GET",
-		"path": "/domain-types/broker_connection/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many Peer to Peer Broker Connections"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.broker_connection.show_broker_connection",
@@ -562,7 +547,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Peer to Peer Broker Connection"
+		"label": "Get"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.broker_connection.show_broker_connections",
+		"resourceLabel": "Broker Connection",
+		"resource": "brokerConnection",
+		"summary": "Show all peer to peer broker connections",
+		"method": "GET",
+		"path": "/domain-types/broker_connection/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.broker_connection.edit_broker_connection",
@@ -599,7 +599,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Peer to Peer Broker Connection"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.post_bi_aggregation",
@@ -1218,7 +1218,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Host Comment"
+		"label": "Create Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.comment.create_service_comment",
@@ -1244,7 +1244,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Service Comment"
+		"label": "Create Service"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.comment.delete_comments",
@@ -1268,7 +1268,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Comments"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.comment.show_comment",
@@ -1299,7 +1299,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Comment"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.comment.show_comments",
@@ -1355,7 +1355,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Comments"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity._create_configuration_entity",
@@ -1379,7 +1379,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Configuration Entity"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity._get_configuration_entity_form_spec_schema",
@@ -1440,7 +1440,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Existing Configuration Entity"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.folder._list_folder",
@@ -1463,7 +1463,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "List Folder"
+		"label": "List"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.notification_parameter._get_notification_parameter",
@@ -1486,7 +1486,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Notification Parameter"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.notification_parameter._list_notification_parameters",
@@ -1509,7 +1509,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "List Notification Parameters"
+		"label": "List"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.passwordstore_password._list_passwordstore_passwords",
@@ -1532,7 +1532,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "List Passwordstore Passwords"
+		"label": "List"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.bulk_create",
@@ -1559,7 +1559,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Create Contact Groups"
+		"label": "Bulk Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.bulk_delete",
@@ -1584,7 +1584,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Delete Contact Groups"
+		"label": "Bulk Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.bulk_update",
@@ -1613,7 +1613,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Update Contact Groups"
+		"label": "Bulk Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.create",
@@ -1639,7 +1639,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Contact Group"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.delete",
@@ -1662,7 +1662,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Contact Group"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.show",
@@ -1685,7 +1685,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Contact Group"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.list_group",
@@ -1700,7 +1700,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Contact Groups"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.update",
@@ -1733,7 +1733,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Contact Group"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.create_host_related_downtime",
@@ -1761,7 +1761,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Host Related Scheduled Downtime"
+		"label": "Create Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.create_service_related_downtime",
@@ -1793,7 +1793,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Service Related Scheduled Downtime"
+		"label": "Create Service"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.delete_downtime",
@@ -1817,7 +1817,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Scheduled Downtime"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.show_downtime",
@@ -1848,7 +1848,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Downtime"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.show_downtimes",
@@ -1904,7 +1904,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Scheduled Downtimes"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.modify_host_downtime",
@@ -1933,7 +1933,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Scheduled Downtime"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.archive_events_with_filter",
@@ -1957,7 +1957,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Archive Events"
+		"label": "Archive"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.change_event_state",
@@ -2044,7 +2044,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Event"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.show_events",
@@ -2111,7 +2111,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Events"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.update_and_acknowledge_event",
@@ -2199,7 +2199,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Update Folders"
+		"label": "Bulk Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.create",
@@ -2226,7 +2226,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Folder"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.delete",
@@ -2262,7 +2262,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Folder"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.show_folder",
@@ -2294,7 +2294,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Folder"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.list_folders",
@@ -2333,7 +2333,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Folders"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.hosts_of_folder",
@@ -2365,7 +2365,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Hosts in Folder"
+		"label": "Get Many Hosts"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.move",
@@ -2395,7 +2395,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Move Folder"
+		"label": "Move"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.update",
@@ -2434,7 +2434,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Folder"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.bulk_create",
@@ -2461,7 +2461,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Create Host Groups"
+		"label": "Bulk Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.bulk_delete",
@@ -2486,7 +2486,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Delete Host Groups"
+		"label": "Bulk Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.bulk_update",
@@ -2515,7 +2515,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Update Host Groups"
+		"label": "Bulk Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.create",
@@ -2538,7 +2538,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Host Group"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.delete",
@@ -2561,7 +2561,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Host Group"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.get",
@@ -2584,7 +2584,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Host Group"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.list_groups",
@@ -2599,7 +2599,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Host Groups"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.update",
@@ -2629,7 +2629,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Host Group"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host.show_host",
@@ -2665,7 +2665,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Host"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host.list_hosts",
@@ -2768,7 +2768,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Host Tag Group"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.delete_host_tag_group",
@@ -2814,7 +2814,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Host Tag Group"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.show_host_tag_group",
@@ -2837,7 +2837,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Host Tag Group"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.list_host_tag_groups",
@@ -2852,7 +2852,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Host Tag Groups"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.update_host_tag_group",
@@ -2891,7 +2891,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Host Tag Group"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.bulk_create_hosts",
@@ -2928,7 +2928,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Create Hosts"
+		"label": "Bulk Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.bulk_delete",
@@ -2953,7 +2953,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Delete Hosts"
+		"label": "Bulk Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.bulk_update_hosts",
@@ -2980,7 +2980,42 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Update Hosts"
+		"label": "Bulk Update"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_config.create_host",
+		"resourceLabel": "Hosts",
+		"resource": "hosts",
+		"summary": "Create a host",
+		"method": "POST",
+		"path": "/domain-types/host_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [
+			{
+				"name": "bake_agent",
+				"kind": "boolean",
+				"required": false,
+				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
+				"example": false,
+				"defaultValue": false
+			}
+		],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateHost",
+			"example": {
+				"host_name": "example.com",
+				"folder": "/",
+				"attributes": {
+					"ipaddress": "192.168.0.123"
+				}
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.create_cluster_host",
@@ -3020,42 +3055,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Cluster Host"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_config.create_host",
-		"resourceLabel": "Hosts",
-		"resource": "hosts",
-		"summary": "Create a host",
-		"method": "POST",
-		"path": "/domain-types/host_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [
-			{
-				"name": "bake_agent",
-				"kind": "boolean",
-				"required": false,
-				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
-				"example": false,
-				"defaultValue": false
-			}
-		],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateHost",
-			"example": {
-				"host_name": "example.com",
-				"folder": "/",
-				"attributes": {
-					"ipaddress": "192.168.0.123"
-				}
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "Create Host"
+		"label": "Create Cluster"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.delete",
@@ -3078,7 +3078,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Host"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.show_host",
@@ -3110,7 +3110,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Host"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.list_hosts",
@@ -3166,7 +3166,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Hosts"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.move",
@@ -3226,7 +3226,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Rename Host"
+		"label": "Rename"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.update_host",
@@ -3264,7 +3264,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Host"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.update_nodes",
@@ -3298,7 +3298,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Nodes of Cluster Host"
+		"label": "Update Nodes of Cluster"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.renaming_job_wait_for_completion",
@@ -3336,7 +3336,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Host"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_internal.link_with_uuid",
@@ -3500,7 +3500,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create LDAP Connection"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ldap_connection.delete_ldap_connection",
@@ -3523,7 +3523,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete LDAP Connection"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ldap_connection.show_ldap_connection",
@@ -3546,7 +3546,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get LDAP Connection"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ldap_connection.show_ldap_connections",
@@ -3561,7 +3561,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many LDAP Connections"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ldap_connection.edit_ldap_connection",
@@ -3673,7 +3673,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update LDAP Connection"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.metric.get_graph",
@@ -3704,7 +3704,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Metrics"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.version.search",
@@ -3906,7 +3906,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Notification Rule"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.notification_rules.delete_rule",
@@ -3929,22 +3929,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Notification Rule"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.notification_rules.show_rules",
-		"resourceLabel": "Notification Rules",
-		"resource": "notificationRules",
-		"summary": "Show all notification rules",
-		"method": "GET",
-		"path": "/domain-types/notification_rule/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many Notification Rules"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.notification_rules.show_rule",
@@ -3967,7 +3952,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Notification Rule"
+		"label": "Get"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.notification_rules.show_rules",
+		"resourceLabel": "Notification Rules",
+		"resource": "notificationRules",
+		"summary": "Show all notification rules",
+		"method": "GET",
+		"path": "/domain-types/notification_rule/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.notification_rules.put_rule",
@@ -4162,7 +4162,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Notification Rule"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.parent_scan.start_parent_scan_background_job",
@@ -4230,7 +4230,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Password"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.password.delete_password",
@@ -4253,7 +4253,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Password"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.password.list_passwords",
@@ -4268,7 +4268,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Get Many Passwords"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.password.show_password",
@@ -4329,7 +4329,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Password"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.quick_setup.fetch_quick_setup_action_result",
@@ -4703,7 +4703,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Rule"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.rule.delete_rule",
@@ -4726,7 +4726,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Rule"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.rule.show_rule",
@@ -4749,7 +4749,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Rule"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.rule.list_rules",
@@ -4772,7 +4772,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "List Rules"
+		"label": "List"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.rule.move_rule_to",
@@ -4895,7 +4895,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Rule"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ruleset.show_ruleset",
@@ -4918,7 +4918,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Ruleset"
+		"label": "Get"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ruleset.list_rulesets",
@@ -4968,7 +4968,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "Search Rule Sets"
+		"label": "Search"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_discovery.execute_service_discovery",
@@ -5154,7 +5154,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Create Service Groups"
+		"label": "Bulk Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.bulk_delete",
@@ -5179,7 +5179,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Delete Service Groups"
+		"label": "Bulk Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.bulk_update",
@@ -5208,7 +5208,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Bulk Update Service Groups"
+		"label": "Bulk Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.create",
@@ -5231,7 +5231,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Service Group"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.delete",
@@ -5254,22 +5254,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Service Group"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service_group_config.list_groups",
-		"resourceLabel": "Service Groups",
-		"resource": "serviceGroups",
-		"summary": "Show all service groups",
-		"method": "GET",
-		"path": "/domain-types/service_group_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many Service Groups"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.show_group",
@@ -5292,7 +5277,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Service Group"
+		"label": "Get"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service_group_config.list_groups",
+		"resourceLabel": "Service Groups",
+		"resource": "serviceGroups",
+		"summary": "Show all service groups",
+		"method": "GET",
+		"path": "/domain-types/service_group_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.update",
@@ -5322,7 +5322,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Service Group"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service._list_all_services",
@@ -5356,7 +5356,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Many Monitored Services"
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service._list_all_services_deprecated-17512",
@@ -5409,7 +5409,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": true,
-		"label": "Get Many Monitored Services (deprecated)"
+		"label": "Get Many (deprecated)"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service._list_host_services",
@@ -5631,7 +5631,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Site Connection"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.delete_site",
@@ -5654,22 +5654,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Site Connection"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.site_management.show_sites",
-		"resourceLabel": "Site Management",
-		"resource": "siteManagement",
-		"summary": "Show all site connections",
-		"method": "GET",
-		"path": "/domain-types/site_connection/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many Site Connections"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.show_site",
@@ -5692,7 +5677,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Site Connection"
+		"label": "Get"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.site_management.show_sites",
+		"resourceLabel": "Site Management",
+		"resource": "siteManagement",
+		"summary": "Show all site connections",
+		"method": "GET",
+		"path": "/domain-types/site_connection/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.site_login",
@@ -5833,7 +5833,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Site Connection"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.time_periods.create_timeperiod",
@@ -5881,7 +5881,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create Time Period"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.time_periods.delete",
@@ -5904,22 +5904,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete Time Period"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.time_periods.list_time_periods",
-		"resourceLabel": "Time Periods",
-		"resource": "timePeriods",
-		"summary": "Show all time periods",
-		"method": "GET",
-		"path": "/domain-types/time_period/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many Time Periods"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.time_periods.show_time_period",
@@ -5942,7 +5927,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get Time Period"
+		"label": "Get"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.time_periods.list_time_periods",
+		"resourceLabel": "Time Periods",
+		"resource": "timePeriods",
+		"summary": "Show all time periods",
+		"method": "GET",
+		"path": "/domain-types/time_period/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.time_periods.update_timeperiod",
@@ -5997,7 +5997,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update Time Period"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_role.create_userrole",
@@ -6021,7 +6021,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create User Role"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_role.delete_userrole",
@@ -6044,22 +6044,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete User Role"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_role.list_user_roles",
-		"resourceLabel": "User Roles",
-		"resource": "userRoles",
-		"summary": "Show all user roles",
-		"method": "GET",
-		"path": "/domain-types/user_role/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many User Roles"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_role.show_user_role",
@@ -6082,7 +6067,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get User Role"
+		"label": "Get"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_role.list_user_roles",
+		"resourceLabel": "User Roles",
+		"resource": "userRoles",
+		"summary": "Show all user roles",
+		"method": "GET",
+		"path": "/domain-types/user_role/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_role.edit_userrole",
@@ -6118,7 +6118,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update User Role"
+		"label": "Update"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_config.create_user",
@@ -6170,7 +6170,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Create User"
+		"label": "Create"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_config.delete_user",
@@ -6193,22 +6193,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Delete User"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_config.list_users",
-		"resourceLabel": "Users",
-		"resource": "users",
-		"summary": "Show all users",
-		"method": "GET",
-		"path": "/domain-types/user_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "Get Many Users"
+		"label": "Delete"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_config.show_user",
@@ -6231,7 +6216,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Get User"
+		"label": "Get"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_config.list_users",
+		"resourceLabel": "Users",
+		"resource": "users",
+		"summary": "Show all users",
+		"method": "GET",
+		"path": "/domain-types/user_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_config.dismiss_user_warning",
@@ -6310,7 +6310,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "Update User"
+		"label": "Update"
 	},
 ];
 
