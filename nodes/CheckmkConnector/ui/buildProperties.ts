@@ -38,7 +38,8 @@ function scalarDefault(
 	param: ApiParameter,
 	kind: 'string' | 'number' | 'boolean',
 ): string | number | boolean | undefined {
-	const candidate = param.example ?? param.defaultValue;
+	// Examples are documentation hints (site1, host1), not values to send.
+	const candidate = param.defaultValue;
 	if (candidate === undefined) return undefined;
 	if (kind === 'string') return String(candidate);
 	if (kind === 'number') {
@@ -57,7 +58,7 @@ function parameterField(
 	const name = fieldName(scope, operation, param.name);
 	const displayOptions = {show: {resource: [operation.resource], operation: [operation.id]}};
 	const typeOptions = param.enumValues && param.enumValues.length > 0 ? 'options' : param.kind;
-	const declaredDefault = param.example ?? param.defaultValue;
+	const declaredDefault = param.defaultValue;
 	const enumDefault =
 		typeof declaredDefault === 'string' && param.enumValues?.includes(declaredDefault)
 			? declaredDefault
@@ -93,8 +94,8 @@ function parameterField(
 				...base,
 				type: 'string',
 				displayName: `${param.name} (comma-separated)`,
-				default: Array.isArray(param.example)
-					? param.example.map(value => String(value)).join(',')
+				default: Array.isArray(param.defaultValue)
+					? param.defaultValue.map(value => String(value)).join(',')
 					: '',
 				description: describe(
 					param,

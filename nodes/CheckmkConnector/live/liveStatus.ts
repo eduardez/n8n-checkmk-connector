@@ -2,6 +2,8 @@ import type {IExecuteFunctions} from 'n8n-workflow';
 import {NodeOperationError} from 'n8n-workflow';
 
 import type {CheckmkClient} from '../transport/CheckmkClient';
+import {isLegacyStatusApi} from '../transport/compatibility';
+import type {CheckmkVersion} from '../transport/version';
 
 const HOST_STATUS_PATH = '/domain-types/host/collections/all';
 const SERVICE_STATUS_PATH = '/domain-types/service/collections/all';
@@ -79,17 +81,34 @@ function normalizeStatusItem(item: StatusItem | undefined): unknown {
 	return item.extensions ?? item;
 }
 
-async function postStatus(
-	client: CheckmkClient,
-	path: string,
-	body: Record<string, unknown>,
-): Promise<StatusItem[]> {
-	const response = await client.request<unknown>({method: 'POST', path, body});
+function statusItems(response: unknown): StatusItem[] {
 	if (typeof response === 'object' && response !== null) {
 		const value = (response as {value?: unknown}).value;
 		if (Array.isArray(value)) return value as StatusItem[];
 	}
 	return Array.isArray(response) ? (response as StatusItem[]) : [];
+}
+
+async function postStatus(
+	client: CheckmkClient,
+	path: string,
+	body: Record<string, unknown>,
+): Promise<StatusItem[]> {
+	return statusItems(await client.request<unknown>({method: 'POST', path, body}));
+}
+
+/**
+ * Checkmk before 2.4 only offers the GET status collections, which take the
+ * same values as query parameters instead of a JSON body.
+ */
+async function fetchStatus(
+	client: CheckmkClient,
+	version: CheckmkVersion | undefined,
+	path: string,
+	body: Record<string, unknown>,
+): Promise<StatusItem[]> {
+	if (!isLegacyStatusApi(version)) return postStatus(client, path, body);
+	return statusItems(await client.request<unknown>({method: 'GET', path, query: body}));
 }
 
 /**
@@ -101,6 +120,7 @@ export async function getHostWithStatus(
 	context: IExecuteFunctions,
 	client: CheckmkClient,
 	itemIndex: number,
+	version?: CheckmkVersion,
 ): Promise<unknown> {
 	const hostName = String(context.getNodeParameter('hostName', itemIndex, '')).trim();
 	if (hostName === '') {
@@ -117,7 +137,7 @@ export async function getHostWithStatus(
 			})
 		: undefined;
 
-	const items = await postStatus(client, HOST_STATUS_PATH, {
+	const items = await fetchStatus(client, version, HOST_STATUS_PATH, {
 		sites,
 		query: JSON.stringify({op: '=', left: 'name', right: hostName}),
 		columns,
@@ -138,6 +158,7 @@ export async function getHostsWithStatus(
 	context: IExecuteFunctions,
 	client: CheckmkClient,
 	itemIndex: number,
+	version?: CheckmkVersion,
 ): Promise<unknown[]> {
 	const columns = readList(context, itemIndex, 'columns', HOST_COLUMNS.join(','));
 	const sites = readList(context, itemIndex, 'sites', '');
@@ -154,7 +175,7 @@ export async function getHostsWithStatus(
 
 	const body: Record<string, unknown> = {sites, columns};
 	if (query !== undefined) body.query = query;
-	const items = await postStatus(client, HOST_STATUS_PATH, body);
+	const items = await fetchStatus(client, version, HOST_STATUS_PATH, body);
 
 	const statusByHost = new Map<string, StatusItem | undefined>();
 	for (const item of items) {
@@ -178,6 +199,7 @@ async function collectServices(
 	context: IExecuteFunctions,
 	client: CheckmkClient,
 	itemIndex: number,
+	version: CheckmkVersion | undefined,
 	defaultColumns: string[],
 	defaultQuery: unknown,
 ): Promise<unknown[]> {
@@ -189,6 +211,13 @@ async function collectServices(
 	const body: Record<string, unknown> = {sites, columns};
 	if (query !== undefined) body.query = query;
 
+	if (isLegacyStatusApi(version)) {
+		return client.requestAll<unknown>(
+			{method: 'GET', path: SERVICE_STATUS_PATH, query: body},
+			returnAll,
+			limit,
+		);
+	}
 	return client.requestAll<unknown>(
 		{method: 'POST', path: SERVICE_STATUS_PATH, body},
 		returnAll,
@@ -201,8 +230,9 @@ export async function getServices(
 	context: IExecuteFunctions,
 	client: CheckmkClient,
 	itemIndex: number,
+	version?: CheckmkVersion,
 ): Promise<unknown[]> {
-	return collectServices(context, client, itemIndex, SERVICE_COLUMNS, {});
+	return collectServices(context, client, itemIndex, version, SERVICE_COLUMNS, {});
 }
 
 /**
@@ -213,6 +243,7 @@ export async function getProblems(
 	context: IExecuteFunctions,
 	client: CheckmkClient,
 	itemIndex: number,
+	version?: CheckmkVersion,
 ): Promise<unknown[]> {
-	return collectServices(context, client, itemIndex, PROBLEM_COLUMNS, PROBLEM_QUERY);
+	return collectServices(context, client, itemIndex, version, PROBLEM_COLUMNS, PROBLEM_QUERY);
 }

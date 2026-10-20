@@ -19,10 +19,11 @@ import {
 import {CheckmkClient} from './transport/CheckmkClient';
 import type {CheckmkCredentials} from './transport/CheckmkClient';
 import {toNodeApiError} from './transport/errors';
-import {warnAboutCheckmkVersion} from './transport/version';
+import type {CheckmkVersion} from './transport/version';
+import {probeCheckmkVersion} from './transport/version';
 import {buildProperties, CUSTOM_API_RESOURCE, LIVE_STATUS_RESOURCE} from './ui/buildProperties';
 
-const LIVE_STATUS_OPERATIONS: Record<string, (context: IExecuteFunctions, client: CheckmkClient, itemIndex: number) => Promise<unknown>> = {
+const LIVE_STATUS_OPERATIONS: Record<string, (context: IExecuteFunctions, client: CheckmkClient, itemIndex: number, version?: CheckmkVersion) => Promise<unknown>> = {
 	getHost: getHostWithStatus,
 	getHosts: getHostsWithStatus,
 	getServices,
@@ -52,7 +53,7 @@ export class CheckmkConnector implements INodeType {
 			'checkmkConnectorApi',
 		)) as unknown as CheckmkCredentials;
 		const client = new CheckmkClient(this, credentials);
-		await warnAboutCheckmkVersion(this, client, credentials);
+		const version = await probeCheckmkVersion(this, client, credentials);
 		const returnData: INodeExecutionData[] = [];
 
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
@@ -68,14 +69,14 @@ export class CheckmkConnector implements INodeType {
 					if (handler === undefined) {
 						throw new NodeOperationError(this.getNode(), `Unknown Live Status operation "${operation}"`);
 					}
-					result = await handler(this, client, itemIndex);
+					result = await handler(this, client, itemIndex, version);
 				} else {
 					const operationId = this.getNodeParameter('operation', itemIndex) as string;
 					const operation = OPERATIONS.find(entry => entry.id === operationId);
 					if (operation === undefined) {
 						throw new NodeOperationError(this.getNode(), `Unknown operation "${operationId}"`);
 					}
-					result = await executeCatalogOperation(this, client, itemIndex, operation);
+					result = await executeCatalogOperation(this, client, itemIndex, operation, version);
 				}
 
 				const rows = Array.isArray(result) ? result : [result];

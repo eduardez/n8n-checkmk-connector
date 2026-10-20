@@ -93,19 +93,22 @@ async function readVersion(
 
 /**
  * Best-effort compatibility probe. Runs at most once per workflow per hour and
- * never fails the execution; it only logs a warning on a known mismatch.
+ * never fails the execution; it logs a warning on a known mismatch and returns
+ * the detected version for callers that must adapt to older APIs.
  */
-export async function warnAboutCheckmkVersion(
+export async function probeCheckmkVersion(
 	context: IExecuteFunctions,
 	client: CheckmkClient,
 	credentials: CheckmkCredentials,
-): Promise<void> {
+): Promise<CheckmkVersion | undefined> {
 	try {
 		const version = await readVersion(context, client, credentials);
-		if (version === undefined) return;
+		if (version === undefined) return undefined;
 		const warning = compatibilityWarning(version, credentials.apiVersion);
 		if (warning !== undefined) context.logger.warn(warning);
+		return version;
 	} catch {
 		// The probe is advisory: an unreachable /version must not break the run.
+		return undefined;
 	}
 }

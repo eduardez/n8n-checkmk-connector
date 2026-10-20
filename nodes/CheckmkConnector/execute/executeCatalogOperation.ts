@@ -3,6 +3,8 @@ import {NodeOperationError} from 'n8n-workflow';
 
 import type {ApiOperation, ApiParameter} from '../catalog/types';
 import type {CheckmkClient, CheckmkRequestOptions} from '../transport/CheckmkClient';
+import {filterLegacyQuery} from '../transport/compatibility';
+import type {CheckmkVersion} from '../transport/version';
 import {sanitize} from '../ui/buildProperties';
 
 function readParameter(
@@ -144,11 +146,12 @@ export async function executeCatalogOperation(
 	client: CheckmkClient,
 	itemIndex: number,
 	operation: ApiOperation,
+	version?: CheckmkVersion,
 ): Promise<unknown> {
 	const requestOptions: CheckmkRequestOptions = {
 		method: operation.method,
 		path: buildPath(context, operation, itemIndex),
-		query: buildQuery(context, operation, itemIndex),
+		query: filterLegacyQuery(context, version, operation, buildQuery(context, operation, itemIndex)),
 		headers: buildHeaders(context, operation, itemIndex),
 		body: buildBody(context, operation, itemIndex),
 	};

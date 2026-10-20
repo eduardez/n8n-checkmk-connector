@@ -192,3 +192,53 @@ test('live status never touches the deprecated GET status collections', async ()
 		}
 	}
 });
+
+test('getServices falls back to the GET status collection before Checkmk 2.4', async () => {
+	const context = createMockContext({params: {query: '{}', sites: '', columns: 'host_name,state'}});
+	const client = new CheckmkClient(context, CREDENTIALS);
+	context.helpers.httpRequestWithAuthentication.call = async (self, name, options) => {
+		context.requests.push({credentialName: name, options});
+		return jsonResponse({value: [{id: 'svc-1', extensions: {state: 2}}]});
+	};
+
+	const result = await getServices(context, client, 0, {
+		raw: '2.2.0p47.cre',
+		major: 2,
+		minor: 2,
+		patch: 0,
+	});
+
+	assert.deepEqual(result, [{id: 'svc-1', extensions: {state: 2}}]);
+	const request = context.requests[0].options;
+	assert.equal(request.method, 'GET');
+	assert.equal(request.url, 'https://monitoring.example.com/cmk/check_mk/api/1.0/domain-types/service/collections/all');
+	assert.equal(request.body, undefined);
+	assert.deepEqual(request.qs, {sites: [], columns: ['host_name', 'state']});
+	assert.equal(request.arrayFormat, 'repeat');
+});
+
+test('getHostWithStatus reads live status with GET before Checkmk 2.4', async () => {
+	const context = createMockContext({params: {hostName: 'web-01'}});
+	const client = new CheckmkClient(context, CREDENTIALS);
+	context.helpers.httpRequestWithAuthentication.call = async (self, name, options) => {
+		context.requests.push({credentialName: name, options});
+		if (options.url.endsWith('/objects/host_config/web-01')) {
+			return jsonResponse({id: 'web-01', extensions: {ipaddress: '10.0.0.1'}});
+		}
+		return jsonResponse({value: [{extensions: {name: 'web-01', state: 0}}]});
+	};
+
+	const result = await getHostWithStatus(context, client, 0, {
+		raw: '2.2.0p47.cre',
+		major: 2,
+		minor: 2,
+		patch: 0,
+	});
+
+	assert.deepEqual(result.host_status, {name: 'web-01', state: 0});
+	const statusRequest = context.requests.find(request =>
+		request.options.url.endsWith('/domain-types/host/collections/all'),
+	);
+	assert.equal(statusRequest.options.method, 'GET');
+	assert.equal(statusRequest.options.body, undefined);
+});

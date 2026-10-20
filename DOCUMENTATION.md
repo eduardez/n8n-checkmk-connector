@@ -117,8 +117,10 @@ reported as `Checkmk request failed: <message>`.
 
 ## Live Status
 
-Live Status reads use the `POST /domain-types/{host,service}/collections/all` endpoints only;
-the `GET` variants are deprecated in Checkmk 2.4.
+Live Status reads use the `POST /domain-types/{host,service}/collections/all` endpoints on
+Checkmk 2.4 and newer. Before 2.4 those collections only accept `GET`, so the node switches to
+`GET` with the same values as query parameters and never touches the deprecated `GET`
+endpoints on 2.4+.
 
 - `getHost` reads the host configuration (`/objects/host_config/{host_name}`) and one filtered
   status row, returning the configuration with `host_status` appended. Without a matching
@@ -134,6 +136,19 @@ the `GET` variants are deprecated in Checkmk 2.4.
 
 Because status collections do not emit `next` links, `returnAll` has no effect beyond
 returning the full status response (bounded by `limit`).
+
+### Checkmk older than 2.4
+
+The version probe runs once per workflow and feeds a legacy adapter:
+
+- Query parameters that do not exist in the 2.2 API (`fields`, `hostnames`, `include_links`,
+  `site` on host listing, `effective_attributes` on folder host listing, `mode` on host tag
+  group deletion, `columns` on service-show invocation) are dropped with a warning instead of
+  triggering HTTP 400 "Unknown field".
+- Operations added after 2.2 (for example `POST /domain-types/host/collections/all`) still
+  return 404 on such servers; use **Custom API** only for endpoints that exist there.
+- The 2.4 catalog remains the single source of truth; UI examples are never used as field
+  defaults, so unset parameters are not sent.
 
 ## Custom API resource
 

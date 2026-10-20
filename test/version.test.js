@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const {
 	compatibilityWarning,
 	parseCheckmkVersion,
-	warnAboutCheckmkVersion,
+	probeCheckmkVersion,
 } = require('../dist/nodes/CheckmkConnector/transport/version.js');
 
 const CREDENTIALS = {
@@ -64,8 +64,8 @@ test('caches the version probe per workflow', async () => {
 	const context = fakeContext();
 	const client = fakeClient('2.3.0p1');
 
-	await warnAboutCheckmkVersion(context, client, CREDENTIALS);
-	await warnAboutCheckmkVersion(context, client, CREDENTIALS);
+	await probeCheckmkVersion(context, client, CREDENTIALS);
+	await probeCheckmkVersion(context, client, CREDENTIALS);
 
 	assert.equal(client.calls, 1);
 	assert.equal(context.warnings.length, 2);
@@ -79,6 +79,25 @@ test('never fails the execution when the version probe fails', async () => {
 		},
 	};
 
-	await warnAboutCheckmkVersion(context, client, CREDENTIALS);
+	await probeCheckmkVersion(context, client, CREDENTIALS);
 	assert.deepEqual(context.warnings, []);
+});
+
+test('drops query parameters that Checkmk 2.2 does not know', () => {
+	const {filterLegacyQuery} = require('../dist/nodes/CheckmkConnector/transport/compatibility.js');
+	const context = {logger: {warn: message => context.warnings.push(message)}, warnings: []};
+	const operation = {
+		method: 'GET',
+		path: '/domain-types/host_config/collections/all',
+	};
+	const query = {include_links: false, site: 'site1', effective_attributes: false};
+
+	const filtered = filterLegacyQuery(context, parseCheckmkVersion('2.2.0p47.cre'), operation, query);
+
+	assert.deepEqual(filtered, {effective_attributes: false});
+	assert.match(context.warnings[0], /include_links, site/);
+	assert.deepEqual(
+		filterLegacyQuery(context, parseCheckmkVersion('2.4.0p37.cre'), operation, query),
+		query,
+	);
 });

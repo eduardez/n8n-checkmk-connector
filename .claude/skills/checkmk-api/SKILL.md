@@ -76,3 +76,9 @@ Responses carry `title`, `detail`, and `fields`; map them to `NodeApiError` as `
 ## Custom API resource
 
 Allows any method/path under the API base. It rejects absolute URLs and the headers `Authorization`, `Host`, `Content-Length`, `Cookie`. Use it for endpoints not present in the generated catalog, not to bypass authentication.
+
+## Checkmk 2.2 constraints
+
+- 2.2 rejects unknown query parameters with HTTP 400 (`These fields have problems: site, hostnames, include_links, fields`). Never send a parameter unless the user set it.
+- Only 157 operations exist in 2.2; `POST /domain-types/{host,service}/collections/all` is 2.4+. Use the `GET` status collections there.
+- Query parameter differences on the 2.4 catalog: see `nodes/CheckmkConnector/transport/compatibility.ts`.

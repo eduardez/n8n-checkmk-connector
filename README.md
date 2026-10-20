@@ -144,7 +144,14 @@ credential after import.
 | 2.4.x | `1.0`, or `v1` | Generated from 2.4.0p37 CRE (131 paths, 189 operations) | Full integration suite on `2.4.0p37.cre` |
 | 2.5.x | `v1` (recommended), `1.0` (legacy) | Same catalog | Full integration suite plus document diff on `2.5.0-2025.11.04.cre` |
 | 3.0.x | `v1` only | Same catalog | Not exercised; the node warns when `1.0` is selected |
-| < 2.4 | n/a | — | Unsupported; the node logs a warning |
+| 2.2.x | `1.0` | 2.4 catalog; query parameters added later are dropped with a warning | Smoke-tested on `2.2.0p47.cre` |
+| 2.3.x | `1.0` | Same as 2.2, plus whatever 2.3 added | Not exercised |
+| < 2.2 | n/a | — | Unsupported; the node logs a warning |
+
+On 2.2 the node keeps the 2.4 catalog but adapts at runtime: parameters unknown to 2.2 are
+dropped (Checkmk rejects unknown query parameters with HTTP 400), Live Status falls back to the
+`GET` status collections, and operations introduced after 2.2 return 404. Operations that only
+exist in 2.2 are reachable through **Custom API**.
 
 The Checkmk 2.5 document keeps all 131 paths and 189 operations. Two differences matter when
 considering regeneration:
