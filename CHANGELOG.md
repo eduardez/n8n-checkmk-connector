@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.3.1...v0.4.0) (2026-10-20)
+
+
+### Features
+
+* select live status columns from a multi-select ([3d3cb32](https://github.com/eduardez/n8n-checkmk-connector/commit/3d3cb32e07c372072f29fcb4b533a2f4bb13bae8))
+
 ## [0.3.1](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.3.0...v0.3.1) (2026-10-20)
 
 
