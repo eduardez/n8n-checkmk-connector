@@ -8,9 +8,10 @@ The operation catalog is generated from the Checkmk OpenAPI document, so the nod
 **189 operations across 40 resources** of Checkmk 2.4.0p37 (API versions `1.0` and `v1`)
 without hand-written per-endpoint code.
 
-Beyond the generated catalog the node ships three convenience layers:
+Beyond the generated catalog the node ships four convenience layers:
 
 - **Live Status** – host/service status reads and a ready-made non-OK problem query.
+- **Monitoring** – acknowledge a problem, read every service of one host, or schedule downtime.
 - **Custom API** – an arbitrary authenticated request for endpoints missing from the catalog.
 - **Pagination** – every collection operation follows `rel="next"` links or returns a bounded page.
 
@@ -63,6 +64,7 @@ The node authenticates with `Authorization: Bearer <username> <password>` and ca
   remaining Checkmk domains. See [`docs/operations.md`](docs/operations.md) for the full table.
 - **Live Status** – `Get Host with Status`, `Get Hosts with Status`, `Get Services`,
   `Get Problems`.
+- **Monitoring** – `Acknowledge Problem`, `Get Host Services`, `Schedule Downtime`.
 - **Custom API** – any method/path/query/headers/body combination, with credential headers
   protected.
 
@@ -83,6 +85,9 @@ limit_<operationId>         page size when Return All is off
 Names are long on purpose: they are stable across regenerations and never collide between
 operations that share a parameter name. The n8n UI shows a readable label; the long key is
 only visible in expressions (`$parameter["path_…"]`) and exported JSON.
+
+Operation labels are humanized (`Show all hosts` becomes `Get Many Hosts`), so the HTTP method
+is no longer part of the name; the dropdown **description** carries `METHOD /path` instead.
 
 ### Pagination and limits
 
@@ -111,6 +116,21 @@ these operations.
 - **Get Host with Status** nests live data under `host_status` so status columns never
   overwrite configuration attributes. **Get Hosts with Status** returns every configuration
   by default (**Return All** on), makes one bulk status request, and joins both by host name.
+
+### Monitoring details
+
+- **Acknowledge Problem** posts to `/domain-types/acknowledge/collections/{host|service}`.
+  **Target** picks host or service; a service acknowledgement also needs the exact
+  **Service Description**. **Comment** is required, `sticky`/`persistent`/`notify` are passed
+  through as sent, and **Expire On** is optional.
+- **Get Host Services** posts one host-filtered request to
+  `/domain-types/service/collections/all` (**GET** on Checkmk < 2.4) and flattens the status
+  rows. **Only Problems** narrows the query to `state != 0`; **Columns** and **Sites** bound the
+  response. The collection is unpaged, so there is no **Return All**.
+- **Schedule Downtime** posts to `/domain-types/downtime/collections/{host|service}` with
+  **Start Time**/**End Time** (ISO 8601). Service downtimes take comma-separated
+  **Service Descriptions**.
+- Both write operations answer with HTTP 204, so the node emits one empty item.
 
 ### Custom API restrictions
 

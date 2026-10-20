@@ -245,7 +245,11 @@ test('getHostWithStatus reads live status with GET before Checkmk 2.4', async ()
 
 test('Live Status columns are multi-select fields with defaults', () => {
 	const {buildProperties} = require('../dist/nodes/CheckmkConnector/ui/buildProperties.js');
-	const fields = buildProperties().filter(field => field.name === 'columns');
+	const fields = buildProperties().filter(
+		field =>
+			field.name === 'columns' &&
+			field.displayOptions?.show?.resource?.includes('liveStatus'),
+	);
 
 	assert.equal(fields.length, 3);
 	for (const field of fields) {

@@ -17,6 +17,7 @@ nodes/CheckmkConnector/
   execute/executeCatalogOperation.ts             catalog operation -> request
   execute/executeCustomOperation.ts              Custom API resource
   live/liveStatus.ts                             Live Status helpers
+  monitoring/monitoring.ts                       Monitoring resource (acknowledge, downtime)
   ui/buildProperties.ts                          n8n parameter generation
 scripts/generate-catalog.mjs                     OpenAPI -> catalog + docs generator
 ```
@@ -38,7 +39,7 @@ For every path/method pair the generator records:
 | --- | --- |
 | `id` | OpenAPI `operationId` |
 | `resource` | first tag, slugified (`host_config` → `hosts`) with a human label |
-| `label` | `"<METHOD> <summary>"`, `" (deprecated)"` appended when `deprecated: true` |
+| `label` | humanized summary: verb prefixes mapped (`Show all` → `Get Many`), articles dropped, title-cased; `" (deprecated)"` appended when `deprecated: true`, `" (METHOD)"` when two operations of a resource end up with the same label |
 | `method`, `path` | operation verb and path template |
 | `pathParameters`, `queryParameters`, `headerParameters` | OpenAPI parameters, with kind, type, enum values, required flag, description, example and schema default |
 | `requestBody` | required flag, schema `$ref` name, first example (resolved through `components/schemas` when the example is schema-generated) |
@@ -59,6 +60,7 @@ deprecated.
 
 - `customApi` → `executeCustomOperation`
 - `liveStatus` → `getHost` / `getHosts` / `getServices` / `getProblems`
+- `monitoring` → `acknowledgeProblem` / `getHostServices` / `scheduleDowntime`
 - anything else → the catalog operation with a matching `operation` id
 
 Results are wrapped: arrays are split into one n8n item per element, scalars are emitted as
@@ -153,6 +155,31 @@ The version probe runs once per workflow and feeds a legacy adapter:
 - The 2.4 catalog remains the single source of truth; UI examples are never used as field
   defaults, so unset parameters are not sent.
 
+## Monitoring resource
+
+Three curated operations cover alert triage and maintenance without exposing raw OpenAPI
+fields. All of them are available on Checkmk 2.2 and newer; none of them is generated from the
+catalog.
+
+| Operation | Request |
+| --- | --- |
+| `acknowledgeProblem` | `POST /domain-types/acknowledge/collections/{host|service}` |
+| `getHostServices` | `POST /domain-types/service/collections/all`, `GET` before 2.4 |
+| `scheduleDowntime` | `POST /domain-types/downtime/collections/{host|service}` |
+
+- `acknowledgeProblem` sends `acknowledge_type` (the **Target**), `host_name`, `comment`,
+  `sticky`, `persistent` and `notify`; `service_description` is added for service targets and
+  `expire_on` only when **Expire On** is set.
+- `scheduleDowntime` sends `downtime_type`, `host_name`, `start_time`, `end_time`,
+  `service_descriptions` for service targets, and `comment` when supplied.
+- `getHostServices` reuses the Live Status transport (including the pre-2.4 `GET` fallback) and
+  flattens each row through `normalizeStatusItem`. Its filter is either
+  `{"op":"=","left":"host_name","right":"<host>"}` or, with **Only Problems**,
+  `{"op":"and","expr":[<host filter>,{"op":"!=","left":"state","right":"0"}]}` — Checkmk
+  rejects an `and` node built from `left`/`right`.
+- Both write operations answer with HTTP 204 and no body, so the handler returns `{}` and the
+  node emits one empty item.
+
 ## Custom API resource
 
 `executeCustomOperation` accepts any method (GET/POST/PUT/PATCH/DELETE), a path relative to the
@@ -169,7 +196,8 @@ API base, a query object, headers and a JSON body.
 
 - `npm test` builds and runs unit tests against `dist/` with `node:test`:
   catalog invariants, URL building, header/body handling, error mapping, pagination guards,
-  live status joins, deprecated-endpoint avoidance.
+  live status joins, deprecated-endpoint avoidance, generated operation labels, and the
+  Monitoring request shapes.
 - `npm run test:integration` additionally exercises a real site when
   `CHECKMK_BASE_URL`, `CHECKMK_SITE`, `CHECKMK_USERNAME` and `CHECKMK_PASSWORD` are set. It
   creates a folder and host, activates changes, verifies ETag conflict handling (412), reads

@@ -6,7 +6,7 @@ import type {ApiOperation, ApiResource} from './types';
 export const OPERATIONS: ApiOperation[] = [
 	{
 		"id": "cmk.gui.openapi.endpoints.acknowledgement.delete_acknowledgement",
-		"resourceLabel": "Acknowledge problems",
+		"resourceLabel": "Acknowledge Problems",
 		"resource": "acknowledgeProblems",
 		"summary": "Remove acknowledgement on host or service problems.",
 		"method": "POST",
@@ -25,11 +25,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Remove acknowledgement on host or service problems."
+		"label": "Remove Acknowledgement on Host or Service Problems"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.acknowledgement.set_acknowledgement_on_hosts",
-		"resourceLabel": "Acknowledge problems",
+		"resourceLabel": "Acknowledge Problems",
 		"resource": "acknowledgeProblems",
 		"summary": "Set acknowledgement on related hosts",
 		"method": "POST",
@@ -53,11 +53,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Set acknowledgement on related hosts"
+		"label": "Set Acknowledgement on Related Hosts"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.acknowledgement.set_acknowledgement_on_services",
-		"resourceLabel": "Acknowledge problems",
+		"resourceLabel": "Acknowledge Problems",
 		"resource": "acknowledgeProblems",
 		"summary": "Set acknowledgement on related services",
 		"method": "POST",
@@ -82,87 +82,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Set acknowledgement on related services"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.activate_changes.list_activations",
-		"resourceLabel": "Activate changes",
-		"resource": "activateChanges",
-		"summary": "Show all currently running activations",
-		"method": "GET",
-		"path": "/domain-types/activation_run/collections/running",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all currently running activations"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.activate_changes.list_pending_changes",
-		"resourceLabel": "Activate changes",
-		"resource": "activateChanges",
-		"summary": "Show all pending changes",
-		"method": "GET",
-		"path": "/domain-types/activation_run/collections/pending_changes",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all pending changes"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.activate_changes.show_activation",
-		"resourceLabel": "Activate changes",
-		"resource": "activateChanges",
-		"summary": "Show the activation status",
-		"method": "GET",
-		"path": "/objects/activation_run/{activation_id}",
-		"pathParameters": [
-			{
-				"name": "activation_id",
-				"kind": "string",
-				"required": true,
-				"description": "The activation-id.",
-				"example": "d3b07384d113e0ec49eaa6238ad5ff00"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show the activation status"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.activate_changes.activate_changes_wait_for_completion",
-		"resourceLabel": "Activate changes",
-		"resource": "activateChanges",
-		"summary": "Wait for activation completion",
-		"method": "GET",
-		"path": "/objects/activation_run/{activation_id}/actions/wait-for-completion/invoke",
-		"pathParameters": [
-			{
-				"name": "activation_id",
-				"kind": "string",
-				"required": true,
-				"description": "The activation-id.",
-				"example": "d3b07384d113e0ec49eaa6238ad5ff00"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Wait for activation completion"
+		"label": "Set Acknowledgement on Related Services"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.activate_changes.activate_changes",
-		"resourceLabel": "Activate changes",
+		"resourceLabel": "Activate Changes",
 		"resource": "activateChanges",
 		"summary": "Activate pending changes",
 		"method": "POST",
@@ -184,7 +108,83 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Activate pending changes"
+		"label": "Activate Pending Changes"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.activate_changes.show_activation",
+		"resourceLabel": "Activate Changes",
+		"resource": "activateChanges",
+		"summary": "Show the activation status",
+		"method": "GET",
+		"path": "/objects/activation_run/{activation_id}",
+		"pathParameters": [
+			{
+				"name": "activation_id",
+				"kind": "string",
+				"required": true,
+				"description": "The activation-id.",
+				"example": "d3b07384d113e0ec49eaa6238ad5ff00"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Activation Status"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.activate_changes.list_activations",
+		"resourceLabel": "Activate Changes",
+		"resource": "activateChanges",
+		"summary": "Show all currently running activations",
+		"method": "GET",
+		"path": "/domain-types/activation_run/collections/running",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Currently Running Activations"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.activate_changes.list_pending_changes",
+		"resourceLabel": "Activate Changes",
+		"resource": "activateChanges",
+		"summary": "Show all pending changes",
+		"method": "GET",
+		"path": "/domain-types/activation_run/collections/pending_changes",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Pending Changes"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.activate_changes.activate_changes_wait_for_completion",
+		"resourceLabel": "Activate Changes",
+		"resource": "activateChanges",
+		"summary": "Wait for activation completion",
+		"method": "GET",
+		"path": "/objects/activation_run/{activation_id}/actions/wait-for-completion/invoke",
+		"pathParameters": [
+			{
+				"name": "activation_id",
+				"kind": "string",
+				"required": true,
+				"description": "The activation-id.",
+				"example": "d3b07384d113e0ec49eaa6238ad5ff00"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Wait for Activation Completion"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.agent.download_agent",
@@ -212,11 +212,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Download agents shipped with Checkmk"
+		"label": "Download Agents Shipped with Checkmk"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.audit_log.get_all",
-		"resourceLabel": "Audit logs",
+		"resourceLabel": "Audit Logs",
 		"resource": "auditLogs",
 		"summary": "Get all audit log entries",
 		"method": "GET",
@@ -273,11 +273,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Get all audit log entries"
+		"label": "Get Many Audit Log Entries"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.audit_log.archive_logs",
-		"resourceLabel": "Audit logs",
+		"resourceLabel": "Audit Logs",
 		"resource": "auditLogs",
 		"summary": "Move audit log entries to archive",
 		"method": "POST",
@@ -288,7 +288,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Move audit log entries to archive"
+		"label": "Move Audit Log Entries to Archive"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.autocomplete.show",
@@ -322,45 +322,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Call the autocompleter specified in the url"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.aux_tags.show_aux_tag",
-		"resourceLabel": "Aux Tags",
-		"resource": "auxTags",
-		"summary": "Show an Auxiliary Tag",
-		"method": "GET",
-		"path": "/objects/aux_tag/{aux_tag_id}",
-		"pathParameters": [
-			{
-				"name": "aux_tag_id",
-				"kind": "string",
-				"required": true,
-				"description": "An auxiliary tag id",
-				"example": "ip-v4"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show an Auxiliary Tag"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.aux_tags.show_aux_tags",
-		"resourceLabel": "Aux Tags",
-		"resource": "auxTags",
-		"summary": "Show Auxiliary Tags",
-		"method": "GET",
-		"path": "/domain-types/aux_tag/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show Auxiliary Tags"
+		"label": "Call Autocompleter Specified in URL"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.aux_tags.create_aux_tag",
@@ -385,7 +347,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create an Auxiliary Tag"
+		"label": "Create Auxiliary Tag"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.aux_tags.delete_aux_tag",
@@ -408,7 +370,45 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Delete an Auxiliary Tag"
+		"label": "Delete Auxiliary Tag"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.aux_tags.show_aux_tag",
+		"resourceLabel": "Aux Tags",
+		"resource": "auxTags",
+		"summary": "Show an Auxiliary Tag",
+		"method": "GET",
+		"path": "/objects/aux_tag/{aux_tag_id}",
+		"pathParameters": [
+			{
+				"name": "aux_tag_id",
+				"kind": "string",
+				"required": true,
+				"description": "An auxiliary tag id",
+				"example": "ip-v4"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Auxiliary Tag"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.aux_tags.show_aux_tags",
+		"resourceLabel": "Aux Tags",
+		"resource": "auxTags",
+		"summary": "Show Auxiliary Tags",
+		"method": "GET",
+		"path": "/domain-types/aux_tag/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Auxiliary Tags"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.aux_tags.put_aux_tag",
@@ -440,7 +440,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update an aux tag"
+		"label": "Update Aux Tag"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.background_job.show_background_job_snapshot",
@@ -471,68 +471,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show the last status of a background job"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.broker_connection.delete_broker_connection",
-		"resourceLabel": "Broker Connection",
-		"resource": "brokerConnection",
-		"summary": "Delete a peer to peer broker connection",
-		"method": "DELETE",
-		"path": "/objects/broker_connection/{connection_id}",
-		"pathParameters": [
-			{
-				"name": "connection_id",
-				"kind": "string",
-				"required": true,
-				"description": "An unique connection id for the broker connection",
-				"example": "connection_1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a peer to peer broker connection"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.broker_connection.show_broker_connection",
-		"resourceLabel": "Broker Connection",
-		"resource": "brokerConnection",
-		"summary": "Show a peer to peer broker connection",
-		"method": "GET",
-		"path": "/objects/broker_connection/{connection_id}",
-		"pathParameters": [
-			{
-				"name": "connection_id",
-				"kind": "string",
-				"required": true,
-				"description": "An unique connection id for the broker connection",
-				"example": "connection_1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a peer to peer broker connection"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.broker_connection.show_broker_connections",
-		"resourceLabel": "Broker Connection",
-		"resource": "brokerConnection",
-		"summary": "Show all peer to peer broker connections",
-		"method": "GET",
-		"path": "/domain-types/broker_connection/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all peer to peer broker connections"
+		"label": "Get Last Status of Background Job"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.broker_connection.create_broker_connection",
@@ -562,7 +501,68 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a peer to peer broker connection"
+		"label": "Create Peer to Peer Broker Connection"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.broker_connection.delete_broker_connection",
+		"resourceLabel": "Broker Connection",
+		"resource": "brokerConnection",
+		"summary": "Delete a peer to peer broker connection",
+		"method": "DELETE",
+		"path": "/objects/broker_connection/{connection_id}",
+		"pathParameters": [
+			{
+				"name": "connection_id",
+				"kind": "string",
+				"required": true,
+				"description": "An unique connection id for the broker connection",
+				"example": "connection_1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Peer to Peer Broker Connection"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.broker_connection.show_broker_connections",
+		"resourceLabel": "Broker Connection",
+		"resource": "brokerConnection",
+		"summary": "Show all peer to peer broker connections",
+		"method": "GET",
+		"path": "/domain-types/broker_connection/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Peer to Peer Broker Connections"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.broker_connection.show_broker_connection",
+		"resourceLabel": "Broker Connection",
+		"resource": "brokerConnection",
+		"summary": "Show a peer to peer broker connection",
+		"method": "GET",
+		"path": "/objects/broker_connection/{connection_id}",
+		"pathParameters": [
+			{
+				"name": "connection_id",
+				"kind": "string",
+				"required": true,
+				"description": "An unique connection id for the broker connection",
+				"example": "connection_1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Peer to Peer Broker Connection"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.broker_connection.edit_broker_connection",
@@ -599,198 +599,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Edit a peer to peer broker connection"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.delete_bi_aggregation",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Delete a BI aggregation",
-		"method": "DELETE",
-		"path": "/objects/bi_aggregation/{aggregation_id}",
-		"pathParameters": [
-			{
-				"name": "aggregation_id",
-				"kind": "string",
-				"required": true,
-				"description": "The unique id for the aggregation",
-				"example": "aggregation1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a BI aggregation"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.delete_bi_pack",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Delete BI pack",
-		"method": "DELETE",
-		"path": "/objects/bi_pack/{pack_id}",
-		"pathParameters": [
-			{
-				"name": "pack_id",
-				"kind": "string",
-				"required": true,
-				"description": "The unique id for the aggregation pack",
-				"example": "pack1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete BI pack"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.delete_bi_rule",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Delete BI rule",
-		"method": "DELETE",
-		"path": "/objects/bi_rule/{rule_id}",
-		"pathParameters": [
-			{
-				"name": "rule_id",
-				"kind": "string",
-				"required": true,
-				"description": "The unique id for the rule",
-				"example": "rule1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete BI rule"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.get_bi_aggregation",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Get a BI aggregation",
-		"method": "GET",
-		"path": "/objects/bi_aggregation/{aggregation_id}",
-		"pathParameters": [
-			{
-				"name": "aggregation_id",
-				"kind": "string",
-				"required": true,
-				"description": "The unique id for the aggregation",
-				"example": "aggregation1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Get a BI aggregation"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.get_bi_pack",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Get a BI pack and its rules and aggregations",
-		"method": "GET",
-		"path": "/objects/bi_pack/{pack_id}",
-		"pathParameters": [
-			{
-				"name": "pack_id",
-				"kind": "string",
-				"required": true,
-				"description": "The unique id for the aggregation pack",
-				"example": "pack1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Get a BI pack and its rules and aggregations"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.bi_aggregation_state_get",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Get the state of BI aggregations",
-		"method": "GET",
-		"path": "/domain-types/bi_aggregation/actions/aggregation_state/invoke",
-		"pathParameters": [],
-		"queryParameters": [
-			{
-				"name": "filter_names",
-				"kind": "array",
-				"required": false,
-				"description": "Filter by names",
-				"example": [
-					"Host foo"
-				]
-			},
-			{
-				"name": "filter_groups",
-				"kind": "array",
-				"required": false,
-				"description": "Filter by group",
-				"example": [
-					"My Group"
-				]
-			}
-		],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Get the state of BI aggregations"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.get_bi_rule",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Show a BI rule",
-		"method": "GET",
-		"path": "/objects/bi_rule/{rule_id}",
-		"pathParameters": [
-			{
-				"name": "rule_id",
-				"kind": "string",
-				"required": true,
-				"description": "The unique id for the rule",
-				"example": "rule1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a BI rule"
-	},
-	{
-		"id": "cmk.gui.bi._openapi.get_bi_packs",
-		"resourceLabel": "Business intelligence (BI)",
-		"resource": "businessIntelligenceBI",
-		"summary": "Show all BI packs",
-		"method": "GET",
-		"path": "/domain-types/bi_pack/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all BI packs"
+		"label": "Update Peer to Peer Broker Connection"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.post_bi_aggregation",
-		"resourceLabel": "Business intelligence (BI)",
+		"resourceLabel": "Business Intelligence (BI)",
 		"resource": "businessIntelligenceBI",
 		"summary": "Create a BI aggregation",
 		"method": "POST",
@@ -858,11 +671,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a BI aggregation"
+		"label": "Create BI Aggregation"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.post_bi_pack",
-		"resourceLabel": "Business intelligence (BI)",
+		"resourceLabel": "Business Intelligence (BI)",
 		"resource": "businessIntelligenceBI",
 		"summary": "Create a new BI pack",
 		"method": "POST",
@@ -893,11 +706,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a new BI pack"
+		"label": "Create New BI Pack"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.post_bi_rule",
-		"resourceLabel": "Business intelligence (BI)",
+		"resourceLabel": "Business Intelligence (BI)",
 		"resource": "businessIntelligenceBI",
 		"summary": "Create a new BI rule",
 		"method": "POST",
@@ -950,11 +763,198 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a new BI rule"
+		"label": "Create New BI Rule"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.delete_bi_aggregation",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Delete a BI aggregation",
+		"method": "DELETE",
+		"path": "/objects/bi_aggregation/{aggregation_id}",
+		"pathParameters": [
+			{
+				"name": "aggregation_id",
+				"kind": "string",
+				"required": true,
+				"description": "The unique id for the aggregation",
+				"example": "aggregation1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete BI Aggregation"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.delete_bi_pack",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Delete BI pack",
+		"method": "DELETE",
+		"path": "/objects/bi_pack/{pack_id}",
+		"pathParameters": [
+			{
+				"name": "pack_id",
+				"kind": "string",
+				"required": true,
+				"description": "The unique id for the aggregation pack",
+				"example": "pack1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete BI Pack"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.delete_bi_rule",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Delete BI rule",
+		"method": "DELETE",
+		"path": "/objects/bi_rule/{rule_id}",
+		"pathParameters": [
+			{
+				"name": "rule_id",
+				"kind": "string",
+				"required": true,
+				"description": "The unique id for the rule",
+				"example": "rule1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete BI Rule"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.get_bi_aggregation",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Get a BI aggregation",
+		"method": "GET",
+		"path": "/objects/bi_aggregation/{aggregation_id}",
+		"pathParameters": [
+			{
+				"name": "aggregation_id",
+				"kind": "string",
+				"required": true,
+				"description": "The unique id for the aggregation",
+				"example": "aggregation1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get BI Aggregation"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.get_bi_pack",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Get a BI pack and its rules and aggregations",
+		"method": "GET",
+		"path": "/objects/bi_pack/{pack_id}",
+		"pathParameters": [
+			{
+				"name": "pack_id",
+				"kind": "string",
+				"required": true,
+				"description": "The unique id for the aggregation pack",
+				"example": "pack1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get BI Pack and Its Rules and Aggregations"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.get_bi_rule",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Show a BI rule",
+		"method": "GET",
+		"path": "/objects/bi_rule/{rule_id}",
+		"pathParameters": [
+			{
+				"name": "rule_id",
+				"kind": "string",
+				"required": true,
+				"description": "The unique id for the rule",
+				"example": "rule1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get BI Rule"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.get_bi_packs",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Show all BI packs",
+		"method": "GET",
+		"path": "/domain-types/bi_pack/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many BI Packs"
+	},
+	{
+		"id": "cmk.gui.bi._openapi.bi_aggregation_state_get",
+		"resourceLabel": "Business Intelligence (BI)",
+		"resource": "businessIntelligenceBI",
+		"summary": "Get the state of BI aggregations",
+		"method": "GET",
+		"path": "/domain-types/bi_aggregation/actions/aggregation_state/invoke",
+		"pathParameters": [],
+		"queryParameters": [
+			{
+				"name": "filter_names",
+				"kind": "array",
+				"required": false,
+				"description": "Filter by names",
+				"example": [
+					"Host foo"
+				]
+			},
+			{
+				"name": "filter_groups",
+				"kind": "array",
+				"required": false,
+				"description": "Filter by group",
+				"example": [
+					"My Group"
+				]
+			}
+		],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get State of BI Aggregations (GET)"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.bi_aggregation_state_post",
-		"resourceLabel": "Business intelligence (BI)",
+		"resourceLabel": "Business Intelligence (BI)",
 		"resource": "businessIntelligenceBI",
 		"summary": "Get the state of BI aggregations",
 		"method": "POST",
@@ -977,11 +977,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Get the state of BI aggregations"
+		"label": "Get State of BI Aggregations (POST)"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.put_bi_aggregation",
-		"resourceLabel": "Business intelligence (BI)",
+		"resourceLabel": "Business Intelligence (BI)",
 		"resource": "businessIntelligenceBI",
 		"summary": "Update an existing BI aggregation",
 		"method": "PUT",
@@ -1049,11 +1049,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update an existing BI aggregation"
+		"label": "Update Existing BI Aggregation"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.put_bi_pack",
-		"resourceLabel": "Business intelligence (BI)",
+		"resourceLabel": "Business Intelligence (BI)",
 		"resource": "businessIntelligenceBI",
 		"summary": "Update an existing BI pack",
 		"method": "PUT",
@@ -1084,11 +1084,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update an existing BI pack"
+		"label": "Update Existing BI Pack"
 	},
 	{
 		"id": "cmk.gui.bi._openapi.put_bi_rule",
-		"resourceLabel": "Business intelligence (BI)",
+		"resourceLabel": "Business Intelligence (BI)",
 		"resource": "businessIntelligenceBI",
 		"summary": "Update an existing BI rule",
 		"method": "PUT",
@@ -1141,7 +1141,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update an existing BI rule"
+		"label": "Update Existing BI Rule"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.cert.agent_controller_certificates_settings",
@@ -1156,22 +1156,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show agent controller certificate settings"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.cert.root_cert",
-		"resourceLabel": "Certificates",
-		"resource": "certificates",
-		"summary": "X.509 PEM-encoded root certificate",
-		"method": "GET",
-		"path": "/root_cert",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET X.509 PEM-encoded root certificate"
+		"label": "Get Agent Controller Certificate Settings"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.cert.make_certificate",
@@ -1193,7 +1178,97 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST X.509 PEM-encoded Certificate Signing Requests (CSRs)"
+		"label": "X.509 PEM-encoded Certificate Signing Requests (CSRs)"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.cert.root_cert",
+		"resourceLabel": "Certificates",
+		"resource": "certificates",
+		"summary": "X.509 PEM-encoded root certificate",
+		"method": "GET",
+		"path": "/root_cert",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "X.509 PEM-encoded Root Certificate"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.comment.create_host_comment",
+		"resourceLabel": "Comments",
+		"resource": "comments",
+		"summary": "Create a host comment",
+		"method": "POST",
+		"path": "/domain-types/comment/collections/host",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateHostRelatedComment",
+			"example": {
+				"comment": "Windows",
+				"persistent": false,
+				"comment_type": "host",
+				"host_name": "example.com"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Host Comment"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.comment.create_service_comment",
+		"resourceLabel": "Comments",
+		"resource": "comments",
+		"summary": "Create a service comment",
+		"method": "POST",
+		"path": "/domain-types/comment/collections/service",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateServiceRelatedComment",
+			"example": {
+				"comment": "Windows",
+				"persistent": false,
+				"comment_type": "service",
+				"host_name": "example.com",
+				"service_description": "Memory"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Service Comment"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.comment.delete_comments",
+		"resourceLabel": "Comments",
+		"resource": "comments",
+		"summary": "Delete comments",
+		"method": "POST",
+		"path": "/domain-types/comment/actions/delete/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/DeleteComments",
+			"example": {
+				"delete_type": "delete_by_query",
+				"comment_id": 21,
+				"site_id": "production"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Comments"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.comment.show_comment",
@@ -1224,7 +1299,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show a comment"
+		"label": "Get Comment"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.comment.show_comments",
@@ -1280,86 +1355,35 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Show comments"
+		"label": "Get Comments"
 	},
 	{
-		"id": "cmk.gui.openapi.endpoints.comment.create_host_comment",
-		"resourceLabel": "Comments",
-		"resource": "comments",
-		"summary": "Create a host comment",
+		"id": "cmk.gui.openapi.endpoints.configuration_entity._create_configuration_entity",
+		"resourceLabel": "Configuration Entities",
+		"resource": "configurationEntities",
+		"summary": "Create a configuration entity",
 		"method": "POST",
-		"path": "/domain-types/comment/collections/host",
+		"path": "/domain-types/configuration_entity/collections/all",
 		"pathParameters": [],
 		"queryParameters": [],
 		"headerParameters": [],
 		"requestBody": {
 			"required": true,
-			"schemaRef": "#/components/schemas/CreateHostRelatedComment",
+			"schemaRef": "#/components/schemas/CreateConfigurationEntity",
 			"example": {
-				"comment": "Windows",
-				"persistent": false,
-				"comment_type": "host",
-				"host_name": "example.com"
+				"entity_type": "notification_parameter",
+				"entity_type_specifier": "mail",
+				"data": {}
 			}
 		},
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a host comment"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.comment.create_service_comment",
-		"resourceLabel": "Comments",
-		"resource": "comments",
-		"summary": "Create a service comment",
-		"method": "POST",
-		"path": "/domain-types/comment/collections/service",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateServiceRelatedComment",
-			"example": {
-				"comment": "Windows",
-				"persistent": false,
-				"comment_type": "service",
-				"host_name": "example.com",
-				"service_description": "Memory"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a service comment"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.comment.delete_comments",
-		"resourceLabel": "Comments",
-		"resource": "comments",
-		"summary": "Delete comments",
-		"method": "POST",
-		"path": "/domain-types/comment/actions/delete/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/DeleteComments",
-			"example": {
-				"delete_type": "delete_by_query",
-				"comment_id": 21,
-				"site_id": "production"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Delete comments"
+		"label": "Create Configuration Entity"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity._get_configuration_entity_form_spec_schema",
-		"resourceLabel": "Configuration entities",
+		"resourceLabel": "Configuration Entities",
 		"resource": "configurationEntities",
 		"summary": "Get a configuration entity form spec schema",
 		"method": "GET",
@@ -1391,35 +1415,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Get a configuration entity form spec schema"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.configuration_entity._create_configuration_entity",
-		"resourceLabel": "Configuration entities",
-		"resource": "configurationEntities",
-		"summary": "Create a configuration entity",
-		"method": "POST",
-		"path": "/domain-types/configuration_entity/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateConfigurationEntity",
-			"example": {
-				"entity_type": "notification_parameter",
-				"entity_type_specifier": "mail",
-				"data": {}
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a configuration entity"
+		"label": "Get Configuration Entity Form Spec Schema"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity._update_configuration_entity",
-		"resourceLabel": "Configuration entities",
+		"resourceLabel": "Configuration Entities",
 		"resource": "configurationEntities",
 		"summary": "Update an existing configuration entity",
 		"method": "PUT",
@@ -1440,11 +1440,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update an existing configuration entity"
+		"label": "Update Existing Configuration Entity"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.folder._list_folder",
-		"resourceLabel": "Configuration entities / Folder",
+		"resourceLabel": "Configuration Entities / Folder",
 		"resource": "configurationEntitiesFolder",
 		"summary": "List existing folder",
 		"method": "GET",
@@ -1463,11 +1463,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET List existing folder"
+		"label": "List Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.notification_parameter._get_notification_parameter",
-		"resourceLabel": "Configuration entities / Notification Parameter",
+		"resourceLabel": "Configuration Entities / Notification Parameter",
 		"resource": "configurationEntitiesNotificationParameter",
 		"summary": "Get a notification parameter",
 		"method": "GET",
@@ -1486,11 +1486,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Get a notification parameter"
+		"label": "Get Notification Parameter"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.notification_parameter._list_notification_parameters",
-		"resourceLabel": "Configuration entities / Notification Parameter",
+		"resourceLabel": "Configuration Entities / Notification Parameter",
 		"resource": "configurationEntitiesNotificationParameter",
 		"summary": "List existing notification parameters",
 		"method": "GET",
@@ -1509,11 +1509,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET List existing notification parameters"
+		"label": "List Notification Parameters"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.configuration_entity.passwordstore_password._list_passwordstore_passwords",
-		"resourceLabel": "Configuration entities / Passwordstore Password",
+		"resourceLabel": "Configuration Entities / Passwordstore Password",
 		"resource": "configurationEntitiesPasswordstorePassword",
 		"summary": "List existing passwordstore passwords",
 		"method": "GET",
@@ -1532,72 +1532,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET List existing passwordstore passwords"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.contact_group_config.delete",
-		"resourceLabel": "Contact groups",
-		"resource": "contactGroups",
-		"summary": "Delete a contact group",
-		"method": "DELETE",
-		"path": "/objects/contact_group_config/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "The identifier name of the group.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a contact group"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.contact_group_config.show",
-		"resourceLabel": "Contact groups",
-		"resource": "contactGroups",
-		"summary": "Show a contact group",
-		"method": "GET",
-		"path": "/objects/contact_group_config/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "The identifier name of the group.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a contact group"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.contact_group_config.list_group",
-		"resourceLabel": "Contact groups",
-		"resource": "contactGroups",
-		"summary": "Show all contact groups",
-		"method": "GET",
-		"path": "/domain-types/contact_group_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all contact groups"
+		"label": "List Passwordstore Passwords"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.bulk_create",
-		"resourceLabel": "Contact groups",
+		"resourceLabel": "Contact Groups",
 		"resource": "contactGroups",
 		"summary": "Bulk create contact groups",
 		"method": "POST",
@@ -1620,11 +1559,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Bulk create contact groups"
+		"label": "Bulk Create Contact Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.bulk_delete",
-		"resourceLabel": "Contact groups",
+		"resourceLabel": "Contact Groups",
 		"resource": "contactGroups",
 		"summary": "Bulk delete contact groups",
 		"method": "POST",
@@ -1645,37 +1584,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Bulk delete contact groups"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.contact_group_config.create",
-		"resourceLabel": "Contact groups",
-		"resource": "contactGroups",
-		"summary": "Create a contact group",
-		"method": "POST",
-		"path": "/domain-types/contact_group_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/InputContactGroup",
-			"example": {
-				"name": "OnCall",
-				"alias": "Not on Sundays.",
-				"inventory_paths": {
-					"type": "allow_all"
-				}
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a contact group"
+		"label": "Bulk Delete Contact Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.bulk_update",
-		"resourceLabel": "Contact groups",
+		"resourceLabel": "Contact Groups",
 		"resource": "contactGroups",
 		"summary": "Bulk update contact groups",
 		"method": "PUT",
@@ -1700,11 +1613,98 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Bulk update contact groups"
+		"label": "Bulk Update Contact Groups"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.contact_group_config.create",
+		"resourceLabel": "Contact Groups",
+		"resource": "contactGroups",
+		"summary": "Create a contact group",
+		"method": "POST",
+		"path": "/domain-types/contact_group_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/InputContactGroup",
+			"example": {
+				"name": "OnCall",
+				"alias": "Not on Sundays.",
+				"inventory_paths": {
+					"type": "allow_all"
+				}
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Contact Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.contact_group_config.delete",
+		"resourceLabel": "Contact Groups",
+		"resource": "contactGroups",
+		"summary": "Delete a contact group",
+		"method": "DELETE",
+		"path": "/objects/contact_group_config/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "The identifier name of the group.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Contact Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.contact_group_config.show",
+		"resourceLabel": "Contact Groups",
+		"resource": "contactGroups",
+		"summary": "Show a contact group",
+		"method": "GET",
+		"path": "/objects/contact_group_config/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "The identifier name of the group.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Contact Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.contact_group_config.list_group",
+		"resourceLabel": "Contact Groups",
+		"resource": "contactGroups",
+		"summary": "Show all contact groups",
+		"method": "GET",
+		"path": "/domain-types/contact_group_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Contact Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.contact_group_config.update",
-		"resourceLabel": "Contact groups",
+		"resourceLabel": "Contact Groups",
 		"resource": "contactGroups",
 		"summary": "Update a contact group",
 		"method": "PUT",
@@ -1733,7 +1733,122 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a contact group"
+		"label": "Update Contact Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.downtime.create_host_related_downtime",
+		"resourceLabel": "Downtimes",
+		"resource": "downtimes",
+		"summary": "Create a host related scheduled downtime",
+		"method": "POST",
+		"path": "/domain-types/downtime/collections/host",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateHostRelatedDowntime",
+			"example": {
+				"start_time": "2017-07-21T17:32:28Z",
+				"end_time": "2017-07-21T17:32:28Z",
+				"recur": "hour",
+				"duration": 60,
+				"comment": "Security updates",
+				"downtime_type": "host",
+				"host_name": "example.com"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Host Related Scheduled Downtime"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.downtime.create_service_related_downtime",
+		"resourceLabel": "Downtimes",
+		"resource": "downtimes",
+		"summary": "Create a service related scheduled downtime",
+		"method": "POST",
+		"path": "/domain-types/downtime/collections/service",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateServiceRelatedDowntime",
+			"example": {
+				"start_time": "2017-07-21T17:32:28Z",
+				"end_time": "2017-07-21T17:32:28Z",
+				"recur": "hour",
+				"duration": 60,
+				"comment": "Security updates",
+				"downtime_type": "service",
+				"host_name": "example.com",
+				"service_descriptions": [
+					"CPU utilization",
+					"Memory"
+				]
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Service Related Scheduled Downtime"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.downtime.delete_downtime",
+		"resourceLabel": "Downtimes",
+		"resource": "downtimes",
+		"summary": "Delete a scheduled downtime",
+		"method": "POST",
+		"path": "/domain-types/downtime/actions/delete/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/DeleteDowntime",
+			"example": {
+				"delete_type": "params",
+				"site_id": "mysite",
+				"downtime_id": "54"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Scheduled Downtime"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.downtime.show_downtime",
+		"resourceLabel": "Downtimes",
+		"resource": "downtimes",
+		"summary": "Show downtime",
+		"method": "GET",
+		"path": "/objects/downtime/{downtime_id}",
+		"pathParameters": [
+			{
+				"name": "downtime_id",
+				"kind": "string",
+				"required": true,
+				"description": "The id of the downtime",
+				"example": "54"
+			}
+		],
+		"queryParameters": [
+			{
+				"name": "site_id",
+				"kind": "string",
+				"required": true,
+				"description": "An existing site id",
+				"example": "mysite"
+			}
+		],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Downtime"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.show_downtimes",
@@ -1789,122 +1904,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Show all scheduled downtimes"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.downtime.show_downtime",
-		"resourceLabel": "Downtimes",
-		"resource": "downtimes",
-		"summary": "Show downtime",
-		"method": "GET",
-		"path": "/objects/downtime/{downtime_id}",
-		"pathParameters": [
-			{
-				"name": "downtime_id",
-				"kind": "string",
-				"required": true,
-				"description": "The id of the downtime",
-				"example": "54"
-			}
-		],
-		"queryParameters": [
-			{
-				"name": "site_id",
-				"kind": "string",
-				"required": true,
-				"description": "An existing site id",
-				"example": "mysite"
-			}
-		],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show downtime"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.downtime.create_host_related_downtime",
-		"resourceLabel": "Downtimes",
-		"resource": "downtimes",
-		"summary": "Create a host related scheduled downtime",
-		"method": "POST",
-		"path": "/domain-types/downtime/collections/host",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateHostRelatedDowntime",
-			"example": {
-				"start_time": "2017-07-21T17:32:28Z",
-				"end_time": "2017-07-21T17:32:28Z",
-				"recur": "hour",
-				"duration": 60,
-				"comment": "Security updates",
-				"downtime_type": "host",
-				"host_name": "example.com"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a host related scheduled downtime"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.downtime.create_service_related_downtime",
-		"resourceLabel": "Downtimes",
-		"resource": "downtimes",
-		"summary": "Create a service related scheduled downtime",
-		"method": "POST",
-		"path": "/domain-types/downtime/collections/service",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateServiceRelatedDowntime",
-			"example": {
-				"start_time": "2017-07-21T17:32:28Z",
-				"end_time": "2017-07-21T17:32:28Z",
-				"recur": "hour",
-				"duration": 60,
-				"comment": "Security updates",
-				"downtime_type": "service",
-				"host_name": "example.com",
-				"service_descriptions": [
-					"CPU utilization",
-					"Memory"
-				]
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a service related scheduled downtime"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.downtime.delete_downtime",
-		"resourceLabel": "Downtimes",
-		"resource": "downtimes",
-		"summary": "Delete a scheduled downtime",
-		"method": "POST",
-		"path": "/domain-types/downtime/actions/delete/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/DeleteDowntime",
-			"example": {
-				"delete_type": "params",
-				"site_id": "mysite",
-				"downtime_id": "54"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Delete a scheduled downtime"
+		"label": "Get Many Scheduled Downtimes"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.downtime.modify_host_downtime",
@@ -1933,7 +1933,87 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Modify a scheduled downtime"
+		"label": "Update Scheduled Downtime"
+	},
+	{
+		"id": "cmk.gui.mkeventd._openapi.archive_events_with_filter",
+		"resourceLabel": "Event Console",
+		"resource": "eventConsole",
+		"summary": "Archive events",
+		"method": "POST",
+		"path": "/domain-types/event_console/actions/delete/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/DeleteECEvents",
+			"example": {
+				"filter_type": "by_id",
+				"site_id": "mysite",
+				"event_id": 1
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Archive Events"
+	},
+	{
+		"id": "cmk.gui.mkeventd._openapi.change_event_state",
+		"resourceLabel": "Event Console",
+		"resource": "eventConsole",
+		"summary": "Change event state",
+		"method": "POST",
+		"path": "/objects/event_console/{event_id}/actions/change_state/invoke",
+		"pathParameters": [
+			{
+				"name": "event_id",
+				"kind": "string",
+				"required": true,
+				"description": "The event console event ID.",
+				"example": "1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/ChangeEventState",
+			"example": {
+				"site_id": "mysite",
+				"new_state": "ok"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Change Event State"
+	},
+	{
+		"id": "cmk.gui.mkeventd._openapi.change_multiple_event_states",
+		"resourceLabel": "Event Console",
+		"resource": "eventConsole",
+		"summary": "Change multiple event states",
+		"method": "POST",
+		"path": "/domain-types/event_console/actions/change_state/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/ChangeEventStateSelector",
+			"example": {
+				"filter_type": "params",
+				"site_id": "mysite",
+				"new_state": "ok",
+				"query": "{\"op\": \"=\", \"left\": \"eventconsoleevents.event_host\", \"right\": \"test_host\"}"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Change Multiple Event States"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.show_event",
@@ -1964,7 +2044,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show an event"
+		"label": "Get Event"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.show_events",
@@ -2031,87 +2111,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Show events"
-	},
-	{
-		"id": "cmk.gui.mkeventd._openapi.archive_events_with_filter",
-		"resourceLabel": "Event Console",
-		"resource": "eventConsole",
-		"summary": "Archive events",
-		"method": "POST",
-		"path": "/domain-types/event_console/actions/delete/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/DeleteECEvents",
-			"example": {
-				"filter_type": "by_id",
-				"site_id": "mysite",
-				"event_id": 1
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Archive events"
-	},
-	{
-		"id": "cmk.gui.mkeventd._openapi.change_event_state",
-		"resourceLabel": "Event Console",
-		"resource": "eventConsole",
-		"summary": "Change event state",
-		"method": "POST",
-		"path": "/objects/event_console/{event_id}/actions/change_state/invoke",
-		"pathParameters": [
-			{
-				"name": "event_id",
-				"kind": "string",
-				"required": true,
-				"description": "The event console event ID.",
-				"example": "1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/ChangeEventState",
-			"example": {
-				"site_id": "mysite",
-				"new_state": "ok"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Change event state"
-	},
-	{
-		"id": "cmk.gui.mkeventd._openapi.change_multiple_event_states",
-		"resourceLabel": "Event Console",
-		"resource": "eventConsole",
-		"summary": "Change multiple event states",
-		"method": "POST",
-		"path": "/domain-types/event_console/actions/change_state/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/ChangeEventStateSelector",
-			"example": {
-				"filter_type": "params",
-				"site_id": "mysite",
-				"new_state": "ok",
-				"query": "{\"op\": \"=\", \"left\": \"eventconsoleevents.event_host\", \"right\": \"test_host\"}"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Change multiple event states"
+		"label": "Get Events"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.update_and_acknowledge_event",
@@ -2144,7 +2144,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Update and acknowledge an event"
+		"label": "Update and Acknowledge Event"
 	},
 	{
 		"id": "cmk.gui.mkeventd._openapi.update_and_acknowledge_multiple_events",
@@ -2171,7 +2171,62 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Update and acknowledge events"
+		"label": "Update and Acknowledge Events"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.folder_config.bulk_update",
+		"resourceLabel": "Folders",
+		"resource": "folders",
+		"summary": "Bulk update folders",
+		"method": "PUT",
+		"path": "/domain-types/folder_config/actions/bulk-update/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/BulkUpdateFolder",
+			"example": {
+				"entries": [
+					{
+						"remove_attributes": [
+							"tag_foobar"
+						]
+					}
+				]
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Bulk Update Folders"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.folder_config.create",
+		"resourceLabel": "Folders",
+		"resource": "folders",
+		"summary": "Create a folder",
+		"method": "POST",
+		"path": "/domain-types/folder_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateFolder",
+			"example": {
+				"name": "production",
+				"title": "Production Hosts",
+				"parent": "/",
+				"attributes": {
+					"tag_criticality": "prod"
+				}
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.delete",
@@ -2207,7 +2262,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "DELETE Delete a folder"
+		"label": "Delete Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.show_folder",
@@ -2239,7 +2294,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show a folder"
+		"label": "Get Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.list_folders",
@@ -2278,7 +2333,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Show all folders"
+		"label": "Get Many Folders"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.hosts_of_folder",
@@ -2310,34 +2365,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Show all hosts in a folder"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.folder_config.create",
-		"resourceLabel": "Folders",
-		"resource": "folders",
-		"summary": "Create a folder",
-		"method": "POST",
-		"path": "/domain-types/folder_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateFolder",
-			"example": {
-				"name": "production",
-				"title": "Production Hosts",
-				"parent": "/",
-				"attributes": {
-					"tag_criticality": "prod"
-				}
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a folder"
+		"label": "Get Many Hosts in Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.move",
@@ -2367,35 +2395,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Move a folder"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.folder_config.bulk_update",
-		"resourceLabel": "Folders",
-		"resource": "folders",
-		"summary": "Bulk update folders",
-		"method": "PUT",
-		"path": "/domain-types/folder_config/actions/bulk-update/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/BulkUpdateFolder",
-			"example": {
-				"entries": [
-					{
-						"remove_attributes": [
-							"tag_foobar"
-						]
-					}
-				]
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "PUT Bulk update folders"
+		"label": "Move Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.folder_config.update",
@@ -2434,72 +2434,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a folder"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_group_config.delete",
-		"resourceLabel": "Host groups",
-		"resource": "hostGroups",
-		"summary": "Delete a host group",
-		"method": "DELETE",
-		"path": "/objects/host_group_config/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "The identifier name of the group.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a host group"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_group_config.get",
-		"resourceLabel": "Host groups",
-		"resource": "hostGroups",
-		"summary": "Show a host group",
-		"method": "GET",
-		"path": "/objects/host_group_config/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "The identifier name of the group.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a host group"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_group_config.list_groups",
-		"resourceLabel": "Host groups",
-		"resource": "hostGroups",
-		"summary": "Show all host groups",
-		"method": "GET",
-		"path": "/domain-types/host_group_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all host groups"
+		"label": "Update Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.bulk_create",
-		"resourceLabel": "Host groups",
+		"resourceLabel": "Host Groups",
 		"resource": "hostGroups",
 		"summary": "Bulk create host groups",
 		"method": "POST",
@@ -2522,11 +2461,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Bulk create host groups"
+		"label": "Bulk Create Host Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.bulk_delete",
-		"resourceLabel": "Host groups",
+		"resourceLabel": "Host Groups",
 		"resource": "hostGroups",
 		"summary": "Bulk delete host groups",
 		"method": "POST",
@@ -2547,34 +2486,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Bulk delete host groups"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_group_config.create",
-		"resourceLabel": "Host groups",
-		"resource": "hostGroups",
-		"summary": "Create a host group",
-		"method": "POST",
-		"path": "/domain-types/host_group_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/InputHostGroup",
-			"example": {
-				"name": "windows",
-				"alias": "Windows Servers"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a host group"
+		"label": "Bulk Delete Host Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.bulk_update",
-		"resourceLabel": "Host groups",
+		"resourceLabel": "Host Groups",
 		"resource": "hostGroups",
 		"summary": "Bulk update host groups",
 		"method": "PUT",
@@ -2599,11 +2515,95 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Bulk update host groups"
+		"label": "Bulk Update Host Groups"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_group_config.create",
+		"resourceLabel": "Host Groups",
+		"resource": "hostGroups",
+		"summary": "Create a host group",
+		"method": "POST",
+		"path": "/domain-types/host_group_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/InputHostGroup",
+			"example": {
+				"name": "windows",
+				"alias": "Windows Servers"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Host Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_group_config.delete",
+		"resourceLabel": "Host Groups",
+		"resource": "hostGroups",
+		"summary": "Delete a host group",
+		"method": "DELETE",
+		"path": "/objects/host_group_config/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "The identifier name of the group.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Host Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_group_config.get",
+		"resourceLabel": "Host Groups",
+		"resource": "hostGroups",
+		"summary": "Show a host group",
+		"method": "GET",
+		"path": "/objects/host_group_config/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "The identifier name of the group.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Host Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_group_config.list_groups",
+		"resourceLabel": "Host Groups",
+		"resource": "hostGroups",
+		"summary": "Show all host groups",
+		"method": "GET",
+		"path": "/domain-types/host_group_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Host Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_group_config.update",
-		"resourceLabel": "Host groups",
+		"resourceLabel": "Host Groups",
 		"resource": "hostGroups",
 		"summary": "Update a host group",
 		"method": "PUT",
@@ -2629,11 +2629,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a host group"
+		"label": "Update Host Group"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host.show_host",
-		"resourceLabel": "Host status",
+		"resourceLabel": "Host Status",
 		"resource": "hostStatus",
 		"summary": "Show host",
 		"method": "GET",
@@ -2665,11 +2665,39 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show host"
+		"label": "Get Host"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host.list_hosts",
+		"resourceLabel": "Host Status",
+		"resource": "hostStatus",
+		"summary": "Show hosts of specific condition",
+		"method": "POST",
+		"path": "/domain-types/host/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/HostParameters",
+			"example": {
+				"sites": [
+					"mysite"
+				],
+				"query": "{\"op\": \"and\", \"expr\": [{\"op\": \"=\", \"left\": \"name\", \"right\": \"example.com\"}, {\"op\": \"!=\", \"left\": \"state\", \"right\": \"0\"}]}",
+				"columns": [
+					"name"
+				]
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Hosts of Specific Condition"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host.list_hosts_deprecated-17003",
-		"resourceLabel": "Host status",
+		"resourceLabel": "Host Status",
 		"resource": "hostStatus",
 		"summary": "Show hosts of specific condition",
 		"method": "GET",
@@ -2709,39 +2737,42 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": true,
-		"label": "GET Show hosts of specific condition (deprecated)"
+		"label": "Get Hosts of Specific Condition (deprecated)"
 	},
 	{
-		"id": "cmk.gui.openapi.endpoints.host.list_hosts",
-		"resourceLabel": "Host status",
-		"resource": "hostStatus",
-		"summary": "Show hosts of specific condition",
+		"id": "cmk.gui.openapi.endpoints.host_tag_group.create_host_tag_group",
+		"resourceLabel": "Host Tag Groups",
+		"resource": "hostTagGroups",
+		"summary": "Create a host tag group",
 		"method": "POST",
-		"path": "/domain-types/host/collections/all",
+		"path": "/domain-types/host_tag_group/collections/all",
 		"pathParameters": [],
 		"queryParameters": [],
 		"headerParameters": [],
 		"requestBody": {
 			"required": true,
-			"schemaRef": "#/components/schemas/HostParameters",
+			"schemaRef": "#/components/schemas/InputHostTagGroup",
 			"example": {
-				"sites": [
-					"mysite"
-				],
-				"query": "{\"op\": \"and\", \"expr\": [{\"op\": \"=\", \"left\": \"name\", \"right\": \"example.com\"}, {\"op\": \"!=\", \"left\": \"state\", \"right\": \"0\"}]}",
-				"columns": [
-					"name"
+				"id": "group_id",
+				"title": "Kubernetes",
+				"topic": "Data Sources",
+				"help": "Kubernetes Pods",
+				"tags": [
+					{
+						"id": "pod",
+						"title": "Pod"
+					}
 				]
 			}
 		},
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Show hosts of specific condition"
+		"label": "Create Host Tag Group"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.delete_host_tag_group",
-		"resourceLabel": "Host tag groups",
+		"resourceLabel": "Host Tag Groups",
 		"resource": "hostTagGroups",
 		"summary": "Delete a host tag group",
 		"method": "DELETE",
@@ -2783,11 +2814,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "DELETE Delete a host tag group"
+		"label": "Delete Host Tag Group"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.show_host_tag_group",
-		"resourceLabel": "Host tag groups",
+		"resourceLabel": "Host Tag Groups",
 		"resource": "hostTagGroups",
 		"summary": "Show a host tag group",
 		"method": "GET",
@@ -2806,11 +2837,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show a host tag group"
+		"label": "Get Host Tag Group"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.list_host_tag_groups",
-		"resourceLabel": "Host tag groups",
+		"resourceLabel": "Host Tag Groups",
 		"resource": "hostTagGroups",
 		"summary": "Show all host tag groups",
 		"method": "GET",
@@ -2821,42 +2852,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Show all host tag groups"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_tag_group.create_host_tag_group",
-		"resourceLabel": "Host tag groups",
-		"resource": "hostTagGroups",
-		"summary": "Create a host tag group",
-		"method": "POST",
-		"path": "/domain-types/host_tag_group/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/InputHostTagGroup",
-			"example": {
-				"id": "group_id",
-				"title": "Kubernetes",
-				"topic": "Data Sources",
-				"help": "Kubernetes Pods",
-				"tags": [
-					{
-						"id": "pod",
-						"title": "Pod"
-					}
-				]
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a host tag group"
+		"label": "Get Many Host Tag Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_tag_group.update_host_tag_group",
-		"resourceLabel": "Host tag groups",
+		"resourceLabel": "Host Tag Groups",
 		"resource": "hostTagGroups",
 		"summary": "Update a host tag group",
 		"method": "PUT",
@@ -2891,7 +2891,171 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a host tag group"
+		"label": "Update Host Tag Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_config.bulk_create_hosts",
+		"resourceLabel": "Hosts",
+		"resource": "hosts",
+		"summary": "Bulk create hosts",
+		"method": "POST",
+		"path": "/domain-types/host_config/actions/bulk-create/invoke",
+		"pathParameters": [],
+		"queryParameters": [
+			{
+				"name": "bake_agent",
+				"kind": "boolean",
+				"required": false,
+				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
+				"example": false,
+				"defaultValue": false
+			}
+		],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/BulkCreateHost",
+			"example": {
+				"entries": [
+					{
+						"host_name": "example.com",
+						"folder": "/",
+						"attributes": {}
+					}
+				]
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Bulk Create Hosts"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_config.bulk_delete",
+		"resourceLabel": "Hosts",
+		"resource": "hosts",
+		"summary": "Bulk delete hosts",
+		"method": "POST",
+		"path": "/domain-types/host_config/actions/bulk-delete/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/BulkDeleteHost",
+			"example": {
+				"entries": [
+					"example",
+					"sample"
+				]
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Bulk Delete Hosts"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_config.bulk_update_hosts",
+		"resourceLabel": "Hosts",
+		"resource": "hosts",
+		"summary": "Bulk update hosts",
+		"method": "PUT",
+		"path": "/domain-types/host_config/actions/bulk-update/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/BulkUpdateHost",
+			"example": {
+				"entries": [
+					{
+						"host_name": "example.com",
+						"attributes": {}
+					}
+				]
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Bulk Update Hosts"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_config.create_cluster_host",
+		"resourceLabel": "Hosts",
+		"resource": "hosts",
+		"summary": "Create a cluster host",
+		"method": "POST",
+		"path": "/domain-types/host_config/collections/clusters",
+		"pathParameters": [],
+		"queryParameters": [
+			{
+				"name": "bake_agent",
+				"kind": "boolean",
+				"required": false,
+				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
+				"example": false,
+				"defaultValue": false
+			}
+		],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateClusterHost",
+			"example": {
+				"host_name": "example.com",
+				"folder": "/",
+				"attributes": {
+					"ipaddress": "192.168.0.123"
+				},
+				"nodes": [
+					"host1",
+					"host2",
+					"host3"
+				]
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Cluster Host"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_config.create_host",
+		"resourceLabel": "Hosts",
+		"resource": "hosts",
+		"summary": "Create a host",
+		"method": "POST",
+		"path": "/domain-types/host_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [
+			{
+				"name": "bake_agent",
+				"kind": "boolean",
+				"required": false,
+				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
+				"example": false,
+				"defaultValue": false
+			}
+		],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/CreateHost",
+			"example": {
+				"host_name": "example.com",
+				"folder": "/",
+				"attributes": {
+					"ipaddress": "192.168.0.123"
+				}
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.delete",
@@ -2914,7 +3078,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "DELETE Delete a host"
+		"label": "Delete Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.show_host",
@@ -2946,7 +3110,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show a host"
+		"label": "Get Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.list_hosts",
@@ -3002,159 +3166,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Show all hosts"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_config.renaming_job_wait_for_completion",
-		"resourceLabel": "Hosts",
-		"resource": "hosts",
-		"summary": "Wait for renaming process completion",
-		"method": "GET",
-		"path": "/domain-types/host_config/actions/wait-for-completion/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Wait for renaming process completion"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_config.bulk_create_hosts",
-		"resourceLabel": "Hosts",
-		"resource": "hosts",
-		"summary": "Bulk create hosts",
-		"method": "POST",
-		"path": "/domain-types/host_config/actions/bulk-create/invoke",
-		"pathParameters": [],
-		"queryParameters": [
-			{
-				"name": "bake_agent",
-				"kind": "boolean",
-				"required": false,
-				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
-				"example": false,
-				"defaultValue": false
-			}
-		],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/BulkCreateHost",
-			"example": {
-				"entries": [
-					{
-						"host_name": "example.com",
-						"folder": "/",
-						"attributes": {}
-					}
-				]
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Bulk create hosts"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_config.bulk_delete",
-		"resourceLabel": "Hosts",
-		"resource": "hosts",
-		"summary": "Bulk delete hosts",
-		"method": "POST",
-		"path": "/domain-types/host_config/actions/bulk-delete/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/BulkDeleteHost",
-			"example": {
-				"entries": [
-					"example",
-					"sample"
-				]
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Bulk delete hosts"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_config.create_cluster_host",
-		"resourceLabel": "Hosts",
-		"resource": "hosts",
-		"summary": "Create a cluster host",
-		"method": "POST",
-		"path": "/domain-types/host_config/collections/clusters",
-		"pathParameters": [],
-		"queryParameters": [
-			{
-				"name": "bake_agent",
-				"kind": "boolean",
-				"required": false,
-				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
-				"example": false,
-				"defaultValue": false
-			}
-		],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateClusterHost",
-			"example": {
-				"host_name": "example.com",
-				"folder": "/",
-				"attributes": {
-					"ipaddress": "192.168.0.123"
-				},
-				"nodes": [
-					"host1",
-					"host2",
-					"host3"
-				]
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a cluster host"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_config.create_host",
-		"resourceLabel": "Hosts",
-		"resource": "hosts",
-		"summary": "Create a host",
-		"method": "POST",
-		"path": "/domain-types/host_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [
-			{
-				"name": "bake_agent",
-				"kind": "boolean",
-				"required": false,
-				"description": "Tries to bake the agents for the just created hosts. This process is started in the background after configuring the host. Please note that the backing may take some time and might block subsequent API calls. This only works when using the…",
-				"example": false,
-				"defaultValue": false
-			}
-		],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/CreateHost",
-			"example": {
-				"host_name": "example.com",
-				"folder": "/",
-				"attributes": {
-					"ipaddress": "192.168.0.123"
-				}
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a host"
+		"label": "Get Many Hosts"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.move",
@@ -3184,34 +3196,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Move a host to another folder"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.host_config.bulk_update_hosts",
-		"resourceLabel": "Hosts",
-		"resource": "hosts",
-		"summary": "Bulk update hosts",
-		"method": "PUT",
-		"path": "/domain-types/host_config/actions/bulk-update/invoke",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/BulkUpdateHost",
-			"example": {
-				"entries": [
-					{
-						"host_name": "example.com",
-						"attributes": {}
-					}
-				]
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "PUT Bulk update hosts"
+		"label": "Move Host to Another Folder"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.rename_host",
@@ -3241,7 +3226,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Rename a host"
+		"label": "Rename Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.update_host",
@@ -3279,7 +3264,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a host"
+		"label": "Update Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_config.update_nodes",
@@ -3313,7 +3298,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update the nodes of a cluster host"
+		"label": "Update Nodes of Cluster Host"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.host_config.renaming_job_wait_for_completion",
+		"resourceLabel": "Hosts",
+		"resource": "hosts",
+		"summary": "Wait for renaming process completion",
+		"method": "GET",
+		"path": "/domain-types/host_config/actions/wait-for-completion/invoke",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Wait for Renaming Process Completion"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_internal.show_host",
@@ -3336,7 +3336,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show a host"
+		"label": "Get Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_internal.link_with_uuid",
@@ -3366,7 +3366,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Link a host to a UUID"
+		"label": "Link Host to UUID"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.host_internal.register_host",
@@ -3396,68 +3396,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Register an existing host, ie. link it to a UUID"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.ldap_connection.delete_ldap_connection",
-		"resourceLabel": "LDAP Connections",
-		"resource": "lDAPConnections",
-		"summary": "Delete an LDAP connection",
-		"method": "DELETE",
-		"path": "/objects/ldap_connection/{ldap_connection_id}",
-		"pathParameters": [
-			{
-				"name": "ldap_connection_id",
-				"kind": "string",
-				"required": true,
-				"description": "An LDAP connection ID string.",
-				"example": "LDAP_1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": true,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete an LDAP connection"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.ldap_connection.show_ldap_connections",
-		"resourceLabel": "LDAP Connections",
-		"resource": "lDAPConnections",
-		"summary": "Show all LDAP connections",
-		"method": "GET",
-		"path": "/domain-types/ldap_connection/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all LDAP connections"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.ldap_connection.show_ldap_connection",
-		"resourceLabel": "LDAP Connections",
-		"resource": "lDAPConnections",
-		"summary": "Show an LDAP connection",
-		"method": "GET",
-		"path": "/objects/ldap_connection/{ldap_connection_id}",
-		"pathParameters": [
-			{
-				"name": "ldap_connection_id",
-				"kind": "string",
-				"required": true,
-				"description": "An LDAP connection ID string.",
-				"example": "LDAP_1"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show an LDAP connection"
+		"label": "Register Existing Host, Ie. Link It to UUID"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ldap_connection.create_ldap_connection",
@@ -3561,7 +3500,68 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create an LDAP connection"
+		"label": "Create LDAP Connection"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.ldap_connection.delete_ldap_connection",
+		"resourceLabel": "LDAP Connections",
+		"resource": "lDAPConnections",
+		"summary": "Delete an LDAP connection",
+		"method": "DELETE",
+		"path": "/objects/ldap_connection/{ldap_connection_id}",
+		"pathParameters": [
+			{
+				"name": "ldap_connection_id",
+				"kind": "string",
+				"required": true,
+				"description": "An LDAP connection ID string.",
+				"example": "LDAP_1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": true,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete LDAP Connection"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.ldap_connection.show_ldap_connection",
+		"resourceLabel": "LDAP Connections",
+		"resource": "lDAPConnections",
+		"summary": "Show an LDAP connection",
+		"method": "GET",
+		"path": "/objects/ldap_connection/{ldap_connection_id}",
+		"pathParameters": [
+			{
+				"name": "ldap_connection_id",
+				"kind": "string",
+				"required": true,
+				"description": "An LDAP connection ID string.",
+				"example": "LDAP_1"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get LDAP Connection"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.ldap_connection.show_ldap_connections",
+		"resourceLabel": "LDAP Connections",
+		"resource": "lDAPConnections",
+		"summary": "Show all LDAP connections",
+		"method": "GET",
+		"path": "/domain-types/ldap_connection/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many LDAP Connections"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ldap_connection.edit_ldap_connection",
@@ -3673,7 +3673,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update an ldap connection"
+		"label": "Update LDAP Connection"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.metric.get_graph",
@@ -3704,7 +3704,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Get metrics"
+		"label": "Get Metrics"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.version.search",
@@ -3719,45 +3719,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Display some version information"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.notification_rules.show_rule",
-		"resourceLabel": "Notification Rules",
-		"resource": "notificationRules",
-		"summary": "Show a notification rule",
-		"method": "GET",
-		"path": "/objects/notification_rule/{rule_id}",
-		"pathParameters": [
-			{
-				"name": "rule_id",
-				"kind": "string",
-				"required": true,
-				"description": "The notification rule ID.",
-				"example": "5425d554-5741-4bbf-b907-1a391dfab5bb"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a notification rule"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.notification_rules.show_rules",
-		"resourceLabel": "Notification Rules",
-		"resource": "notificationRules",
-		"summary": "Show all notification rules",
-		"method": "GET",
-		"path": "/domain-types/notification_rule/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all notification rules"
+		"label": "Display Some Version Information"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.notification_rules.post_rule",
@@ -3944,7 +3906,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a notification rule"
+		"label": "Create Notification Rule"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.notification_rules.delete_rule",
@@ -3967,7 +3929,45 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Delete a notification rule"
+		"label": "Delete Notification Rule"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.notification_rules.show_rules",
+		"resourceLabel": "Notification Rules",
+		"resource": "notificationRules",
+		"summary": "Show all notification rules",
+		"method": "GET",
+		"path": "/domain-types/notification_rule/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Notification Rules"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.notification_rules.show_rule",
+		"resourceLabel": "Notification Rules",
+		"resource": "notificationRules",
+		"summary": "Show a notification rule",
+		"method": "GET",
+		"path": "/objects/notification_rule/{rule_id}",
+		"pathParameters": [
+			{
+				"name": "rule_id",
+				"kind": "string",
+				"required": true,
+				"description": "The notification rule ID.",
+				"example": "5425d554-5741-4bbf-b907-1a391dfab5bb"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Notification Rule"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.notification_rules.put_rule",
@@ -4162,11 +4162,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a notification rule"
+		"label": "Update Notification Rule"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.parent_scan.start_parent_scan_background_job",
-		"resourceLabel": "Parent scan",
+		"resourceLabel": "Parent Scan",
 		"resource": "parentScan",
 		"summary": "Start the parent scan background job",
 		"method": "POST",
@@ -4199,68 +4199,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Start the parent scan background job"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.password.delete_password",
-		"resourceLabel": "Passwords",
-		"resource": "passwords",
-		"summary": "Delete a password",
-		"method": "DELETE",
-		"path": "/objects/password/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a password"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.password.list_passwords",
-		"resourceLabel": "Passwords",
-		"resource": "passwords",
-		"summary": "Show all passwords",
-		"method": "GET",
-		"path": "/domain-types/password/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all passwords"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.password.show_password",
-		"resourceLabel": "Passwords",
-		"resource": "passwords",
-		"summary": "Show password store entry",
-		"method": "GET",
-		"path": "/objects/password/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show password store entry"
+		"label": "Start Parent Scan Background Job"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.password.create_password",
@@ -4291,7 +4230,68 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a password"
+		"label": "Create Password"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.password.delete_password",
+		"resourceLabel": "Passwords",
+		"resource": "passwords",
+		"summary": "Delete a password",
+		"method": "DELETE",
+		"path": "/objects/password/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Password"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.password.list_passwords",
+		"resourceLabel": "Passwords",
+		"resource": "passwords",
+		"summary": "Show all passwords",
+		"method": "GET",
+		"path": "/domain-types/password/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Passwords"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.password.show_password",
+		"resourceLabel": "Passwords",
+		"resource": "passwords",
+		"summary": "Show password store entry",
+		"method": "GET",
+		"path": "/objects/password/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Password Store Entry"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.password.update_password",
@@ -4329,11 +4329,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a password"
+		"label": "Update Password"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.quick_setup.fetch_quick_setup_action_result",
-		"resourceLabel": "Quick setup",
+		"resourceLabel": "Quick Setup",
 		"resource": "quickSetup",
 		"summary": "Fetch the Quick action background job result",
 		"method": "GET",
@@ -4352,11 +4352,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Fetch the Quick action background job result"
+		"label": "Fetch Quick Action Background Job Result"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.quick_setup.fetch_quick_setup_stage_action_result",
-		"resourceLabel": "Quick setup",
+		"resourceLabel": "Quick Setup",
 		"resource": "quickSetup",
 		"summary": "Fetch the Quick setup stage action background job result",
 		"method": "GET",
@@ -4383,50 +4383,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Fetch the Quick setup stage action background job result"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.quick_setup.quick_setup_get_stage_structure",
-		"resourceLabel": "Quick setup",
-		"resource": "quickSetup",
-		"summary": "Get a Quick setup stage structure",
-		"method": "GET",
-		"path": "/objects/quick_setup/{quick_setup_id}/quick_setup_stage/{stage_index}",
-		"pathParameters": [
-			{
-				"name": "quick_setup_id",
-				"kind": "string",
-				"required": true,
-				"description": "The quick setup id",
-				"example": "aws"
-			},
-			{
-				"name": "stage_index",
-				"kind": "string",
-				"required": true,
-				"description": "The stage index",
-				"example": "1"
-			}
-		],
-		"queryParameters": [
-			{
-				"name": "object_id",
-				"kind": "string",
-				"required": false,
-				"description": "Select object id to prefill data for the quick setup",
-				"example": "8558f956-3e45-4c4f-bd02-e88da17c99dd",
-				"defaultValue": ""
-			}
-		],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Get a Quick setup stage structure"
+		"label": "Fetch Quick Setup Stage Action Background Job Result"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.quick_setup.get_guided_stages_or_overview_stages",
-		"resourceLabel": "Quick setup",
+		"resourceLabel": "Quick Setup",
 		"resource": "quickSetup",
 		"summary": "Get guided stages or overview stages",
 		"method": "GET",
@@ -4466,11 +4427,50 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Get guided stages or overview stages"
+		"label": "Get Guided Stages or Overview Stages"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.quick_setup.quick_setup_get_stage_structure",
+		"resourceLabel": "Quick Setup",
+		"resource": "quickSetup",
+		"summary": "Get a Quick setup stage structure",
+		"method": "GET",
+		"path": "/objects/quick_setup/{quick_setup_id}/quick_setup_stage/{stage_index}",
+		"pathParameters": [
+			{
+				"name": "quick_setup_id",
+				"kind": "string",
+				"required": true,
+				"description": "The quick setup id",
+				"example": "aws"
+			},
+			{
+				"name": "stage_index",
+				"kind": "string",
+				"required": true,
+				"description": "The stage index",
+				"example": "1"
+			}
+		],
+		"queryParameters": [
+			{
+				"name": "object_id",
+				"kind": "string",
+				"required": false,
+				"description": "Select object id to prefill data for the quick setup",
+				"example": "8558f956-3e45-4c4f-bd02-e88da17c99dd",
+				"defaultValue": ""
+			}
+		],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Quick Setup Stage Structure"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.quick_setup.quick_setup_run_action",
-		"resourceLabel": "Quick setup",
+		"resourceLabel": "Quick Setup",
 		"resource": "quickSetup",
 		"summary": "Run a quick setup action",
 		"method": "POST",
@@ -4525,11 +4525,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Run a quick setup action"
+		"label": "Run Quick Setup Action"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.quick_setup.quicksetup_run_stage_action",
-		"resourceLabel": "Quick setup",
+		"resourceLabel": "Quick Setup",
 		"resource": "quickSetup",
 		"summary": "Run a Quick setup stage validation and recap action",
 		"method": "POST",
@@ -4563,11 +4563,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Run a Quick setup stage validation and recap action"
+		"label": "Run Quick Setup Stage Validation and Recap Action"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.quick_setup.edit_quick_setup_action",
-		"resourceLabel": "Quick setup",
+		"resourceLabel": "Quick Setup",
 		"resource": "quickSetup",
 		"summary": "Edit the quick setup",
 		"method": "PUT",
@@ -4617,76 +4617,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Edit the quick setup"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.rule.delete_rule",
-		"resourceLabel": "Rules",
-		"resource": "rules",
-		"summary": "Delete a rule",
-		"method": "DELETE",
-		"path": "/objects/rule/{rule_id}",
-		"pathParameters": [
-			{
-				"name": "rule_id",
-				"kind": "string",
-				"required": true,
-				"description": "The ID of the rule.",
-				"example": "0a168697-14a2-48d0-9c3c-ca65569a39e2"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a rule"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.rule.list_rules",
-		"resourceLabel": "Rules",
-		"resource": "rules",
-		"summary": "List rules",
-		"method": "GET",
-		"path": "/domain-types/rule/collections/all",
-		"pathParameters": [],
-		"queryParameters": [
-			{
-				"name": "ruleset_name",
-				"kind": "string",
-				"required": true,
-				"description": "The name of the ruleset.",
-				"example": "host_groups"
-			}
-		],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET List rules"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.rule.show_rule",
-		"resourceLabel": "Rules",
-		"resource": "rules",
-		"summary": "Show a rule",
-		"method": "GET",
-		"path": "/objects/rule/{rule_id}",
-		"pathParameters": [
-			{
-				"name": "rule_id",
-				"kind": "string",
-				"required": true,
-				"description": "The ID of the rule.",
-				"example": "0a168697-14a2-48d0-9c3c-ca65569a39e2"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a rule"
+		"label": "Update Quick Setup"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.rule.create_rule",
@@ -4772,7 +4703,76 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create rule"
+		"label": "Create Rule"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.rule.delete_rule",
+		"resourceLabel": "Rules",
+		"resource": "rules",
+		"summary": "Delete a rule",
+		"method": "DELETE",
+		"path": "/objects/rule/{rule_id}",
+		"pathParameters": [
+			{
+				"name": "rule_id",
+				"kind": "string",
+				"required": true,
+				"description": "The ID of the rule.",
+				"example": "0a168697-14a2-48d0-9c3c-ca65569a39e2"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Rule"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.rule.show_rule",
+		"resourceLabel": "Rules",
+		"resource": "rules",
+		"summary": "Show a rule",
+		"method": "GET",
+		"path": "/objects/rule/{rule_id}",
+		"pathParameters": [
+			{
+				"name": "rule_id",
+				"kind": "string",
+				"required": true,
+				"description": "The ID of the rule.",
+				"example": "0a168697-14a2-48d0-9c3c-ca65569a39e2"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Rule"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.rule.list_rules",
+		"resourceLabel": "Rules",
+		"resource": "rules",
+		"summary": "List rules",
+		"method": "GET",
+		"path": "/domain-types/rule/collections/all",
+		"pathParameters": [],
+		"queryParameters": [
+			{
+				"name": "ruleset_name",
+				"kind": "string",
+				"required": true,
+				"description": "The name of the ruleset.",
+				"example": "host_groups"
+			}
+		],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "List Rules"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.rule.move_rule_to",
@@ -4803,7 +4803,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Move a rule to a specific location"
+		"label": "Move Rule to Specific Location"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.rule.edit_rule",
@@ -4895,7 +4895,30 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Modify a rule"
+		"label": "Update Rule"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.ruleset.show_ruleset",
+		"resourceLabel": "Rulesets",
+		"resource": "rulesets",
+		"summary": "Show a ruleset",
+		"method": "GET",
+		"path": "/objects/ruleset/{ruleset_name}",
+		"pathParameters": [
+			{
+				"name": "ruleset_name",
+				"kind": "string",
+				"required": true,
+				"description": "The name of the ruleset.",
+				"example": "host_groups"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Ruleset"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.ruleset.list_rulesets",
@@ -4945,103 +4968,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": true,
 		"deprecated": false,
-		"label": "GET Search rule sets"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.ruleset.show_ruleset",
-		"resourceLabel": "Rulesets",
-		"resource": "rulesets",
-		"summary": "Show a ruleset",
-		"method": "GET",
-		"path": "/objects/ruleset/{ruleset_name}",
-		"pathParameters": [
-			{
-				"name": "ruleset_name",
-				"kind": "string",
-				"required": true,
-				"description": "The name of the ruleset.",
-				"example": "host_groups"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a ruleset"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service_discovery.show_service_discovery_result",
-		"resourceLabel": "Service discovery",
-		"resource": "serviceDiscovery",
-		"summary": "Show the current service discovery result",
-		"method": "GET",
-		"path": "/objects/service_discovery/{host_name}",
-		"pathParameters": [
-			{
-				"name": "host_name",
-				"kind": "string",
-				"required": true,
-				"description": "The host of the service discovery result",
-				"example": "example.com"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show the current service discovery result"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service_discovery.show_service_discovery_run",
-		"resourceLabel": "Service discovery",
-		"resource": "serviceDiscovery",
-		"summary": "Show the last service discovery background job on a host",
-		"method": "GET",
-		"path": "/objects/service_discovery_run/{host_name}",
-		"pathParameters": [
-			{
-				"name": "host_name",
-				"kind": "string",
-				"required": true,
-				"description": "A host name.",
-				"example": "example.com"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show the last service discovery background job on a host"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service_discovery.service_discovery_run_wait_for_completion",
-		"resourceLabel": "Service discovery",
-		"resource": "serviceDiscovery",
-		"summary": "Wait for service discovery completion",
-		"method": "GET",
-		"path": "/objects/service_discovery_run/{host_name}/actions/wait-for-completion/invoke",
-		"pathParameters": [
-			{
-				"name": "host_name",
-				"kind": "string",
-				"required": true,
-				"description": "A host name.",
-				"example": "example.com"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Wait for service discovery completion"
+		"label": "Search Rule Sets"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_discovery.execute_service_discovery",
-		"resourceLabel": "Service discovery",
+		"resourceLabel": "Service Discovery",
 		"resource": "serviceDiscovery",
 		"summary": "Execute a service discovery on a host",
 		"method": "POST",
@@ -5060,11 +4991,57 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Execute a service discovery on a host"
+		"label": "Execute Service Discovery on Host"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service_discovery.show_service_discovery_result",
+		"resourceLabel": "Service Discovery",
+		"resource": "serviceDiscovery",
+		"summary": "Show the current service discovery result",
+		"method": "GET",
+		"path": "/objects/service_discovery/{host_name}",
+		"pathParameters": [
+			{
+				"name": "host_name",
+				"kind": "string",
+				"required": true,
+				"description": "The host of the service discovery result",
+				"example": "example.com"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Current Service Discovery Result"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service_discovery.show_service_discovery_run",
+		"resourceLabel": "Service Discovery",
+		"resource": "serviceDiscovery",
+		"summary": "Show the last service discovery background job on a host",
+		"method": "GET",
+		"path": "/objects/service_discovery_run/{host_name}",
+		"pathParameters": [
+			{
+				"name": "host_name",
+				"kind": "string",
+				"required": true,
+				"description": "A host name.",
+				"example": "example.com"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Last Service Discovery Background Job on Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_discovery.execute_bulk_discovery",
-		"resourceLabel": "Service discovery",
+		"resourceLabel": "Service Discovery",
 		"resource": "serviceDiscovery",
 		"summary": "Start a bulk discovery job",
 		"method": "POST",
@@ -5095,11 +5072,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Start a bulk discovery job"
+		"label": "Start Bulk Discovery Job"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_discovery.update_service_phase",
-		"resourceLabel": "Service discovery",
+		"resourceLabel": "Service Discovery",
 		"resource": "serviceDiscovery",
 		"summary": "Update the phase of a service",
 		"method": "PUT",
@@ -5127,22 +5104,22 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update the phase of a service"
+		"label": "Update Phase of Service"
 	},
 	{
-		"id": "cmk.gui.openapi.endpoints.service_group_config.delete",
-		"resourceLabel": "Service groups",
-		"resource": "serviceGroups",
-		"summary": "Delete a service group",
-		"method": "DELETE",
-		"path": "/objects/service_group_config/{name}",
+		"id": "cmk.gui.openapi.endpoints.service_discovery.service_discovery_run_wait_for_completion",
+		"resourceLabel": "Service Discovery",
+		"resource": "serviceDiscovery",
+		"summary": "Wait for service discovery completion",
+		"method": "GET",
+		"path": "/objects/service_discovery_run/{host_name}/actions/wait-for-completion/invoke",
 		"pathParameters": [
 			{
-				"name": "name",
+				"name": "host_name",
 				"kind": "string",
 				"required": true,
-				"description": "The identifier name of the group.",
-				"example": "pathname"
+				"description": "A host name.",
+				"example": "example.com"
 			}
 		],
 		"queryParameters": [],
@@ -5150,49 +5127,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "DELETE Delete a service group"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service_group_config.show_group",
-		"resourceLabel": "Service groups",
-		"resource": "serviceGroups",
-		"summary": "Show a service group",
-		"method": "GET",
-		"path": "/objects/service_group_config/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "The identifier name of the group.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a service group"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service_group_config.list_groups",
-		"resourceLabel": "Service groups",
-		"resource": "serviceGroups",
-		"summary": "Show all service groups",
-		"method": "GET",
-		"path": "/domain-types/service_group_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all service groups"
+		"label": "Wait for Service Discovery Completion"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.bulk_create",
-		"resourceLabel": "Service groups",
+		"resourceLabel": "Service Groups",
 		"resource": "serviceGroups",
 		"summary": "Bulk create service groups",
 		"method": "POST",
@@ -5215,11 +5154,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Bulk create service groups"
+		"label": "Bulk Create Service Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.bulk_delete",
-		"resourceLabel": "Service groups",
+		"resourceLabel": "Service Groups",
 		"resource": "serviceGroups",
 		"summary": "Bulk delete service groups",
 		"method": "POST",
@@ -5240,34 +5179,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Bulk delete service groups"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service_group_config.create",
-		"resourceLabel": "Service groups",
-		"resource": "serviceGroups",
-		"summary": "Create a service group",
-		"method": "POST",
-		"path": "/domain-types/service_group_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/InputServiceGroup",
-			"example": {
-				"name": "windows",
-				"alias": "Environment Sensors"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Create a service group"
+		"label": "Bulk Delete Service Groups"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.bulk_update",
-		"resourceLabel": "Service groups",
+		"resourceLabel": "Service Groups",
 		"resource": "serviceGroups",
 		"summary": "Bulk update service groups",
 		"method": "PUT",
@@ -5292,11 +5208,95 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Bulk update service groups"
+		"label": "Bulk Update Service Groups"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service_group_config.create",
+		"resourceLabel": "Service Groups",
+		"resource": "serviceGroups",
+		"summary": "Create a service group",
+		"method": "POST",
+		"path": "/domain-types/service_group_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/InputServiceGroup",
+			"example": {
+				"name": "windows",
+				"alias": "Environment Sensors"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Create Service Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service_group_config.delete",
+		"resourceLabel": "Service Groups",
+		"resource": "serviceGroups",
+		"summary": "Delete a service group",
+		"method": "DELETE",
+		"path": "/objects/service_group_config/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "The identifier name of the group.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Service Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service_group_config.list_groups",
+		"resourceLabel": "Service Groups",
+		"resource": "serviceGroups",
+		"summary": "Show all service groups",
+		"method": "GET",
+		"path": "/domain-types/service_group_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Service Groups"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service_group_config.show_group",
+		"resourceLabel": "Service Groups",
+		"resource": "serviceGroups",
+		"summary": "Show a service group",
+		"method": "GET",
+		"path": "/objects/service_group_config/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "The identifier name of the group.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Service Group"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service_group_config.update",
-		"resourceLabel": "Service groups",
+		"resourceLabel": "Service Groups",
 		"resource": "serviceGroups",
 		"summary": "Update a service group",
 		"method": "PUT",
@@ -5322,11 +5322,193 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a service group"
+		"label": "Update Service Group"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service._list_all_services",
+		"resourceLabel": "Service Status",
+		"resource": "serviceStatus",
+		"summary": "Show all monitored services",
+		"method": "POST",
+		"path": "/domain-types/service/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/ServiceParametersWithHost",
+			"example": {
+				"sites": [
+					"mysite"
+				],
+				"columns": [
+					"host_name",
+					"description"
+				],
+				"query": {
+					"op": "=",
+					"left": "host_name",
+					"right": "example.com"
+				},
+				"host_name": "example.com"
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Many Monitored Services"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service._list_all_services_deprecated-17512",
+		"resourceLabel": "Service Status",
+		"resource": "serviceStatus",
+		"summary": "Show all monitored services",
+		"method": "GET",
+		"path": "/domain-types/service/collections/all",
+		"pathParameters": [],
+		"queryParameters": [
+			{
+				"name": "sites",
+				"kind": "array",
+				"required": false,
+				"description": "Restrict the query to this particular site.",
+				"example": [
+					"mysite"
+				],
+				"defaultValue": []
+			},
+			{
+				"name": "columns",
+				"kind": "array",
+				"required": false,
+				"description": "The desired columns of the `services` table. If left empty, a default set of columns is used.",
+				"example": [
+					"host_name",
+					"description"
+				],
+				"defaultValue": [
+					"host_name",
+					"description"
+				]
+			},
+			{
+				"name": "query",
+				"kind": "string",
+				"required": false,
+				"description": "An query expression of the Livestatus 'services' table in nested dictionary form. If you want to use multiple expressions, nest them with the AND/OR operators."
+			},
+			{
+				"name": "host_name",
+				"kind": "string",
+				"required": false,
+				"description": "A host name.",
+				"example": "example.com"
+			}
+		],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": true,
+		"label": "Get Many Monitored Services (deprecated)"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service._list_host_services",
+		"resourceLabel": "Service Status",
+		"resource": "serviceStatus",
+		"summary": "Show the monitored services of a host",
+		"method": "POST",
+		"path": "/objects/host/{host_name}/collections/services",
+		"pathParameters": [
+			{
+				"name": "host_name",
+				"kind": "string",
+				"required": true,
+				"description": "A host name.",
+				"example": "example.com"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"requestBody": {
+			"required": true,
+			"schemaRef": "#/components/schemas/ServiceParameters",
+			"example": {
+				"sites": [
+					"mysite"
+				],
+				"columns": [
+					"host_name",
+					"description"
+				],
+				"query": {
+					"op": "=",
+					"left": "host_name",
+					"right": "example.com"
+				}
+			}
+		},
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Monitored Services of Host"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.service._list_host_services_deprecated-17512",
+		"resourceLabel": "Service Status",
+		"resource": "serviceStatus",
+		"summary": "Show the monitored services of a host",
+		"method": "GET",
+		"path": "/objects/host/{host_name}/collections/services",
+		"pathParameters": [
+			{
+				"name": "host_name",
+				"kind": "string",
+				"required": true,
+				"description": "A host name.",
+				"example": "example.com"
+			}
+		],
+		"queryParameters": [
+			{
+				"name": "sites",
+				"kind": "array",
+				"required": false,
+				"description": "Restrict the query to this particular site.",
+				"example": [
+					"mysite"
+				],
+				"defaultValue": []
+			},
+			{
+				"name": "columns",
+				"kind": "array",
+				"required": false,
+				"description": "The desired columns of the `services` table. If left empty, a default set of columns is used.",
+				"example": [
+					"host_name",
+					"description"
+				],
+				"defaultValue": [
+					"host_name",
+					"description"
+				]
+			},
+			{
+				"name": "query",
+				"kind": "string",
+				"required": false,
+				"description": "An query expression of the Livestatus 'services' table in nested dictionary form. If you want to use multiple expressions, nest them with the AND/OR operators."
+			}
+		],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": true,
+		"label": "Get Monitored Services of Host (deprecated)"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.service.show_service",
-		"resourceLabel": "Service status",
+		"resourceLabel": "Service Status",
 		"resource": "serviceStatus",
 		"summary": "Show a single service of a specific host",
 		"method": "GET",
@@ -5370,227 +5552,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "GET Show a single service of a specific host"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service._list_all_services_deprecated-17512",
-		"resourceLabel": "Service status",
-		"resource": "serviceStatus",
-		"summary": "Show all monitored services",
-		"method": "GET",
-		"path": "/domain-types/service/collections/all",
-		"pathParameters": [],
-		"queryParameters": [
-			{
-				"name": "sites",
-				"kind": "array",
-				"required": false,
-				"description": "Restrict the query to this particular site.",
-				"example": [
-					"mysite"
-				],
-				"defaultValue": []
-			},
-			{
-				"name": "columns",
-				"kind": "array",
-				"required": false,
-				"description": "The desired columns of the `services` table. If left empty, a default set of columns is used.",
-				"example": [
-					"host_name",
-					"description"
-				],
-				"defaultValue": [
-					"host_name",
-					"description"
-				]
-			},
-			{
-				"name": "query",
-				"kind": "string",
-				"required": false,
-				"description": "An query expression of the Livestatus 'services' table in nested dictionary form. If you want to use multiple expressions, nest them with the AND/OR operators."
-			},
-			{
-				"name": "host_name",
-				"kind": "string",
-				"required": false,
-				"description": "A host name.",
-				"example": "example.com"
-			}
-		],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": true,
-		"label": "GET Show all monitored services (deprecated)"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service._list_host_services_deprecated-17512",
-		"resourceLabel": "Service status",
-		"resource": "serviceStatus",
-		"summary": "Show the monitored services of a host",
-		"method": "GET",
-		"path": "/objects/host/{host_name}/collections/services",
-		"pathParameters": [
-			{
-				"name": "host_name",
-				"kind": "string",
-				"required": true,
-				"description": "A host name.",
-				"example": "example.com"
-			}
-		],
-		"queryParameters": [
-			{
-				"name": "sites",
-				"kind": "array",
-				"required": false,
-				"description": "Restrict the query to this particular site.",
-				"example": [
-					"mysite"
-				],
-				"defaultValue": []
-			},
-			{
-				"name": "columns",
-				"kind": "array",
-				"required": false,
-				"description": "The desired columns of the `services` table. If left empty, a default set of columns is used.",
-				"example": [
-					"host_name",
-					"description"
-				],
-				"defaultValue": [
-					"host_name",
-					"description"
-				]
-			},
-			{
-				"name": "query",
-				"kind": "string",
-				"required": false,
-				"description": "An query expression of the Livestatus 'services' table in nested dictionary form. If you want to use multiple expressions, nest them with the AND/OR operators."
-			}
-		],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": true,
-		"label": "GET Show the monitored services of a host (deprecated)"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service._list_all_services",
-		"resourceLabel": "Service status",
-		"resource": "serviceStatus",
-		"summary": "Show all monitored services",
-		"method": "POST",
-		"path": "/domain-types/service/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/ServiceParametersWithHost",
-			"example": {
-				"sites": [
-					"mysite"
-				],
-				"columns": [
-					"host_name",
-					"description"
-				],
-				"query": {
-					"op": "=",
-					"left": "host_name",
-					"right": "example.com"
-				},
-				"host_name": "example.com"
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Show all monitored services"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.service._list_host_services",
-		"resourceLabel": "Service status",
-		"resource": "serviceStatus",
-		"summary": "Show the monitored services of a host",
-		"method": "POST",
-		"path": "/objects/host/{host_name}/collections/services",
-		"pathParameters": [
-			{
-				"name": "host_name",
-				"kind": "string",
-				"required": true,
-				"description": "A host name.",
-				"example": "example.com"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"requestBody": {
-			"required": true,
-			"schemaRef": "#/components/schemas/ServiceParameters",
-			"example": {
-				"sites": [
-					"mysite"
-				],
-				"columns": [
-					"host_name",
-					"description"
-				],
-				"query": {
-					"op": "=",
-					"left": "host_name",
-					"right": "example.com"
-				}
-			}
-		},
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "POST Show the monitored services of a host"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.site_management.show_site",
-		"resourceLabel": "Site Management",
-		"resource": "siteManagement",
-		"summary": "Show a site connection",
-		"method": "GET",
-		"path": "/objects/site_connection/{site_id}",
-		"pathParameters": [
-			{
-				"name": "site_id",
-				"kind": "string",
-				"required": true,
-				"description": "A site ID that exists.",
-				"example": "prod"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a site connection"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.site_management.show_sites",
-		"resourceLabel": "Site Management",
-		"resource": "siteManagement",
-		"summary": "Show all site connections",
-		"method": "GET",
-		"path": "/domain-types/site_connection/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all site connections"
+		"label": "Get Single Service of Specific Host"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.post_site",
@@ -5669,7 +5631,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a site connection"
+		"label": "Create Site Connection"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.delete_site",
@@ -5692,7 +5654,45 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Delete a site connection"
+		"label": "Delete Site Connection"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.site_management.show_sites",
+		"resourceLabel": "Site Management",
+		"resource": "siteManagement",
+		"summary": "Show all site connections",
+		"method": "GET",
+		"path": "/domain-types/site_connection/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Site Connections"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.site_management.show_site",
+		"resourceLabel": "Site Management",
+		"resource": "siteManagement",
+		"summary": "Show a site connection",
+		"method": "GET",
+		"path": "/objects/site_connection/{site_id}",
+		"pathParameters": [
+			{
+				"name": "site_id",
+				"kind": "string",
+				"required": true,
+				"description": "A site ID that exists.",
+				"example": "prod"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Site Connection"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.site_login",
@@ -5723,7 +5723,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Login to a remote site"
+		"label": "Log in to Remote Site"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.site_logout",
@@ -5746,7 +5746,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Logout from a remote site"
+		"label": "Log Out from Remote Site"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.site_management.put_site",
@@ -5833,72 +5833,11 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a site connection"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.time_periods.delete",
-		"resourceLabel": "Time periods",
-		"resource": "timePeriods",
-		"summary": "Delete a time period",
-		"method": "DELETE",
-		"path": "/objects/time_period/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": true,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a time period"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.time_periods.show_time_period",
-		"resourceLabel": "Time periods",
-		"resource": "timePeriods",
-		"summary": "Show a time period",
-		"method": "GET",
-		"path": "/objects/time_period/{name}",
-		"pathParameters": [
-			{
-				"name": "name",
-				"kind": "string",
-				"required": true,
-				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
-				"example": "pathname"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a time period"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.time_periods.list_time_periods",
-		"resourceLabel": "Time periods",
-		"resource": "timePeriods",
-		"summary": "Show all time periods",
-		"method": "GET",
-		"path": "/domain-types/time_period/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all time periods"
+		"label": "Update Site Connection"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.time_periods.create_timeperiod",
-		"resourceLabel": "Time periods",
+		"resourceLabel": "Time Periods",
 		"resource": "timePeriods",
 		"summary": "Create a time period",
 		"method": "POST",
@@ -5942,11 +5881,72 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a time period"
+		"label": "Create Time Period"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.time_periods.delete",
+		"resourceLabel": "Time Periods",
+		"resource": "timePeriods",
+		"summary": "Delete a time period",
+		"method": "DELETE",
+		"path": "/objects/time_period/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": true,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete Time Period"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.time_periods.list_time_periods",
+		"resourceLabel": "Time Periods",
+		"resource": "timePeriods",
+		"summary": "Show all time periods",
+		"method": "GET",
+		"path": "/domain-types/time_period/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Time Periods"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.time_periods.show_time_period",
+		"resourceLabel": "Time Periods",
+		"resource": "timePeriods",
+		"summary": "Show a time period",
+		"method": "GET",
+		"path": "/objects/time_period/{name}",
+		"pathParameters": [
+			{
+				"name": "name",
+				"kind": "string",
+				"required": true,
+				"description": "A name used as an identifier. Can be of arbitrary (sensible) length.",
+				"example": "pathname"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get Time Period"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.time_periods.update_timeperiod",
-		"resourceLabel": "Time periods",
+		"resourceLabel": "Time Periods",
 		"resource": "timePeriods",
 		"summary": "Update a time period",
 		"method": "PUT",
@@ -5997,68 +5997,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Update a time period"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_role.delete_userrole",
-		"resourceLabel": "User Roles",
-		"resource": "userRoles",
-		"summary": "Delete a user role",
-		"method": "DELETE",
-		"path": "/objects/user_role/{role_id}",
-		"pathParameters": [
-			{
-				"name": "role_id",
-				"kind": "string",
-				"required": true,
-				"description": "An existing custom user role that you want to delete.",
-				"example": "userx"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a user role"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_role.show_user_role",
-		"resourceLabel": "User Roles",
-		"resource": "userRoles",
-		"summary": "Show a user role",
-		"method": "GET",
-		"path": "/objects/user_role/{role_id}",
-		"pathParameters": [
-			{
-				"name": "role_id",
-				"kind": "string",
-				"required": true,
-				"description": "An existing user role.",
-				"example": "userx"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a user role"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_role.list_user_roles",
-		"resourceLabel": "User Roles",
-		"resource": "userRoles",
-		"summary": "Show all user roles",
-		"method": "GET",
-		"path": "/domain-types/user_role/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all user roles"
+		"label": "Update Time Period"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_role.create_userrole",
@@ -6082,7 +6021,68 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create/clone a user role"
+		"label": "Create User Role"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_role.delete_userrole",
+		"resourceLabel": "User Roles",
+		"resource": "userRoles",
+		"summary": "Delete a user role",
+		"method": "DELETE",
+		"path": "/objects/user_role/{role_id}",
+		"pathParameters": [
+			{
+				"name": "role_id",
+				"kind": "string",
+				"required": true,
+				"description": "An existing custom user role that you want to delete.",
+				"example": "userx"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete User Role"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_role.list_user_roles",
+		"resourceLabel": "User Roles",
+		"resource": "userRoles",
+		"summary": "Show all user roles",
+		"method": "GET",
+		"path": "/domain-types/user_role/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many User Roles"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_role.show_user_role",
+		"resourceLabel": "User Roles",
+		"resource": "userRoles",
+		"summary": "Show a user role",
+		"method": "GET",
+		"path": "/objects/user_role/{role_id}",
+		"pathParameters": [
+			{
+				"name": "role_id",
+				"kind": "string",
+				"required": true,
+				"description": "An existing user role.",
+				"example": "userx"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get User Role"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_role.edit_userrole",
@@ -6118,68 +6118,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Edit a user role"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_config.delete_user",
-		"resourceLabel": "Users",
-		"resource": "users",
-		"summary": "Delete a user",
-		"method": "DELETE",
-		"path": "/objects/user_config/{username}",
-		"pathParameters": [
-			{
-				"name": "username",
-				"kind": "string",
-				"required": true,
-				"description": "An unique username for the user",
-				"example": "cmkuser"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "DELETE Delete a user"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_config.show_user",
-		"resourceLabel": "Users",
-		"resource": "users",
-		"summary": "Show a user",
-		"method": "GET",
-		"path": "/objects/user_config/{username}",
-		"pathParameters": [
-			{
-				"name": "username",
-				"kind": "string",
-				"required": true,
-				"description": "An unique username for the user",
-				"example": "cmkuser"
-			}
-		],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": false,
-		"deprecated": false,
-		"label": "GET Show a user"
-	},
-	{
-		"id": "cmk.gui.openapi.endpoints.user_config.list_users",
-		"resourceLabel": "Users",
-		"resource": "users",
-		"summary": "Show all users",
-		"method": "GET",
-		"path": "/domain-types/user_config/collections/all",
-		"pathParameters": [],
-		"queryParameters": [],
-		"headerParameters": [],
-		"ifMatch": false,
-		"paginated": true,
-		"deprecated": false,
-		"label": "GET Show all users"
+		"label": "Update User Role"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_config.create_user",
@@ -6231,7 +6170,68 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Create a user"
+		"label": "Create User"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_config.delete_user",
+		"resourceLabel": "Users",
+		"resource": "users",
+		"summary": "Delete a user",
+		"method": "DELETE",
+		"path": "/objects/user_config/{username}",
+		"pathParameters": [
+			{
+				"name": "username",
+				"kind": "string",
+				"required": true,
+				"description": "An unique username for the user",
+				"example": "cmkuser"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Delete User"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_config.list_users",
+		"resourceLabel": "Users",
+		"resource": "users",
+		"summary": "Show all users",
+		"method": "GET",
+		"path": "/domain-types/user_config/collections/all",
+		"pathParameters": [],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": true,
+		"deprecated": false,
+		"label": "Get Many Users"
+	},
+	{
+		"id": "cmk.gui.openapi.endpoints.user_config.show_user",
+		"resourceLabel": "Users",
+		"resource": "users",
+		"summary": "Show a user",
+		"method": "GET",
+		"path": "/objects/user_config/{username}",
+		"pathParameters": [
+			{
+				"name": "username",
+				"kind": "string",
+				"required": true,
+				"description": "An unique username for the user",
+				"example": "cmkuser"
+			}
+		],
+		"queryParameters": [],
+		"headerParameters": [],
+		"ifMatch": false,
+		"paginated": false,
+		"deprecated": false,
+		"label": "Get User"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_config.dismiss_user_warning",
@@ -6253,7 +6253,7 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": false,
 		"paginated": false,
 		"deprecated": false,
-		"label": "POST Save a warning dismissal for the current user."
+		"label": "Save Warning Dismissal for Current User"
 	},
 	{
 		"id": "cmk.gui.openapi.endpoints.user_config.edit_user",
@@ -6310,18 +6310,18 @@ export const OPERATIONS: ApiOperation[] = [
 		"ifMatch": true,
 		"paginated": false,
 		"deprecated": false,
-		"label": "PUT Edit a user"
+		"label": "Update User"
 	},
 ];
 
 export const RESOURCES: ApiResource[] = [
 	{
 		"value": "acknowledgeProblems",
-		"label": "Acknowledge problems"
+		"label": "Acknowledge Problems"
 	},
 	{
 		"value": "activateChanges",
-		"label": "Activate changes"
+		"label": "Activate Changes"
 	},
 	{
 		"value": "agents",
@@ -6329,7 +6329,7 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "auditLogs",
-		"label": "Audit logs"
+		"label": "Audit Logs"
 	},
 	{
 		"value": "autocompleteInternal",
@@ -6349,7 +6349,7 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "businessIntelligenceBI",
-		"label": "Business intelligence (BI)"
+		"label": "Business Intelligence (BI)"
 	},
 	{
 		"value": "certificates",
@@ -6361,23 +6361,23 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "configurationEntities",
-		"label": "Configuration entities"
+		"label": "Configuration Entities"
 	},
 	{
 		"value": "configurationEntitiesFolder",
-		"label": "Configuration entities / Folder"
+		"label": "Configuration Entities / Folder"
 	},
 	{
 		"value": "configurationEntitiesNotificationParameter",
-		"label": "Configuration entities / Notification Parameter"
+		"label": "Configuration Entities / Notification Parameter"
 	},
 	{
 		"value": "configurationEntitiesPasswordstorePassword",
-		"label": "Configuration entities / Passwordstore Password"
+		"label": "Configuration Entities / Passwordstore Password"
 	},
 	{
 		"value": "contactGroups",
-		"label": "Contact groups"
+		"label": "Contact Groups"
 	},
 	{
 		"value": "downtimes",
@@ -6393,15 +6393,15 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "hostGroups",
-		"label": "Host groups"
+		"label": "Host Groups"
 	},
 	{
 		"value": "hostStatus",
-		"label": "Host status"
+		"label": "Host Status"
 	},
 	{
 		"value": "hostTagGroups",
-		"label": "Host tag groups"
+		"label": "Host Tag Groups"
 	},
 	{
 		"value": "hosts",
@@ -6429,7 +6429,7 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "parentScan",
-		"label": "Parent scan"
+		"label": "Parent Scan"
 	},
 	{
 		"value": "passwords",
@@ -6437,7 +6437,7 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "quickSetup",
-		"label": "Quick setup"
+		"label": "Quick Setup"
 	},
 	{
 		"value": "rules",
@@ -6449,15 +6449,15 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "serviceDiscovery",
-		"label": "Service discovery"
+		"label": "Service Discovery"
 	},
 	{
 		"value": "serviceGroups",
-		"label": "Service groups"
+		"label": "Service Groups"
 	},
 	{
 		"value": "serviceStatus",
-		"label": "Service status"
+		"label": "Service Status"
 	},
 	{
 		"value": "siteManagement",
@@ -6465,7 +6465,7 @@ export const RESOURCES: ApiResource[] = [
 	},
 	{
 		"value": "timePeriods",
-		"label": "Time periods"
+		"label": "Time Periods"
 	},
 	{
 		"value": "userRoles",

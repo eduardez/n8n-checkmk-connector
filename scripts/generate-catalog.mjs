@@ -189,6 +189,96 @@ function toParameter(parameter, resolver, kind) {
 	return result;
 }
 
+const ACRONYM_CASING = {
+	api: 'API',
+	bi: 'BI',
+	csrs: 'CSRs',
+	http: 'HTTP',
+	https: 'HTTPS',
+	json: 'JSON',
+	ldap: 'LDAP',
+	pem: 'PEM',
+	rest: 'REST',
+	url: 'URL',
+	uuid: 'UUID',
+};
+const SMALL_WORDS = new Set([
+	'a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'from',
+	'in', 'into', 'of', 'on', 'or', 'the', 'to', 'with',
+]);
+const ARTICLES = new Set(['a', 'an', 'the']);
+// Longest/most specific prefix first.
+const VERB_PREFIXES = [
+	['show all', 'Get Many'],
+	['show', 'Get'],
+	['get all', 'Get Many'],
+	['get', 'Get'],
+	['list existing', 'List'],
+	['list', 'List'],
+	['bulk create', 'Bulk Create'],
+	['bulk update', 'Bulk Update'],
+	['bulk delete', 'Bulk Delete'],
+	['create/clone', 'Create'],
+	['create', 'Create'],
+	['delete', 'Delete'],
+	['update', 'Update'],
+	['edit', 'Update'],
+	['modify', 'Update'],
+	['move', 'Move'],
+	['rename', 'Rename'],
+	['link', 'Link'],
+	['register', 'Register'],
+	['remove', 'Remove'],
+	['set', 'Set'],
+	['activate', 'Activate'],
+	['archive', 'Archive'],
+	['change', 'Change'],
+	['execute', 'Execute'],
+	['start', 'Start'],
+	['run', 'Run'],
+	['fetch', 'Fetch'],
+	['search', 'Search'],
+	['call', 'Call'],
+	['download', 'Download'],
+	['display', 'Display'],
+	['login', 'Log In'],
+	['logout', 'Log Out'],
+	['wait', 'Wait'],
+	['save', 'Save'],
+];
+
+function titleCase(text) {
+	return String(text)
+		.trim()
+		.split(/\s+/)
+		.filter(Boolean)
+		.map((token, index) => {
+			const lower = token.toLowerCase();
+			if (index > 0 && SMALL_WORDS.has(lower)) return lower;
+			const key = lower.replace(/[^a-z0-9.+/#]/g, '');
+			if (key !== '' && ACRONYM_CASING[key] !== undefined) {
+				return lower.split(key).join(ACRONYM_CASING[key]);
+			}
+			// Keep words that already carry meaningful casing, e.g. "PEM-encoded".
+			if (/[A-Z]/.test(token.slice(1))) return token;
+			return token.charAt(0).toUpperCase() + token.slice(1).toLowerCase();
+		})
+		.join(' ');
+}
+
+function humanizeSummary(summary) {
+	const text = String(summary).trim().replace(/\.$/, '');
+	const tokens = text.split(/\s+/).filter(Boolean);
+	const withoutArticles = tokens.filter((word, index) => index === 0 || !ARTICLES.has(word.toLowerCase()));
+	const lower = withoutArticles.join(' ').toLowerCase();
+	const prefix = VERB_PREFIXES.find(([verb]) => lower === verb || lower.startsWith(`${verb} `));
+	if (prefix !== undefined) {
+		const [verb, replacement] = prefix;
+		return titleCase(`${replacement} ${withoutArticles.join(' ').slice(verb.length).trim()}`);
+	}
+	return titleCase(withoutArticles.join(' '));
+}
+
 function buildOperations(document) {
 	const resolver = createSchemaResolver(document.components?.schemas ?? {});
 	const operations = [];
@@ -208,7 +298,7 @@ function buildOperations(document) {
 			seenIds.add(id);
 
 			const tags = Array.isArray(raw.tags) ? raw.tags : [];
-			const resourceLabel = tags[0] ?? 'Undocumented';
+			const resourceLabel = titleCase(String(tags[0] ?? 'Undocumented'));
 			const parameters = [...(pathItem.parameters ?? []), ...(raw.parameters ?? [])];
 			const pathParameters = [];
 			const queryParameters = [];
@@ -272,10 +362,8 @@ function buildOperations(document) {
 	}
 
 	for (const operation of operations) {
-		operation.label = `${operation.method} ${operation.summary}`;
-		if (operation.deprecated) {
-			operation.label = `${operation.label} (deprecated)`;
-		}
+		const baseLabel = humanizeSummary(operation.summary);
+		operation.label = operation.deprecated ? `${baseLabel} (deprecated)` : baseLabel;
 	}
 	const labelCounts = new Map();
 	for (const operation of operations) {
@@ -285,7 +373,7 @@ function buildOperations(document) {
 	for (const operation of operations) {
 		const key = `${operation.resource}\u0000${operation.label}`;
 		if (labelCounts.get(key) > 1) {
-			operation.label = `${operation.label} (${operation.path})`;
+			operation.label = `${operation.label} (${operation.method})`;
 		}
 	}
 

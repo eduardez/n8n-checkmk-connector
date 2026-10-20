@@ -84,6 +84,69 @@ test('deprecated endpoints are flagged', () => {
 	);
 });
 
+test('operation labels are human names without the HTTP method prefix', () => {
+	for (const operation of OPERATIONS) {
+		assert.equal(
+			/^(GET|POST|PUT|PATCH|DELETE)\s/.test(operation.label),
+			false,
+			`${operation.id} label "${operation.label}" still starts with the method`,
+		);
+	}
+});
+
+test('operation labels are rendered from the OpenAPI summary', () => {
+	const label = id => OPERATIONS.find(operation => operation.id === id).label;
+	assert.equal(label('cmk.gui.openapi.endpoints.host_config.list_hosts'), 'Get Many Hosts');
+	assert.equal(label('cmk.gui.openapi.endpoints.host_config.create_host'), 'Create Host');
+	assert.equal(label('cmk.gui.openapi.endpoints.downtime.show_downtime'), 'Get Downtime');
+	assert.equal(label('cmk.gui.bi._openapi.bi_aggregation_state_get'), 'Get State of BI Aggregations (GET)');
+	assert.equal(label('cmk.gui.bi._openapi.bi_aggregation_state_post'), 'Get State of BI Aggregations (POST)');
+});
+
+test('operation labels are unique within a resource', () => {
+	const seen = new Set();
+	for (const operation of OPERATIONS) {
+		const key = `${operation.resource}\u0000${operation.label}`;
+		assert.equal(seen.has(key), false, `${operation.resource} shows "${operation.label}" twice`);
+		seen.add(key);
+	}
+});
+
+test('generated operation options carry the method and path as description', () => {
+	const {buildProperties} = require('../dist/nodes/CheckmkConnector/ui/buildProperties.js');
+	const {RESOURCES} = require('../dist/nodes/CheckmkConnector/catalog/operations.generated.js');
+	const selectors = buildProperties().filter(
+		field => field.type === 'options' && field.name === 'operation',
+	);
+
+	for (const resource of RESOURCES) {
+		const selector = selectors.find(
+			field => field.displayOptions.show.resource[0] === resource.value,
+		);
+		assert.ok(selector !== undefined, `no operation selector for ${resource.value}`);
+		assert.ok(selector.options.some(option => option.value === selector.default));
+		const defaultOperation = OPERATIONS.find(operation => operation.id === selector.default);
+		if (defaultOperation.method === 'GET') {
+			assert.equal(defaultOperation.deprecated, false, `${resource.value} defaults to a deprecated GET`);
+		}
+		for (const option of selector.options) {
+			const operation = OPERATIONS.find(entry => entry.id === option.value);
+			assert.equal(option.name, operation.label);
+			assert.equal(option.description, `${operation.method} ${operation.path}`);
+		}
+	}
+});
+
+test('the Monitoring resource is offered next to Live Status', () => {
+	const {buildProperties} = require('../dist/nodes/CheckmkConnector/ui/buildProperties.js');
+	const resource = buildProperties().find(field => field.name === 'resource');
+	const values = resource.options.map(option => option.value);
+
+	assert.ok(values.includes('monitoring'));
+	assert.ok(values.includes('liveStatus'));
+	assert.equal(values.indexOf('monitoring') < values.indexOf('liveStatus'), true);
+});
+
 test('the catalog carries no trace of prior packages', () => {
 	const source = readFileSync(
 		join(__dirname, '..', 'nodes', 'CheckmkConnector', 'catalog', 'operations.generated.ts'),

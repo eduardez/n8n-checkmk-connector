@@ -150,6 +150,32 @@ export async function getHostWithStatus(
 	return {host_name: hostName, host_status: status};
 }
 
+/** Returns every live service row for one host. */
+export async function getHostServices(
+	context: IExecuteFunctions,
+	client: CheckmkClient,
+	itemIndex: number,
+	version?: CheckmkVersion,
+): Promise<unknown[]> {
+	const hostName = String(context.getNodeParameter('hostName', itemIndex, '')).trim();
+	if (hostName === '') {
+		throw new NodeOperationError(context.getNode(), 'Host name is required');
+	}
+
+	const columns = readList(context, itemIndex, 'columns', SERVICE_COLUMNS.join(','));
+	const sites = readList(context, itemIndex, 'sites', '');
+	const onlyProblems = Boolean(context.getNodeParameter('onlyProblems', itemIndex, false));
+
+	const hostQuery = {op: '=', left: 'host_name', right: hostName};
+	const query = onlyProblems
+		? {op: 'and', expr: [hostQuery, {op: '!=', left: 'state', right: '0'}]}
+		: hostQuery;
+
+	const body: Record<string, unknown> = {sites, columns, query: JSON.stringify(query)};
+	const items = await fetchStatus(client, version, SERVICE_STATUS_PATH, body);
+	return items.map(normalizeStatusItem);
+}
+
 /**
  * Fetches every host configuration, then one bulk status request, and joins the
  * two by host name.

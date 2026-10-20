@@ -30,7 +30,10 @@ The script asserts `info.version === "1.0"`. A document reporting another versio
 Stable rules:
 
 - Operation value = full OpenAPI `operationId`; duplicates or missing IDs abort generation.
-- Resource = camelCase of the first tag; labels keep the original tag.
+- Resource = camelCase of the first tag; resource labels are title-cased (`host_config` →
+  `Host Config`).
+- Operation labels are humanized summaries (`Show all hosts` → `Get Many Hosts`); the HTTP
+  method lives in the option description, never in the label.
 - Header parameters `Content-Type`, `Accept`, `Authorization` are dropped; `If-Match` becomes `ifMatch`.
 - `paginated` is true only for `GET` paths containing `/collections/`.
 - Deprecated operations stay in the catalog and are marked.

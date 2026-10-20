@@ -11,23 +11,31 @@ import {OPERATIONS} from './catalog/operations.generated';
 import {executeCatalogOperation} from './execute/executeCatalogOperation';
 import {executeCustomOperation} from './execute/executeCustomOperation';
 import {
+	getHostServices,
 	getHostWithStatus,
 	getHostsWithStatus,
 	getProblems,
 	getServices,
 } from './live/liveStatus';
+import {acknowledgeProblem, scheduleDowntime} from './monitoring/monitoring';
 import {CheckmkClient} from './transport/CheckmkClient';
 import type {CheckmkCredentials} from './transport/CheckmkClient';
 import {toNodeApiError} from './transport/errors';
 import type {CheckmkVersion} from './transport/version';
 import {probeCheckmkVersion} from './transport/version';
-import {buildProperties, CUSTOM_API_RESOURCE, LIVE_STATUS_RESOURCE} from './ui/buildProperties';
+import {buildProperties, CUSTOM_API_RESOURCE, LIVE_STATUS_RESOURCE, MONITORING_RESOURCE} from './ui/buildProperties';
 
 const LIVE_STATUS_OPERATIONS: Record<string, (context: IExecuteFunctions, client: CheckmkClient, itemIndex: number, version?: CheckmkVersion) => Promise<unknown>> = {
 	getHost: getHostWithStatus,
 	getHosts: getHostsWithStatus,
 	getServices,
 	getProblems,
+};
+
+const MONITORING_OPERATIONS: Record<string, (context: IExecuteFunctions, client: CheckmkClient, itemIndex: number, version?: CheckmkVersion) => Promise<unknown>> = {
+	acknowledgeProblem,
+	getHostServices,
+	scheduleDowntime,
 };
 
 export class CheckmkConnector implements INodeType {
@@ -68,6 +76,13 @@ export class CheckmkConnector implements INodeType {
 					const handler = LIVE_STATUS_OPERATIONS[operation];
 					if (handler === undefined) {
 						throw new NodeOperationError(this.getNode(), `Unknown Live Status operation "${operation}"`);
+					}
+					result = await handler(this, client, itemIndex, version);
+				} else if (resource === MONITORING_RESOURCE) {
+					const operation = this.getNodeParameter('operation', itemIndex) as string;
+					const handler = MONITORING_OPERATIONS[operation];
+					if (handler === undefined) {
+						throw new NodeOperationError(this.getNode(), `Unknown Monitoring operation "${operation}"`);
 					}
 					result = await handler(this, client, itemIndex, version);
 				} else {
