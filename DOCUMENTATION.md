@@ -126,8 +126,9 @@ endpoints on 2.4+.
   status row, returning the configuration with `host_status` appended. Without a matching
   status row `host_status` is `null`; with **Include Host Configuration** off it returns
   `{ host_name, host_status }`.
-- `getHosts` lists all host configurations first, then issues exactly **one** bulk status
-  request (columns and optional query, no per-host requests) and joins both by host name.
+- `getHosts` (**Return All** on by default) lists all host configurations first, then issues
+  exactly **one** bulk status request (columns and optional query, no per-host requests) and
+  joins both by host name.
 - `getServices` / `getProblems` post to the service status collection. Query objects are
   serialized to a JSON string because Checkmk expects a string field; `right` must be a string
   (`"0"`), numeric literals crash the 2.4.0p37 status engine.
@@ -135,8 +136,9 @@ endpoints on 2.4+.
   for service/problem operations). Defaults: 6 host columns, 6 service columns, 7 problem columns, problem query
   `{"op":"!=","left":"state","right":"0"}`.
 
-Because status collections do not emit `next` links, `returnAll` has no effect beyond
-returning the full status response (bounded by `limit`).
+Status collections do not emit `next` links, so `returnAll` does not page status rows: one
+request returns every match. For `getHosts` it pages the host configuration listing, and the
+joined output is only truncated by `limit` when **Return All** is off.
 
 ### Checkmk older than 2.4
 

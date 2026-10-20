@@ -109,8 +109,8 @@ these operations.
   literals crash the status engine on 2.4.0p37.
 - **Get Problems** defaults to `state != 0`; supplying a query replaces that default.
 - **Get Host with Status** nests live data under `host_status` so status columns never
-  overwrite configuration attributes. **Get Hosts with Status** fetches all configurations,
-  one bulk status request, and joins both by host name.
+  overwrite configuration attributes. **Get Hosts with Status** returns every configuration
+  by default (**Return All** on), makes one bulk status request, and joins both by host name.
 
 ### Custom API restrictions
 

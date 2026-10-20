@@ -268,3 +268,13 @@ test('getServices accepts columns already selected as an array', async () => {
 	await getServices(context, client, 0);
 	assert.deepEqual(context.requests[0].options.body.columns, ['host_name', 'state']);
 });
+
+test('Get Hosts with Status returns every host by default', () => {
+	const {buildProperties} = require('../dist/nodes/CheckmkConnector/ui/buildProperties.js');
+	const fields = buildProperties().filter(field => field.name === 'returnAll');
+	const hostField = fields.find(field => field.displayOptions.show.operation.includes('getHosts'));
+	const serviceField = fields.find(field => field.displayOptions.show.operation.includes('getServices'));
+
+	assert.equal(hostField.default, true);
+	assert.equal(serviceField.default, false);
+});

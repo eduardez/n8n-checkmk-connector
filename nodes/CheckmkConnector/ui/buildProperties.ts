@@ -352,8 +352,16 @@ function liveStatusProperties(): INodeProperties[] {
 			displayName: 'Return All',
 			name: 'returnAll',
 			type: 'boolean',
+			default: true,
+			displayOptions: show(['getHosts']),
+			description: 'Whether to return all results or only up to a given limit',
+		},
+		{
+			displayName: 'Return All',
+			name: 'returnAll',
+			type: 'boolean',
 			default: false,
-			displayOptions: show(['getHosts', 'getServices']),
+			displayOptions: show(['getServices']),
 			description: 'Whether to return all results or only up to a given limit',
 		},
 		{
