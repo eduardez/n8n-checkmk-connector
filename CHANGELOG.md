@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.4.0...v0.4.1) (2026-10-20)
+
+
+### Bug Fixes
+
+* return all hosts by default in Get Hosts with Status ([109ea4c](https://github.com/eduardez/n8n-checkmk-connector/commit/109ea4cc25aaba6aa4cfeef5d89c0d6fa1ea2760))
+
 ## [0.4.0](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.3.1...v0.4.0) (2026-10-20)
 
 
