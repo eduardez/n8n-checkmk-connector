@@ -1,5 +1,5 @@
 {
-  "name": "n8n-checkmk-connector",
+  "name": "n8n-nodes-checkmk-connector",
   "version": "0.2.0",
   "description": "Full-featured n8n connector for the Checkmk REST API",
   "keywords": [

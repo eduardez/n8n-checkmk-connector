@@ -19,7 +19,7 @@
       },
       "id": "4c1f3a48-3a4c-4a3a-9d4c-6f0f9b5f0a02",
       "name": "Checkmk Problems",
-      "type": "n8n-checkmk-connector.checkmkConnector",
+      "type": "n8n-nodes-checkmk-connector.checkmkConnector",
       "typeVersion": 1,
       "position": [0, 0],
       "credentials": {

@@ -1,7 +1,7 @@
 # n8n Checkmk Connector
 
 [![CI](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml/badge.svg)](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/n8n-checkmk-connector.svg)](https://www.npmjs.com/package/n8n-checkmk-connector)
+[![npm](https://img.shields.io/npm/v/n8n-nodes-checkmk-connector.svg)](https://www.npmjs.com/package/n8n-nodes-checkmk-connector)
 
 Community n8n action node for the [Checkmk REST API](https://docs.checkmk.com/latest/en/rest_api.html).
 The operation catalog is generated from the Checkmk OpenAPI document, so the node exposes
@@ -19,7 +19,7 @@ Beyond the generated catalog the node ships three convenience layers:
 ### As a community node
 
 ```bash
-npm install n8n-checkmk-connector
+npm install n8n-nodes-checkmk-connector
 ```
 
 Restart n8n afterwards. The node appears as **Checkmk Connector**.
@@ -30,7 +30,7 @@ Restart n8n afterwards. The node appears as **Checkmk Connector**.
 mkdir -p ~/.n8n/custom
 cd ~/.n8n/custom
 npm init -y
-npm install n8n-checkmk-connector
+npm install n8n-nodes-checkmk-connector
 ```
 
 Set `N8N_CUSTOM_EXTENSIONS=~/.n8n/custom` (or rely on the default `~/.n8n/custom` lookup) and
@@ -173,7 +173,7 @@ the commit (`vX.Y.Z`) and creates the GitHub release. The same workflow run then
 versions that already exist. Do not edit the version or `CHANGELOG.md` by hand.
 
 Required repository secret: `NPM_TOKEN` (npm automation token allowed to publish
-`n8n-checkmk-connector`).
+`n8n-nodes-checkmk-connector`).
 
 ## Development
 

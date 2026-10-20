@@ -17,7 +17,7 @@
       },
       "id": "9b7c1e10-2f3a-4b5c-8d9e-0a1b2c3d4e02",
       "name": "Create Host",
-      "type": "n8n-checkmk-connector.checkmkConnector",
+      "type": "n8n-nodes-checkmk-connector.checkmkConnector",
       "typeVersion": 1,
       "position": [0, 0],
       "credentials": {
@@ -36,7 +36,7 @@
       },
       "id": "9b7c1e10-2f3a-4b5c-8d9e-0a1b2c3d4e03",
       "name": "Activate Changes",
-      "type": "n8n-checkmk-connector.checkmkConnector",
+      "type": "n8n-nodes-checkmk-connector.checkmkConnector",
       "typeVersion": 1,
       "position": [220, 0],
       "credentials": {
@@ -54,7 +54,7 @@
       },
       "id": "9b7c1e10-2f3a-4b5c-8d9e-0a1b2c3d4e04",
       "name": "Read Host",
-      "type": "n8n-checkmk-connector.checkmkConnector",
+      "type": "n8n-nodes-checkmk-connector.checkmkConnector",
       "typeVersion": 1,
       "position": [440, 0],
       "credentials": {

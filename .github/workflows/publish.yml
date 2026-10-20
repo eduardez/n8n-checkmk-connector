@@ -38,8 +38,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          if npm view "n8n-checkmk-connector@$VERSION" version >/dev/null 2>&1; then
-            echo "n8n-checkmk-connector@$VERSION already published; skipping"
+          if npm view "n8n-nodes-checkmk-connector@$VERSION" version >/dev/null 2>&1; then
+            echo "n8n-nodes-checkmk-connector@$VERSION already published; skipping"
           else
             npm publish --access public --provenance
           fi

@@ -17,10 +17,6 @@ module.exports = {
 			files: ['package.json'],
 			plugins: ['eslint-plugin-n8n-nodes-base'],
 			extends: ['plugin:n8n-nodes-base/community'],
-			rules: {
-				// The requested package name is intentionally not prefixed with n8n-nodes-.
-				'n8n-nodes-base/community-package-json-name-still-default': 'off',
-			},
 		},
 		{
 			files: ['./credentials/**/*.ts'],

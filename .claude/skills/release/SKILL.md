@@ -23,7 +23,7 @@ Versions are derived from Conventional Commits on `main`; do not bump `package.j
 
 Required repository secret:
 
-- `NPM_TOKEN` — npm automation token allowed to publish `n8n-checkmk-connector`.
+- `NPM_TOKEN` — npm automation token allowed to publish `n8n-nodes-checkmk-connector`.
 
 CI: `.github/workflows/ci.yml` runs build, lint, tests, and `npm pack --dry-run` on Node 20 and 22. Dependencies install with `--ignore-scripts` because `isolated-vm` has no prebuilt binary for every Node release.
 
@@ -34,7 +34,7 @@ Manual integration: `.github/workflows/integration.yml` uses repository secrets 
 1. `PATH=/usr/bin:$PATH npm run build && npm run lint && npm test`
 2. Integration suite against a matching Checkmk version when the catalog or transport changed.
 3. Confirm the PR's version and changelog entries match the commits.
-4. Merge; verify the release job published `dist`-only tarball content and `npm view n8n-checkmk-connector dist-tags`.
+4. Merge; verify the release job published `dist`-only tarball content and `npm view n8n-nodes-checkmk-connector dist-tags`.
 
 ## Local dry run
 
