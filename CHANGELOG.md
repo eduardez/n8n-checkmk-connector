@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.6.0...v0.7.0) (2026-10-20)
+
+
+### Features
+
+* derive site from credential, add host status and attribute selection ([21eddfb](https://github.com/eduardez/n8n-checkmk-connector/commit/21eddfb9bd40d77b12bc8df3dad734d7134cb889))
+
 ## [0.6.0](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.5.0...v0.6.0) (2026-10-20)
 
 
