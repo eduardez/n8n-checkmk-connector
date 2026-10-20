@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.5.0...v0.6.0) (2026-10-20)
+
+
+### Features
+
+* drop resource noun from operation labels ([5800932](https://github.com/eduardez/n8n-checkmk-connector/commit/5800932d13c3bc22f0242285bcc5e2355ba6664c))
+
 ## [0.5.0](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.4.1...v0.5.0) (2026-10-20)
 
 
