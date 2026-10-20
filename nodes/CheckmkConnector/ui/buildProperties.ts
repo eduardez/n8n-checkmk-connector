@@ -6,10 +6,56 @@ import type {ApiOperation, ApiParameter} from '../catalog/types';
 export const LIVE_STATUS_RESOURCE = 'liveStatus';
 export const CUSTOM_API_RESOURCE = 'customApi';
 
-const HOST_COLUMNS = 'name,state,plugin_output,address,alias,last_check';
-const SERVICE_COLUMNS = 'host_name,description,state,state_type,last_check,plugin_output';
-const PROBLEM_COLUMNS =
-	'host_name,description,state,state_type,acknowledged,last_check,plugin_output';
+const HOST_COLUMNS = ['name', 'state', 'plugin_output', 'address', 'alias', 'last_check'];
+const SERVICE_COLUMNS = ['host_name', 'description', 'state', 'state_type', 'last_check', 'plugin_output'];
+const PROBLEM_COLUMNS = [
+	'host_name',
+	'description',
+	'state',
+	'state_type',
+	'acknowledged',
+	'last_check',
+	'plugin_output',
+];
+
+// Curated Live Status columns. Any other column can still be requested through
+// the Custom API resource.
+const HOST_COLUMN_OPTIONS = [
+	...HOST_COLUMNS,
+	'last_state',
+	'last_hard_state',
+	'state_type',
+	'acknowledged',
+	'acknowledged_by',
+	'checks_enabled',
+	'notifications_enabled',
+	'parents',
+	'host_groups',
+	'contact_groups',
+	'host_tags',
+	'inventory_last',
+	'num_services',
+	'num_services_ok',
+	'num_services_warn',
+	'num_services_crit',
+	'num_services_unknown',
+	'worst_service_state',
+];
+const SERVICE_COLUMN_OPTIONS = [
+	...SERVICE_COLUMNS,
+	'acknowledged',
+	'acknowledged_by',
+	'checks_enabled',
+	'notifications_enabled',
+	'last_state',
+	'last_hard_state',
+	'service_groups',
+	'contact_groups',
+	'host_alias',
+	'host_address',
+	'host_state',
+	'perf_data',
+];
 const PROBLEM_QUERY: INodeParameters = {op: '!=', left: 'state', right: '0'};
 const EMPTY_JSON: INodeParameters = {};
 
@@ -241,26 +287,32 @@ function liveStatusProperties(): INodeProperties[] {
 		{
 			displayName: 'Columns',
 			name: 'columns',
-			type: 'string',
-			default: HOST_COLUMNS,
+			type: 'multiOptions',
+			default: [...HOST_COLUMNS],
+			options: HOST_COLUMN_OPTIONS.map(column => ({name: column, value: column})),
 			displayOptions: show(['getHost', 'getHosts']),
-			description: 'Comma-separated list of live status columns',
+			description:
+				'Live status columns to return. Other columns can be requested through the Custom API resource.',
 		},
 		{
 			displayName: 'Columns',
 			name: 'columns',
-			type: 'string',
-			default: SERVICE_COLUMNS,
+			type: 'multiOptions',
+			default: [...SERVICE_COLUMNS],
+			options: SERVICE_COLUMN_OPTIONS.map(column => ({name: column, value: column})),
 			displayOptions: show(['getServices']),
-			description: 'Comma-separated list of live status columns',
+			description:
+				'Live status columns to return. Other columns can be requested through the Custom API resource.',
 		},
 		{
 			displayName: 'Columns',
 			name: 'columns',
-			type: 'string',
-			default: PROBLEM_COLUMNS,
+			type: 'multiOptions',
+			default: [...PROBLEM_COLUMNS],
+			options: SERVICE_COLUMN_OPTIONS.map(column => ({name: column, value: column})),
 			displayOptions: show(['getProblems']),
-			description: 'Comma-separated list of live status columns',
+			description:
+				'Live status columns to return. Other columns can be requested through the Custom API resource.',
 		},
 		{
 			displayName: 'Query',

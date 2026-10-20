@@ -103,7 +103,7 @@ Live Status reads always use the supported `POST /domain-types/{host,service}/co
 endpoints. The older `GET` collections are deprecated in Checkmk 2.4 and are never used by
 these operations.
 
-- **Columns** – comma-separated list of live status columns.
+- **Columns** – multi-select of common live status columns, pre-selected with sensible defaults; anything else can be requested through **Custom API**.
 - **Query** – Checkmk filter expression as a JSON object, sent as a JSON *string*.
   Use string values for `right`, e.g. `{"op":"!=","left":"state","right":"0"}`; numeric
   literals crash the status engine on 2.4.0p37.

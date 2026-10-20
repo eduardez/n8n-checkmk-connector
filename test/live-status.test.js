@@ -242,3 +242,29 @@ test('getHostWithStatus reads live status with GET before Checkmk 2.4', async ()
 	assert.equal(statusRequest.options.method, 'GET');
 	assert.equal(statusRequest.options.body, undefined);
 });
+
+test('Live Status columns are multi-select fields with defaults', () => {
+	const {buildProperties} = require('../dist/nodes/CheckmkConnector/ui/buildProperties.js');
+	const fields = buildProperties().filter(field => field.name === 'columns');
+
+	assert.equal(fields.length, 3);
+	for (const field of fields) {
+		assert.equal(field.type, 'multiOptions');
+		assert.ok(Array.isArray(field.default) && field.default.length > 0);
+		const values = field.options.map(option => option.value);
+		for (const value of field.default) assert.ok(values.includes(value), value);
+	}
+	assert.ok(fields.some(field => field.default.includes('acknowledged')));
+});
+
+test('getServices accepts columns already selected as an array', async () => {
+	const context = createMockContext({params: {query: '{}', columns: ['host_name', 'state']}});
+	const client = new CheckmkClient(context, CREDENTIALS);
+	context.helpers.httpRequestWithAuthentication.call = async (self, name, options) => {
+		context.requests.push({credentialName: name, options});
+		return jsonResponse({value: []});
+	};
+
+	await getServices(context, client, 0);
+	assert.deepEqual(context.requests[0].options.body.columns, ['host_name', 'state']);
+});

@@ -131,7 +131,8 @@ endpoints on 2.4+.
 - `getServices` / `getProblems` post to the service status collection. Query objects are
   serialized to a JSON string because Checkmk expects a string field; `right` must be a string
   (`"0"`), numeric literals crash the 2.4.0p37 status engine.
-- Defaults: 6 host columns, 6 service columns, 7 problem columns, problem query
+- Columns are picked from a curated multi-select (host table for host operations, service table
+  for service/problem operations). Defaults: 6 host columns, 6 service columns, 7 problem columns, problem query
   `{"op":"!=","left":"state","right":"0"}`.
 
 Because status collections do not emit `next` links, `returnAll` has no effect beyond
