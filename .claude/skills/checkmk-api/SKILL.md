@@ -46,7 +46,7 @@ Body shape:
 - `query` MUST be a JSON **string**, not an object.
 - `right` in comparison expressions MUST be a string, e.g. `"0"`; numeric literals return HTTP 500 on 2.4.
 - `columns` is a JSON array of Livestatus column names; unknown columns fail the request.
-- `sites: []` means all sites.
+- `sites: []` means all sites on the raw API; this node never sends it, because the credential site already scopes the URL.
 - `GET /domain-types/host/collections/all`, `GET /domain-types/service/collections/all`, and `GET /objects/host/{host_name}/collections/services` are deprecated and removed in Checkmk 3.0.
 
 ## Configuration objects and ETags

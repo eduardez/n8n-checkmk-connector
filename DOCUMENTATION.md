@@ -48,7 +48,8 @@ For every path/method pair the generator records:
 | `deprecated` | OpenAPI `deprecated` |
 
 The generator drops `Content-Type`, `Accept` and `Authorization` header parameters because the
-transport owns them. Operation IDs must be unique; generation fails otherwise. Running the
+transport owns them, and the `site`/`sites` query parameters because the credential **Site**
+already scopes the request URL. A site can never be selected per operation. Operation IDs must be unique; generation fails otherwise. Running the
 generator is deterministic for a given document, so a regeneration diff is reviewable.
 
 The current catalog: 189 operations, 40 resources, 32 paginated, 20 ETag-protected, 3
@@ -142,6 +143,18 @@ Status collections do not emit `next` links, so `returnAll` does not page status
 request returns every match. For `getHosts` it pages the host configuration listing, and the
 joined output is only truncated by `limit` when **Return All** is off.
 
+Catalog operations `host_config.show_host` and `host_config.list_hosts` reuse the same bulk
+status request: `attachHostStatus` fetches the configured host columns, joins by
+`extensions.name` (falling back to `id`) and appends `host_status` (`null` when missing) without
+touching the configuration maps. The **Include Live Status** field, default on, controls it.
+
+### Response shaping
+
+**Extension Attributes** is a comma-separated list applied to the output of every operation.
+`keepAttributes` walks each emitted row and, inside any `attributes` or `effective_attributes`
+map, keeps only the listed names; arrays are preserved and an empty list returns the row
+untouched. The filter never adds keys and never rewrites the surrounding structure.
+
 ### Checkmk older than 2.4
 
 The version probe runs once per workflow and feeds a legacy adapter:
@@ -183,13 +196,18 @@ catalog.
 ## Custom API resource
 
 `executeCustomOperation` accepts any method (GET/POST/PUT/PATCH/DELETE), a path relative to the
-API base, a query object, headers and a JSON body.
+API base, a query object, headers and a body serialized as JSON, form URL-encoded or text.
 
 - Paths must start with `/`; protocol-relative paths, schemes and drive-letter prefixes are
   rejected, so the request can never leave the configured site.
 - `Authorization`, `Host`, `Content-Length` and `Cookie` headers are rejected (case-insensitive)
   because the credential or transport owns them.
-- Bodies are JSON objects only and are skipped for `GET`/`DELETE`.
+- **Body Content Type** selects the serializer: `application/json` requires an object or array,
+  `application/x-www-form-urlencoded` flattens an object into `URLSearchParams` (array values
+  repeat the key), `text/plain` sends the JSON string value as-is. Bodies are skipped for
+  empty values and for `GET`/`DELETE`.
+- **Response Format** `text` sends `Accept: */*`, sets `encoding: text` and returns the raw
+  string; `json` keeps the parsed body.
 - **Return Full Response** returns `{statusCode, headers, body}`.
 
 ## Testing

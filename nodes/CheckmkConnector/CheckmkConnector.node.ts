@@ -11,6 +11,8 @@ import {OPERATIONS} from './catalog/operations.generated';
 import {executeCatalogOperation} from './execute/executeCatalogOperation';
 import {executeCustomOperation} from './execute/executeCustomOperation';
 import {
+	attachHostStatus,
+	HOST_CONFIG_STATUS_OPERATIONS,
 	getHostServices,
 	getHostWithStatus,
 	getHostsWithStatus,
@@ -37,6 +39,37 @@ const MONITORING_OPERATIONS: Record<string, (context: IExecuteFunctions, client:
 	getHostServices,
 	scheduleDowntime,
 };
+
+const ATTRIBUTE_CONTAINERS = new Set(['attributes', 'effective_attributes']);
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Keeps only the requested attribute names inside `attributes` and
+ * `effective_attributes` maps anywhere in the response. An empty selection
+ * returns the response untouched.
+ */
+export function keepAttributes(value: unknown, keep: Set<string>): unknown {
+	if (keep.size === 0) return value;
+	if (Array.isArray(value)) return value.map(entry => keepAttributes(entry, keep));
+	if (!isRecord(value)) return value;
+
+	const result: Record<string, unknown> = {};
+	for (const [key, entry] of Object.entries(value)) {
+		if (ATTRIBUTE_CONTAINERS.has(key) && isRecord(entry)) {
+			result[key] = Object.fromEntries(
+				Object.entries(entry)
+					.filter(([name]) => keep.has(name))
+					.map(([name, attribute]) => [name, keepAttributes(attribute, keep)]),
+			);
+		} else {
+			result[key] = keepAttributes(entry, keep);
+		}
+	}
+	return result;
+}
 
 export class CheckmkConnector implements INodeType {
 	description: INodeTypeDescription = {
@@ -92,11 +125,26 @@ export class CheckmkConnector implements INodeType {
 						throw new NodeOperationError(this.getNode(), `Unknown operation "${operationId}"`);
 					}
 					result = await executeCatalogOperation(this, client, itemIndex, operation, version);
+					if (
+						HOST_CONFIG_STATUS_OPERATIONS.has(operation.id) &&
+						Boolean(this.getNodeParameter('includeStatus', itemIndex, true))
+					) {
+						result = await attachHostStatus(client, version, result);
+					}
 				}
 
+				const keep = new Set(
+					String(this.getNodeParameter('extensionAttributes', itemIndex, ''))
+						.split(',')
+						.map(attribute => attribute.trim())
+						.filter(attribute => attribute !== ''),
+				);
 				const rows = Array.isArray(result) ? result : [result];
 				for (const row of rows) {
-					const json = (typeof row === 'object' && row !== null ? row : {value: row}) as IDataObject;
+					const json = keepAttributes(
+						typeof row === 'object' && row !== null ? row : {value: row},
+						keep,
+					) as IDataObject;
 					returnData.push({json, pairedItem: {item: itemIndex}});
 				}
 			} catch (error) {

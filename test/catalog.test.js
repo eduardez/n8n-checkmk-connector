@@ -170,3 +170,48 @@ test('the catalog carries no trace of prior packages', () => {
 		assert.equal(source.includes(marker), false, `catalog contains ${marker}`);
 	}
 });
+
+test('the site is a credential concern, never an operation parameter', () => {
+	for (const operation of OPERATIONS) {
+		for (const param of operation.queryParameters) {
+			assert.ok(!['site', 'sites'].includes(param.name), `${operation.id} exposes ${param.name}`);
+		}
+	}
+	const {buildProperties} = require('../dist/nodes/CheckmkConnector/ui/buildProperties.js');
+	for (const field of buildProperties()) {
+		assert.ok(!['site', 'sites'].includes(field.name), `node exposes ${field.name}`);
+	}
+});
+
+test('the node exposes response shaping and host status fields', () => {
+	const {buildProperties} = require('../dist/nodes/CheckmkConnector/ui/buildProperties.js');
+	const properties = buildProperties();
+	const byName = name => properties.filter(field => field.name === name);
+
+	assert.equal(byName('extensionAttributes').length, 1);
+	assert.equal(byName('customContentType').length, 1);
+	assert.equal(byName('customResponseFormat').length, 1);
+	const status = byName('includeStatus');
+	assert.equal(status.length, 1);
+	assert.deepEqual(status[0].displayOptions.show.operation.sort(), [
+		'cmk.gui.openapi.endpoints.host_config.list_hosts',
+		'cmk.gui.openapi.endpoints.host_config.show_host',
+	]);
+});
+
+test('extension attribute filtering keeps only the requested attributes', () => {
+	const {keepAttributes} = require('../dist/nodes/CheckmkConnector/CheckmkConnector.node.js');
+	const row = {
+		id: 'web-01',
+		extensions: {
+			attributes: {alias: 'Web', ipaddress: '10.0.0.1', tag_site_id: 'S1'},
+			effective_attributes: {alias: 'Web', tag_agent: 'cmk-agent'},
+			is_cluster: false,
+		},
+	};
+	assert.deepEqual(keepAttributes(row, new Set(['alias'])), {
+		id: 'web-01',
+		extensions: {attributes: {alias: 'Web'}, effective_attributes: {alias: 'Web'}, is_cluster: false},
+	});
+	assert.equal(keepAttributes(row, new Set()), row);
+});

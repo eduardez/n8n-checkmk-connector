@@ -8,6 +8,10 @@ const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 const SUPPORTED_VERSION = '1.0';
 const MAX_DESCRIPTION = 240;
 const IGNORED_HEADERS = new Set(['content-type', 'accept', 'authorization']);
+// The site is part of the credential and therefore of the base URL; a per-call
+// site filter would only contradict it.
+const IGNORED_QUERY = new Set(['site', 'sites']);
+const ignoredQuery = name => IGNORED_QUERY.has(String(name).toLowerCase());
 
 function argValue(name) {
 	const idx = process.argv.indexOf(name);
@@ -382,7 +386,9 @@ function buildOperations(document) {
 				if (parameter.in === 'path') {
 					pathParameters.push(toParameter(parameter, resolver));
 				} else if (parameter.in === 'query') {
-					queryParameters.push(toParameter(parameter, resolver));
+					if (!ignoredQuery(parameter.name)) {
+						queryParameters.push(toParameter(parameter, resolver));
+					}
 				} else if (parameter.in === 'header') {
 					const name = String(parameter.name ?? '').toLowerCase();
 					if (name === 'if-match') {

@@ -11,26 +11,61 @@ const FORBIDDEN_HEADERS: Record<string, true> = {
 	cookie: true,
 };
 
+function parseJsonValue(context: IExecuteFunctions, value: unknown, field: string): unknown {
+	if (typeof value !== 'string') return value;
+	const trimmed = value.trim();
+	if (trimmed === '') return undefined;
+	try {
+		return JSON.parse(trimmed);
+	} catch {
+		throw new NodeOperationError(context.getNode(), `Field "${field}" must contain valid JSON`);
+	}
+}
+
 function parseJsonObject(
 	context: IExecuteFunctions,
 	value: unknown,
 	field: string,
 ): Record<string, unknown> {
-	let parsed: unknown = value;
-	if (typeof value === 'string') {
-		const trimmed = value.trim();
-		if (trimmed === '') return {};
-		try {
-			parsed = JSON.parse(trimmed);
-		} catch {
-			throw new NodeOperationError(context.getNode(), `Field "${field}" must contain valid JSON`);
-		}
-	}
+	const parsed = parseJsonValue(context, value, field);
 	if (parsed === undefined || parsed === null) return {};
 	if (typeof parsed !== 'object' || Array.isArray(parsed)) {
 		throw new NodeOperationError(context.getNode(), `Field "${field}" must contain a JSON object`);
 	}
 	return parsed as Record<string, unknown>;
+}
+
+function buildCustomBody(
+	context: IExecuteFunctions,
+	itemIndex: number,
+	contentType: string,
+): unknown {
+	const raw = context.getNodeParameter('customBody', itemIndex, {});
+	if (contentType === 'application/x-www-form-urlencoded') {
+		const form = new URLSearchParams();
+		for (const [key, value] of Object.entries(parseJsonObject(context, raw, 'Body'))) {
+			for (const entry of Array.isArray(value) ? value : [value]) {
+				form.append(key, String(entry));
+			}
+		}
+		const encoded = form.toString();
+		return encoded === '' ? undefined : encoded;
+	}
+	if (contentType === 'text/plain') {
+		const parsed = parseJsonValue(context, raw, 'Body');
+		if (parsed === undefined || parsed === null) return undefined;
+		const text = String(parsed);
+		return text.trim() === '' ? undefined : text;
+	}
+	const parsed = parseJsonValue(context, raw, 'Body');
+	if (parsed === undefined || parsed === null) return undefined;
+	if (typeof parsed !== 'object') {
+		throw new NodeOperationError(
+			context.getNode(),
+			'Field "Body" must contain a JSON object or array for the JSON content type',
+		);
+	}
+	return parsed;
 }
 
 /**
@@ -78,10 +113,14 @@ export async function executeCustomOperation(
 		headers[name] = String(value);
 	}
 
-	const parsedBody = context.getNodeParameter('customBody', itemIndex, {});
-	const body = parseJsonObject(context, parsedBody, 'Body (JSON)');
-	const hasBody = Object.keys(body).length > 0;
-	const sendBody = hasBody && method !== 'GET' && method !== 'DELETE';
+	const contentType = String(
+		context.getNodeParameter('customContentType', itemIndex, 'application/json'),
+	);
+	const responseFormat = String(
+		context.getNodeParameter('customResponseFormat', itemIndex, 'json'),
+	) as 'json' | 'text';
+	const body = buildCustomBody(context, itemIndex, contentType);
+	const sendBody = body !== undefined && method !== 'GET' && method !== 'DELETE';
 	const returnFullResponse = Boolean(
 		context.getNodeParameter('customReturnFullResponse', itemIndex, false),
 	);
@@ -92,6 +131,8 @@ export async function executeCustomOperation(
 		query: Object.keys(query).length > 0 ? query : undefined,
 		headers: Object.keys(headers).length > 0 ? headers : undefined,
 		body: sendBody ? body : undefined,
+		contentType: sendBody ? contentType : undefined,
+		responseFormat,
 		returnFullResponse,
 	});
 }

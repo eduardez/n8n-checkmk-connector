@@ -65,8 +65,8 @@ The node authenticates with `Authorization: Bearer <username> <password>` and ca
 - **Live Status** – `Get Host with Status`, `Get Hosts with Status`, `Get Services`,
   `Get Problems`.
 - **Monitoring** – `Acknowledge Problem`, `Get Host Services`, `Schedule Downtime`.
-- **Custom API** – any method/path/query/headers/body combination, with credential headers
-  protected.
+- **Custom API** – any method, path, query parameters, headers and body (JSON, form or text),
+  with credential headers protected.
 
 ### Parameter naming
 
@@ -98,6 +98,19 @@ Collection operations expose **Return All** and **Limit**. Return All follows th
 `rel="next"` link (including its HTTP method) until the last page. The client guards against
 runaway chains at 1000 pages / 100 000 items and fails with a node error instead of looping.
 
+### Host status
+
+**Hosts → Get** and **Hosts → Get Many** fetch the live status of the returned hosts in one
+bulk request and attach it as `host_status` (`null` when no status row matches). Turn
+**Include Live Status** off to skip that request and keep the raw configuration only.
+
+### Extension attributes
+
+**Extension Attributes** takes a comma-separated list of attribute names (`tag_criticality,
+tag_location`) and trims the `attributes` and `effective_attributes` maps of every operation's
+response to those names. Leave it empty to return every attribute. The site is not a node
+option: the credential **Site** already scopes the request URL.
+
 ### Optimistic locking
 
 Operations that check ETags expose an **If-Match** field. `*` disables concurrency control
@@ -128,8 +141,8 @@ these operations.
   through as sent, and **Expire On** is optional.
 - **Get Host Services** posts one host-filtered request to
   `/domain-types/service/collections/all` (**GET** on Checkmk < 2.4) and flattens the status
-  rows. **Only Problems** narrows the query to `state != 0`; **Columns** and **Sites** bound the
-  response. The collection is unpaged, so there is no **Return All**.
+  rows. **Only Problems** narrows the query to `state != 0`; **Columns** bounds the response.
+  The collection is unpaged, so there is no **Return All**.
 - **Schedule Downtime** posts to `/domain-types/downtime/collections/{host|service}` with
   **Start Time**/**End Time** (ISO 8601). Service downtimes take comma-separated
   **Service Descriptions**.
@@ -139,8 +152,12 @@ these operations.
 
 - Path must start with `/` and stay relative to the API base; absolute URLs are rejected.
 - `Authorization`, `Host`, `Content-Length` and `Cookie` headers cannot be overridden.
-- Bodies are JSON objects and ignored for `GET`/`DELETE`.
-- Optional **Return Full Response** returns `{statusCode, headers, body}`.
+- **Query Parameters** and **Headers** take JSON objects; array query values are sent as
+  repeated keys.
+- **Body Content Type** selects JSON (object/array), form URL-encoded (object, arrays repeat
+  the key) or text (JSON string) serialization; bodies are ignored for `GET`/`DELETE`.
+- **Response Format** parses the body as JSON or returns it as plain text. **Return Full
+  Response** returns `{statusCode, headers, body}`.
 
 ## Errors
 

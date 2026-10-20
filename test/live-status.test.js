@@ -5,6 +5,7 @@ const {test} = require('node:test');
 
 const {CheckmkClient} = require('../dist/nodes/CheckmkConnector/transport/CheckmkClient.js');
 const {
+	attachHostStatus,
 	getHostWithStatus,
 	getHostsWithStatus,
 	getProblems,
@@ -112,7 +113,6 @@ test('getServices sends a JSON-string query and comma-parsed columns', async () 
 	const context = createMockContext({
 		params: {
 			columns: 'host_name, state ,description',
-			sites: 'cmk,',
 			query: {op: '=', left: 'host_name', right: 'a'},
 			returnAll: false,
 			limit: 10,
@@ -130,7 +130,7 @@ test('getServices sends a JSON-string query and comma-parsed columns', async () 
 	assert.equal(sent.options.method, 'POST');
 	assert.equal(sent.options.url, 'https://monitoring.example.com/cmk/check_mk/api/1.0/domain-types/service/collections/all');
 	assert.deepEqual(sent.options.body.columns, ['host_name', 'state', 'description']);
-	assert.deepEqual(sent.options.body.sites, ['cmk']);
+	assert.equal(sent.options.body.sites, undefined, 'site comes from the credential');
 	assert.equal(typeof sent.options.body.query, 'string');
 	assert.deepEqual(JSON.parse(sent.options.body.query), {
 		op: '=',
@@ -194,7 +194,7 @@ test('live status never touches the deprecated GET status collections', async ()
 });
 
 test('getServices falls back to the GET status collection before Checkmk 2.4', async () => {
-	const context = createMockContext({params: {query: '{}', sites: '', columns: 'host_name,state'}});
+	const context = createMockContext({params: {query: '{}', columns: 'host_name,state'}});
 	const client = new CheckmkClient(context, CREDENTIALS);
 	context.helpers.httpRequestWithAuthentication.call = async (self, name, options) => {
 		context.requests.push({credentialName: name, options});
@@ -213,7 +213,7 @@ test('getServices falls back to the GET status collection before Checkmk 2.4', a
 	assert.equal(request.method, 'GET');
 	assert.equal(request.url, 'https://monitoring.example.com/cmk/check_mk/api/1.0/domain-types/service/collections/all');
 	assert.equal(request.body, undefined);
-	assert.deepEqual(request.qs, {sites: [], columns: ['host_name', 'state']});
+	assert.deepEqual(request.qs, {columns: ['host_name', 'state']});
 	assert.equal(request.arrayFormat, 'repeat');
 });
 
@@ -281,4 +281,37 @@ test('Get Hosts with Status returns every host by default', () => {
 
 	assert.equal(hostField.default, true);
 	assert.equal(serviceField.default, false);
+});
+
+test('attachHostStatus merges live status into host_config rows', async () => {
+	const context = createMockContext({params: {}});
+	const client = new CheckmkClient(context, CREDENTIALS);
+	context.helpers.httpRequestWithAuthentication.call = async (self, name, options) => {
+		context.requests.push({credentialName: name, options});
+		return jsonResponse({
+			value: [
+				{extensions: {name: 'web-01', state: 2, plugin_output: 'CRIT'}},
+				{extensions: {name: 'db-01', state: 0}},
+			],
+		});
+	};
+
+	const rows = await attachHostStatus(client, undefined, [
+		{id: 'web-01', extensions: {attributes: {alias: 'Web'}}},
+		{id: 'db-01', extensions: {}},
+	]);
+
+	assert.deepEqual(rows, [
+		{
+			id: 'web-01',
+			extensions: {attributes: {alias: 'Web'}},
+			host_status: {name: 'web-01', state: 2, plugin_output: 'CRIT'},
+		},
+		{id: 'db-01', extensions: {}, host_status: {name: 'db-01', state: 0}},
+	]);
+	assert.equal(context.requests[0].options.method, 'POST');
+	assert.equal(
+		context.requests[0].options.url,
+		'https://monitoring.example.com/cmk/check_mk/api/1.0/domain-types/host/collections/all',
+	);
 });

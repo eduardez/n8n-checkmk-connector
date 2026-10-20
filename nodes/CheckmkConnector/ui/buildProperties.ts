@@ -2,6 +2,7 @@ import type {INodeParameters, INodeProperties} from 'n8n-workflow';
 
 import {OPERATIONS, RESOURCES} from '../catalog/operations.generated';
 import type {ApiOperation, ApiParameter} from '../catalog/types';
+import {HOST_CONFIG_STATUS_OPERATIONS} from '../live/liveStatus';
 
 export const LIVE_STATUS_RESOURCE = 'liveStatus';
 export const CUSTOM_API_RESOURCE = 'customApi';
@@ -342,14 +343,6 @@ function liveStatusProperties(): INodeProperties[] {
 				'Checkmk live status filter expression as a JSON object; a supplied expression replaces the non-OK default',
 		},
 		{
-			displayName: 'Sites',
-			name: 'sites',
-			type: 'string',
-			default: '',
-			displayOptions: show(['getHost', 'getHosts', 'getServices', 'getProblems']),
-			description: 'Comma-separated site names; leave empty to use every site',
-		},
-		{
 			displayName: 'Include Host Configuration',
 			name: 'includeConfig',
 			type: 'boolean',
@@ -525,14 +518,6 @@ function monitoringProperties(): INodeProperties[] {
 				'Live status columns to return. Other columns can be requested through the Custom API resource.',
 		},
 		{
-			displayName: 'Sites',
-			name: 'sites',
-			type: 'string',
-			default: '',
-			displayOptions: show(['getHostServices']),
-			description: 'Comma-separated site names; leave empty to use every site',
-		},
-		{
 			displayName: 'Start Time',
 			name: 'startTime',
 			type: 'dateTime',
@@ -589,12 +574,12 @@ function customApiProperties(): INodeProperties[] {
 				'Path relative to the Checkmk API base, starting with "/"; absolute URLs are not allowed',
 		},
 		{
-			displayName: 'Query',
+			displayName: 'Query Parameters',
 			name: 'customQuery',
 			type: 'json',
 			default: EMPTY_JSON,
 			displayOptions,
-			description: 'Query parameters as a JSON object',
+			description: 'Query string parameters as a JSON object; array values are sent as repeated keys',
 		},
 		{
 			displayName: 'Headers',
@@ -606,12 +591,37 @@ function customApiProperties(): INodeProperties[] {
 				'Additional headers as a JSON object; Authorization, Host, Content-Length and Cookie cannot be overridden',
 		},
 		{
-			displayName: 'Body (JSON)',
+			displayName: 'Body Content Type',
+			name: 'customContentType',
+			type: 'options',
+			default: 'application/json',
+			displayOptions,
+			options: [
+				{name: 'JSON', value: 'application/json'},
+				{name: 'Form URL Encoded', value: 'application/x-www-form-urlencoded'},
+				{name: 'Text', value: 'text/plain'},
+			],
+			description: 'How the body is serialized before it is sent',
+		},
+		{
+			displayName: 'Body',
 			name: 'customBody',
 			type: 'json',
 			default: EMPTY_JSON,
 			displayOptions,
-			description: 'Request body as JSON; ignored for GET and DELETE when empty',
+			description: 'Request body; a JSON object for JSON and form content types, a JSON string for text. Ignored for GET and DELETE when empty.',
+		},
+		{
+			displayName: 'Response Format',
+			name: 'customResponseFormat',
+			type: 'options',
+			default: 'json',
+			displayOptions,
+			options: [
+				{name: 'JSON', value: 'json'},
+				{name: 'Text', value: 'text'},
+			],
+			description: 'Whether the response body is parsed as JSON or returned as plain text',
 		},
 		{
 			displayName: 'Return Full Response',
@@ -654,6 +664,25 @@ export function buildProperties(): INodeProperties[] {
 	for (const operation of OPERATIONS) {
 		properties.push(...operationFields(operation));
 	}
+
+	properties.push({
+		displayName: 'Extension Attributes',
+		name: 'extensionAttributes',
+		type: 'string',
+		default: '',
+		placeholder: 'tag_criticality,tag_location',
+		description: 'Comma-separated attribute names to keep inside attributes and effective_attributes; leave empty to return every attribute',
+	});
+	properties.push({
+		displayName: 'Include Live Status',
+		name: 'includeStatus',
+		type: 'boolean',
+		default: true,
+		displayOptions: {
+			show: {resource: ['hosts'], operation: [...HOST_CONFIG_STATUS_OPERATIONS]},
+		},
+		description: 'Whether to fetch the host live status and attach it as host_status',
+	});
 
 	properties.push(...monitoringProperties());
 	properties.push(...liveStatusProperties());

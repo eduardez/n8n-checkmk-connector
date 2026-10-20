@@ -26,6 +26,8 @@ export interface CheckmkRequestOptions {
 	headers?: Record<string, string>;
 	ifMatch?: string;
 	returnFullResponse?: boolean;
+	contentType?: string;
+	responseFormat?: 'json' | 'text';
 }
 
 export interface CheckmkFullResponse {
@@ -56,8 +58,13 @@ export class CheckmkClient {
 	}
 
 	async request<T>(options: CheckmkRequestOptions): Promise<T> {
-		const headers: Record<string, string> = {Accept: 'application/json'};
-		if (options.body !== undefined) headers['Content-Type'] = 'application/json';
+		const textResponse = options.responseFormat === 'text';
+		const headers: Record<string, string> = {
+			Accept: textResponse ? '*/*' : 'application/json',
+		};
+		if (options.body !== undefined) {
+			headers['Content-Type'] = options.contentType ?? 'application/json';
+		}
 		if (options.headers) Object.assign(headers, options.headers);
 		if (options.ifMatch !== undefined) headers['If-Match'] = options.ifMatch;
 
@@ -66,11 +73,12 @@ export class CheckmkClient {
 			url: this.buildUrl(options.path),
 			qs: options.query as IDataObject,
 			arrayFormat: 'repeat',
-			json: true,
+			json: !textResponse,
 			returnFullResponse: true,
 			skipSslCertificateValidation: this.credentials.allowUnauthorizedCerts,
 			headers,
 		};
+		if (textResponse) requestOptions.encoding = 'text';
 		if (options.body !== undefined) requestOptions.body = options.body;
 
 		let response: CheckmkFullResponse;

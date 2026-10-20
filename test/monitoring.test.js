@@ -131,7 +131,7 @@ test('scheduleDowntime requires at least one service description', async () => {
 });
 
 test('getHostServices filters one host and flattens the status rows', async () => {
-	const context = createMockContext({params: {hostName: 'web-01', sites: 'cmk'}});
+	const context = createMockContext({params: {hostName: 'web-01'}});
 	context.helpers.httpRequestWithAuthentication.call = async (self, name, options) => {
 		context.requests.push({credentialName: name, options});
 		return jsonResponse({
@@ -157,7 +157,7 @@ test('getHostServices filters one host and flattens the status rows', async () =
 		left: 'host_name',
 		right: 'web-01',
 	});
-	assert.deepEqual(request.options.body.sites, ['cmk']);
+	assert.equal(request.options.body.sites, undefined, 'site comes from the credential');
 });
 
 test('getHostServices narrows the query to non-OK services', async () => {

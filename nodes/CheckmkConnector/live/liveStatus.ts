@@ -127,7 +127,6 @@ export async function getHostWithStatus(
 		throw new NodeOperationError(context.getNode(), 'Host name is required');
 	}
 	const columns = readList(context, itemIndex, 'columns', HOST_COLUMNS.join(','));
-	const sites = readList(context, itemIndex, 'sites', '');
 	const includeConfig = Boolean(context.getNodeParameter('includeConfig', itemIndex, true));
 
 	const config = includeConfig
@@ -138,7 +137,6 @@ export async function getHostWithStatus(
 		: undefined;
 
 	const items = await fetchStatus(client, version, HOST_STATUS_PATH, {
-		sites,
 		query: JSON.stringify({op: '=', left: 'name', right: hostName}),
 		columns,
 	});
@@ -163,7 +161,6 @@ export async function getHostServices(
 	}
 
 	const columns = readList(context, itemIndex, 'columns', SERVICE_COLUMNS.join(','));
-	const sites = readList(context, itemIndex, 'sites', '');
 	const onlyProblems = Boolean(context.getNodeParameter('onlyProblems', itemIndex, false));
 
 	const hostQuery = {op: '=', left: 'host_name', right: hostName};
@@ -171,7 +168,7 @@ export async function getHostServices(
 		? {op: 'and', expr: [hostQuery, {op: '!=', left: 'state', right: '0'}]}
 		: hostQuery;
 
-	const body: Record<string, unknown> = {sites, columns, query: JSON.stringify(query)};
+	const body: Record<string, unknown> = {columns, query: JSON.stringify(query)};
 	const items = await fetchStatus(client, version, SERVICE_STATUS_PATH, body);
 	return items.map(normalizeStatusItem);
 }
@@ -187,7 +184,6 @@ export async function getHostsWithStatus(
 	version?: CheckmkVersion,
 ): Promise<unknown[]> {
 	const columns = readList(context, itemIndex, 'columns', HOST_COLUMNS.join(','));
-	const sites = readList(context, itemIndex, 'sites', '');
 	const query = readQuery(context, itemIndex, {});
 	const includeConfig = Boolean(context.getNodeParameter('includeConfig', itemIndex, true));
 	const {returnAll, limit} = readPaging(context, itemIndex);
@@ -199,7 +195,7 @@ export async function getHostsWithStatus(
 	);
 	if (configs.length === 0) return [];
 
-	const body: Record<string, unknown> = {sites, columns};
+	const body: Record<string, unknown> = {columns};
 	if (query !== undefined) body.query = query;
 	const items = await fetchStatus(client, version, HOST_STATUS_PATH, body);
 
@@ -221,6 +217,39 @@ export async function getHostsWithStatus(
 	return returnAll ? joined : joined.slice(0, Math.max(1, limit));
 }
 
+/** Host catalog operations that get their live status merged into `host_status`. */
+export const HOST_CONFIG_STATUS_OPERATIONS = new Set([
+	'cmk.gui.openapi.endpoints.host_config.show_host',
+	'cmk.gui.openapi.endpoints.host_config.list_hosts',
+]);
+
+/**
+ * Merges the live host status into host_config results, nested under
+ * `host_status` so status columns never overwrite configuration attributes.
+ */
+export async function attachHostStatus(
+	client: CheckmkClient,
+	version: CheckmkVersion | undefined,
+	configs: unknown,
+): Promise<unknown> {
+	const rows = Array.isArray(configs) ? configs : [configs];
+	if (rows.length === 0) return configs;
+
+	const items = await fetchStatus(client, version, HOST_STATUS_PATH, {columns: HOST_COLUMNS});
+	const statusByHost = new Map<string, StatusItem | undefined>();
+	for (const item of items) {
+		const name = typeof item.extensions?.name === 'string' ? item.extensions.name : item.id;
+		if (typeof name === 'string') statusByHost.set(name, item);
+	}
+
+	const joined = rows.map(config => {
+		if (typeof config !== 'object' || config === null) return config;
+		const hostName = String((config as {id?: unknown}).id ?? '');
+		return {...config, host_status: normalizeStatusItem(statusByHost.get(hostName))};
+	});
+	return Array.isArray(configs) ? joined : joined[0];
+}
+
 async function collectServices(
 	context: IExecuteFunctions,
 	client: CheckmkClient,
@@ -230,11 +259,10 @@ async function collectServices(
 	defaultQuery: unknown,
 ): Promise<unknown[]> {
 	const columns = readList(context, itemIndex, 'columns', defaultColumns.join(','));
-	const sites = readList(context, itemIndex, 'sites', '');
 	const query = readQuery(context, itemIndex, defaultQuery);
 	const {returnAll, limit} = readPaging(context, itemIndex);
 
-	const body: Record<string, unknown> = {sites, columns};
+	const body: Record<string, unknown> = {columns};
 	if (query !== undefined) body.query = query;
 
 	if (isLegacyStatusApi(version)) {

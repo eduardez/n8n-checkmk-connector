@@ -26,7 +26,9 @@ Hard invariants for this repository. A change that breaks one is wrong even if t
    resource module.
 9. The transport and the credential own request headers. The generator drops `Content-Type`,
    `Accept` and `Authorization` header parameters, and Custom API rejects `Authorization`,
-   `Host`, `Content-Length` and `Cookie`. NEVER add a field for them.
+   `Host`, `Content-Length` and `Cookie`. NEVER add a field for them. The generator also drops
+   the `site`/`sites` query parameters: the credential **Site** is the only site selector, so
+   operations never expose a site field.
 10. Catalog operations that declare `If-Match` expose `ifMatch_<operationId>`, defaulting to
    `*`. Concurrency control stays opt-in through a real ETag.
 11. Pagination follows `rel="next"` including its HTTP method and respects the 1000-page /

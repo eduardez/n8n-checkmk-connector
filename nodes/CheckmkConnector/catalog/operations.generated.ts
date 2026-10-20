@@ -2705,16 +2705,6 @@ export const OPERATIONS: ApiOperation[] = [
 		"pathParameters": [],
 		"queryParameters": [
 			{
-				"name": "sites",
-				"kind": "array",
-				"required": false,
-				"description": "Restrict the query to this particular site.",
-				"example": [
-					"mysite"
-				],
-				"defaultValue": []
-			},
-			{
 				"name": "query",
 				"kind": "string",
 				"required": false,
@@ -3153,13 +3143,6 @@ export const OPERATIONS: ApiOperation[] = [
 					"host1",
 					"host2"
 				]
-			},
-			{
-				"name": "site",
-				"kind": "string",
-				"required": false,
-				"description": "Filter the result by a specific site.",
-				"example": "site1"
 			}
 		],
 		"headerParameters": [],
@@ -5368,16 +5351,6 @@ export const OPERATIONS: ApiOperation[] = [
 		"pathParameters": [],
 		"queryParameters": [
 			{
-				"name": "sites",
-				"kind": "array",
-				"required": false,
-				"description": "Restrict the query to this particular site.",
-				"example": [
-					"mysite"
-				],
-				"defaultValue": []
-			},
-			{
 				"name": "columns",
 				"kind": "array",
 				"required": false,
@@ -5469,16 +5442,6 @@ export const OPERATIONS: ApiOperation[] = [
 			}
 		],
 		"queryParameters": [
-			{
-				"name": "sites",
-				"kind": "array",
-				"required": false,
-				"description": "Restrict the query to this particular site.",
-				"example": [
-					"mysite"
-				],
-				"defaultValue": []
-			},
 			{
 				"name": "columns",
 				"kind": "array",
