@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.3.0...v0.3.1) (2026-10-20)
+
+
+### Bug Fixes
+
+* only send parameters the connected Checkmk version supports ([fc14e0c](https://github.com/eduardez/n8n-checkmk-connector/commit/fc14e0c4263997330bbd0c31e5ffe84f301bb4ef))
+
 ## [0.3.0](https://github.com/eduardez/n8n-checkmk-connector/compare/v0.2.0...v0.3.0) (2026-10-20)
 
 
