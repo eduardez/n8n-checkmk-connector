@@ -1,0 +1,50 @@
+# bullet configuration — lives at <target-repo>/.bullet/bullet.yaml (created by `bullet init`).
+# bullet reads ONLY this file + the forge. No daemon state.
+
+forge: forgejo                  # forgejo | github
+url: https://git.eduard3v.com   # forge host (github: https://api.github.com)
+repo: EduarD3V/masante          # owner/name
+
+branches:
+  trunk: develop                # PRs land here (integration)
+  ship: main                    # protected; deliberate promotion only
+
+# hard cap 10 — fleet slots enforced per tick (global across repos)
+agents: 10
+split:                          # optional; defaults coder 7 / reviewer 2 / fixer 1 of agents
+  coder: 7
+  reviewer: 2
+  fixer: 1
+
+models:
+  coder: nan/deepseek-v4-flash
+  reviewer: 9router/reviewer    # must be a DIFFERENT family than coder
+  fixer: nan/deepseek-v4-flash
+
+# gates run in the worktree before push; all must exit 0. Empty list = diff-only check.
+# Entries must be UNQUOTED: the loader keeps surrounding quotes, and `eval` would then run
+# `"test` (quote as command name). Inner quotes are fine; wrapping the whole entry is not.
+# Third gate is the mechanical conflict-marker check — a killed conflict-solver can leave
+# markers committed (see docs/STATE-MACHINE.md, T3 post-mortem gate):
+gates:
+  - bunx tsc --noEmit
+  - bun test
+  - [ "$(git grep -cE '^(<{7}|>{7})' -- . 2>/dev/null | awk -F: '{s+=$2} END {print s+0}')" -eq 0 ]
+
+# deps for gate runs in fresh worktrees (integration); optional
+# setup:
+#   - bun install
+
+budget_minutes: 45              # per agent session
+stall_minutes: 15               # no activity → nudge
+kill_minutes: 60                # no activity → kill + blocked
+merge: operator                 # operator (default) | auto (planned, F-24)
+
+# runtime tree: default <repo>/.bullet (state/ meta/ worktrees/ logs/ inside it);
+# set run_root to relocate worktrees+state elsewhere. NOTE: every agent session leaves a
+# transcript dir under ~/.omp/agent/sessions (one per worktree per wave — AutoFirme grew
+# 300+ dirs in 2 waves of ~10 issues). On big/long-lived repos point run_root at a scratch
+# location (e.g. ~/.bullet) so pruning <repo> doesn't fight git, and prune old transcript
+# dirs periodically:
+# run_root: ~/.bullet
+omp_path: ~/.bun/bin/omp        # headless agent CLI (any omp-compatible)
