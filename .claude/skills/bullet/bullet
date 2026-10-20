@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# bullet — entrypoint. tick · status · doctor · labels · tidy
+set -u
+BULLET_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+usage() {
+  cat <<'EOF'
+bullet — plug and play autonomous issue→PR fleet
+
+  bullet tick    <target-repo>    one orchestration action (cron this every 15–30 min)
+  bullet status  <target-repo>    fleet overview: slots, sessions, issues per state
+  bullet doctor  <target-repo>    config + dependency + auth check
+  bullet protect <target-repo>    enforce branch protection: no agent pushes/merges into trunk
+                                  (--repair creates/repairs forge rules; needs admin token)
+  bullet labels  init <target-repo>   create the state labels on the target repo
+  bullet tidy    <target-repo>    reconcile stale state labels with the evidence (report.md,
+                                  review verdict, merged branch) — dry-run, --apply to mutate
+
+State machine: bullet:queued → running → review → done → integrated (bullet-develop) → PR (human merges trunk)
+EOF
+}
+
+cmd=${1:-}; shift || true
+case $cmd in
+  tick|status|doctor|tidy)
+    T=${1:?usage: bullet $cmd <target-repo>}
+    "$BULLET_HOME/orchestrator/precheck.sh" "$T" || { echo "bullet $cmd: precheck blocked — fix above first." >&2; exit 1; }
+    ;;
+esac
+
+case $cmd in
+  tick)
+    T=${1:?usage: bullet tick <target-repo>}
+    "$BULLET_HOME/orchestrator/preflight.sh" "$T"
+    "$BULLET_HOME/orchestrator/launch.sh" "$T" || true
+    "$BULLET_HOME/orchestrator/monitor.sh" "$T" || true
+    "$BULLET_HOME/orchestrator/review.sh" "$T" || true
+    "$BULLET_HOME/orchestrator/integrate.sh" "$T" || true
+    "$BULLET_HOME/orchestrator/publish.sh" "$T" || true
+    ;;
+  tidy)
+    T=${1:?usage: bullet tidy <target-repo> [--apply]}
+    "$BULLET_HOME/orchestrator/tidy.sh" "$@"
+    ;;
+  status)
+    T=${1:?usage: bullet status <target-repo>}
+    "$BULLET_HOME/orchestrator/status.sh" "$T"
+    ;;
+  doctor)
+    T=${1:?usage: bullet doctor <target-repo>}
+    "$BULLET_HOME/orchestrator/doctor.sh" "$T"
+    ;;
+  protect)
+    T=${1:?usage: bullet protect <target-repo> [--repair]}
+    "$BULLET_HOME/orchestrator/protect.sh" "$@"
+    ;;
+  labels)
+    sub=${1:?usage: bullet labels init <target-repo>}
+    [[ $sub == init ]] || usage
+    "$BULLET_HOME/orchestrator/labels.sh" "$2"
+    ;;
+  init)
+    "$BULLET_HOME/orchestrator/init.sh" "$1"
+    ;;
+  *) usage; [[ -n $cmd ]] && exit 1 ;;
+esac
