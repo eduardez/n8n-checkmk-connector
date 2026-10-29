@@ -6,12 +6,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://github.com/eduardez/n8n-checkmk-connector/blob/main/README.md#credentials"
+				"url": "https://github.com/eduardez/n8n-nodes-checkmk-connector/blob/main/README.md#credentials"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://github.com/eduardez/n8n-checkmk-connector/blob/main/DOCUMENTATION.md"
+				"url": "https://github.com/eduardez/n8n-nodes-checkmk-connector/blob/main/DOCUMENTATION.md"
 			}
 		]
 	}

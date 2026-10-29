@@ -1,9 +1,9 @@
 # n8n Checkmk Connector
 
-[![CI](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml/badge.svg)](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml)
+[![CI](https://github.com/eduardez/n8n-nodes-checkmk-connector/actions/workflows/ci.yml/badge.svg)](https://github.com/eduardez/n8n-nodes-checkmk-connector/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/n8n-nodes-checkmk-connector.svg)](https://www.npmjs.com/package/n8n-nodes-checkmk-connector)
 
-Repository: [n8n-checkmk-connector](https://github.com/eduardez/n8n-checkmk-connector) · Homepage: [README](https://github.com/eduardez/n8n-checkmk-connector#readme) · npm package: [n8n-nodes-checkmk-connector](https://www.npmjs.com/package/n8n-nodes-checkmk-connector) · Issues: [GitHub Issues](https://github.com/eduardez/n8n-checkmk-connector/issues)
+Repository: [n8n-nodes-checkmk-connector](https://github.com/eduardez/n8n-nodes-checkmk-connector) · Homepage: [README](https://github.com/eduardez/n8n-nodes-checkmk-connector#readme) · npm package: [n8n-nodes-checkmk-connector](https://www.npmjs.com/package/n8n-nodes-checkmk-connector) · Issues: [GitHub Issues](https://github.com/eduardez/n8n-nodes-checkmk-connector/issues)
 
 Contributions are welcome—feel free to contribute!
 
@@ -225,7 +225,7 @@ The workflow does not open a release PR or commit a version back to `main`. The 
 
 If automatic publishing fails after semantic-release creates a tag, dispatch **Actions → Publish → Run workflow** from `main` with the exact `X.Y.Z` from that existing `vX.Y.Z` tag. Recovery builds the tagged commit, requires it to be an ancestor of `main`, and skips an existing npm version only when its registry `gitHead` matches that commit. A manual version without an existing tag must exceed both the highest stable git tag and npm `latest`. The workflow never pushes a version commit to `main`.
 
-Configure the npm **Trusted Publisher** for owner `eduardez`, repository `n8n-checkmk-connector`, and workflow filename `publish.yml` only. Leave the environment blank and allow direct `npm publish`; the workflow uses Node 22 and npm 11.19.0 with OIDC, not an npm token.
+Configure the npm **Trusted Publisher** for owner `eduardez`, repository `n8n-nodes-checkmk-connector`, and workflow filename `publish.yml` only. Leave the environment blank and allow direct `npm publish`; the workflow uses Node 22 and npm 11.19.0 with OIDC, not an npm token.
 
 ## Development
 
