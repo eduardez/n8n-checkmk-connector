@@ -1,16 +1,31 @@
 # n8n Checkmk Connector
 
+<img src="https://raw.githubusercontent.com/eduardez/n8n-nodes-checkmk-connector/main/nodes/CheckmkConnector/checkmk.svg" alt="Checkmk logo" width="80">
+
 [![CI](https://github.com/eduardez/n8n-nodes-checkmk-connector/actions/workflows/ci.yml/badge.svg)](https://github.com/eduardez/n8n-nodes-checkmk-connector/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/n8n-nodes-checkmk-connector.svg)](https://www.npmjs.com/package/n8n-nodes-checkmk-connector)
 
+n8n action node for Checkmk monitoring and configuration, with an OpenAPI-generated REST catalog, live host/service status, acknowledgements, downtime, and authenticated Custom API requests.
+
 Repository: [n8n-nodes-checkmk-connector](https://github.com/eduardez/n8n-nodes-checkmk-connector) · Homepage: [README](https://github.com/eduardez/n8n-nodes-checkmk-connector#readme) · npm package: [n8n-nodes-checkmk-connector](https://www.npmjs.com/package/n8n-nodes-checkmk-connector) · Issues: [GitHub Issues](https://github.com/eduardez/n8n-nodes-checkmk-connector/issues)
+
+Checkmk is a trademark of its respective owner. This project is not affiliated with or endorsed by Checkmk.
+
+## Contents
+
+- [Installation](#installation)
+- [Credentials](#credentials)
+- [Quick start](#quick-start)
+- [Resources](#resources)
+- [Errors and security](#errors-and-security)
+- [Examples](#examples)
+- [Compatibility and versioning](#compatibility-and-versioning)
+- [Development](#development)
+- [License](#license)
 
 Contributions are welcome—feel free to contribute!
 
-Community n8n action node for the [Checkmk REST API](https://docs.checkmk.com/latest/en/rest_api.html).
-The operation catalog is generated from the Checkmk OpenAPI document, so the node exposes
-**189 operations across 40 resources** of Checkmk 2.4.0p37 (API versions `1.0` and `v1`)
-without hand-written per-endpoint code.
+The operation catalog is generated from the Checkmk OpenAPI document and exposes **189 operations across 40 resources** from Checkmk 2.4.0p37 (API versions `1.0` and `v1`), without hand-written per-endpoint code.
 
 Beyond the generated catalog the node ships four convenience layers:
 
@@ -21,16 +36,9 @@ Beyond the generated catalog the node ships four convenience layers:
 
 ## Installation
 
-The npm package is `n8n-nodes-checkmk-connector`. Releases up to `0.2.0` were published as
-`n8n-checkmk-connector` and are deprecated.
+Install the package on self-hosted n8n using **Owner/Admin → Settings → Community Nodes → Install** and enter `n8n-nodes-checkmk-connector`. See the [n8n GUI installation guide](https://docs.n8n.io/integrations/community-nodes/installation-and-management/gui-installation). Restart n8n if prompted. The package requires Node.js `>=20.15`; no minimum installed n8n version is specified here.
 
-### As a community node
-
-```bash
-npm install n8n-nodes-checkmk-connector
-```
-
-Restart n8n afterwards. The node appears as **Checkmk Connector**.
+The npm package is `n8n-nodes-checkmk-connector`. Releases up to `0.2.0` were published as `n8n-checkmk-connector` and are deprecated.
 
 ### Manual install (custom nodes folder)
 
@@ -41,8 +49,7 @@ npm init -y
 npm install n8n-nodes-checkmk-connector
 ```
 
-Set `N8N_CUSTOM_EXTENSIONS=~/.n8n/custom` (or rely on the default `~/.n8n/custom` lookup) and
-restart n8n.
+Set `N8N_CUSTOM_EXTENSIONS=~/.n8n/custom` (or rely on the default `~/.n8n/custom` lookup) and restart n8n.
 
 ## Credentials
 
@@ -50,16 +57,22 @@ Create a **Checkmk Connector API** credential:
 
 | Field | Meaning | Example |
 | --- | --- | --- |
-| Host | Scheme, host and optional port of the Checkmk site, **without** the site path | `https://checkmk.example.com` |
-| Site | Site ID | `production` |
-| API Version | `1.0` or `v1` | `1.0` |
-| Username | Automation user | `automation` |
-| Password | Automation secret | `…` |
-| Ignore SSL Issues | Skip certificate verification (self-signed setups only) | `false` |
+| Host | HTTPS origin of the Checkmk server, without the site path | `https://checkmk.example.com` |
+| Site | Site ID, without surrounding slashes | `lab-site` |
+| API Version | `1.0` or `v1`, as supported by the target Checkmk version | `1.0` |
+| Username | Dedicated automation-user name | `automation-user` |
+| Password | Checkmk automation secret; store only in n8n credentials | *(enter in n8n)* |
+| Allow Unauthorized Certificates | Skips TLS certificate validation; keep disabled | `false` |
 
-The node authenticates with `Authorization: Bearer <username> <password>` and calls
-`<host>/<site>/check_mk/api/<version>/…`. Create a dedicated automation user with the
-**Customer** role or an equivalent restricted role; the node can modify configuration.
+The node authenticates with `Authorization: Bearer <username> <password>` and calls `<host>/<site>/check_mk/api/<version>/…`. Grant a dedicated automation user only the permissions needed by the selected operations; the connector includes writes.
+
+## Quick start
+
+1. Add a **Manual Trigger**.
+2. Add **Checkmk Connector**, select the saved **Checkmk Connector API** credential, then choose **Live Status → Get Problems**.
+3. Execute the workflow. The default query returns non-OK problems; if there are none, the node can emit no items.
+
+This read-only example requires permission to read the selected live status data. It does not include a token, credential ID, or write operation.
 
 ## Resources
 
@@ -124,9 +137,7 @@ value returns HTTP 412.
 
 ### Live Status details
 
-Live Status reads always use the supported `POST /domain-types/{host,service}/collections/all`
-endpoints. The older `GET` collections are deprecated in Checkmk 2.4 and are never used by
-these operations.
+Live Status reads use `POST /domain-types/{host,service}/collections/all` on Checkmk 2.4+ and the legacy `GET` collections below 2.4.
 
 - **Columns** – multi-select of common live status columns, pre-selected with sensible defaults; anything else can be requested through **Custom API**.
 - **Query** – Checkmk filter expression as a JSON object, sent as a JSON *string*.
@@ -163,11 +174,15 @@ these operations.
 - **Response Format** parses the body as JSON or returns it as plain text. **Return Full
   Response** returns `{statusCode, headers, body}`.
 
-## Errors
+## Errors and security
 
 Checkmk problem responses (`title`, `detail`, `fields`) are surfaced as n8n node API errors:
 `title` becomes the message, `detail` plus field problems become the description, and the HTTP
 status is preserved. Enable **Continue On Fail** to emit `{ "error": "…" }` per item instead.
+
+Use HTTPS, keep certificate validation enabled, grant least privilege, and store credentials in n8n's credential store. Disabling certificate validation permits interception; trusting a self-signed server does not make that bypass safe. Never place secrets in workflow JSON or screenshots. Read-only selectors do not make the full connector read-only.
+
+Return All follows a server-provided pagination link. Only enable it for a trusted Checkmk endpoint; a foreign-origin pagination link can cross the authenticated request boundary. This behavior is under review and is not fixed by this README update.
 
 ## Examples
 
@@ -177,7 +192,7 @@ status is preserved. Enable **Continue On Fail** to emit `{ "error": "…" }` pe
   host, activate changes, read it back.
 
 Both workflows ship with a placeholder credential; select your own **Checkmk Connector API**
-credential after import.
+credential after import. The host-lifecycle workflow writes configuration and must only run against a disposable Checkmk site.
 
 ## Compatibility and versioning
 
@@ -229,12 +244,21 @@ Configure the npm **Trusted Publisher** for owner `eduardez`, repository `n8n-no
 
 ## Development
 
+Routine offline development checks:
+
 ```bash
-npm install
-npm run build          # tsc + icons into dist/
-npm run lint           # eslint (n8n community rules)
-npm test               # unit tests against dist/
-npm run generate       # regenerate catalog + docs/operations.md from Checkmk
+npm ci --ignore-scripts
+npm test
+npm run lint
+npm pack --dry-run
+```
+
+### Optional catalog maintenance
+
+Catalog regeneration is optional and is not required to install, build, or test the checked-in catalog:
+
+```bash
+npm run generate
 ```
 
 `npm run generate` fetches the document from `CHECKMK_OPENAPI_URL`, or from a local site at
@@ -243,19 +267,20 @@ npm run generate       # regenerate catalog + docs/operations.md from Checkmk
 [`.claude/skills/catalog-regeneration/SKILL.md`](.claude/skills/catalog-regeneration/SKILL.md)
 for the regeneration checklist.
 
-Integration tests run against a real site and clean up after themselves:
+### Live integration tests
+
+Integration tests create, activate, and delete Checkmk configuration. Run them only against a disposable site; never point them at production or shared infrastructure:
 
 ```bash
-CHECKMK_BASE_URL=https://checkmk.example.com \
-CHECKMK_SITE=production \
-CHECKMK_USERNAME=automation \
-CHECKMK_PASSWORD=secret \
+CHECKMK_BASE_URL=https://<disposable-checkmk.example.com> \
+CHECKMK_SITE=<disposable-site-id> \
+CHECKMK_USERNAME=<automation-user> \
+CHECKMK_PASSWORD=<automation-secret> \
 CHECKMK_EXPECTED_VERSION=2.4.0p37.cre \
 npm run test:integration
 ```
 
-They create a folder and a host, activate changes, verify ETag conflicts, and delete everything
-again (recursively). The test is skipped when the four connection variables are missing;
+The test is skipped when the four connection variables are missing;
 `CHECKMK_EXPECTED_VERSION` defaults to `2.4.0p37.cre`.
 
 CI runs build, lint, unit tests, and `npm pack --dry-run` on Node 20 and 22
@@ -276,3 +301,4 @@ Repo-scoped skills for coding agents live in `.claude/skills/`:
 ## License
 
 MIT © 2026 eduardez
+
