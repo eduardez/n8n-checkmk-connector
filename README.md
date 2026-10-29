@@ -3,6 +3,10 @@
 [![CI](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml/badge.svg)](https://github.com/eduardez/n8n-checkmk-connector/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/n8n-nodes-checkmk-connector.svg)](https://www.npmjs.com/package/n8n-nodes-checkmk-connector)
 
+Repository: [n8n-checkmk-connector](https://github.com/eduardez/n8n-checkmk-connector) · Homepage: [README](https://github.com/eduardez/n8n-checkmk-connector#readme) · npm package: [n8n-nodes-checkmk-connector](https://www.npmjs.com/package/n8n-nodes-checkmk-connector) · Issues: [GitHub Issues](https://github.com/eduardez/n8n-checkmk-connector/issues)
+
+Contributions are welcome—feel free to contribute!
+
 Community n8n action node for the [Checkmk REST API](https://docs.checkmk.com/latest/en/rest_api.html).
 The operation catalog is generated from the Checkmk OpenAPI document, so the node exposes
 **189 operations across 40 resources** of Checkmk 2.4.0p37 (API versions `1.0` and `v1`)
@@ -208,24 +212,20 @@ predates 2.4 or when API `1.0` is used against Checkmk 3.0. The probe never fail
 
 ### Package versions
 
-Releases are automated with [release-please](https://github.com/googleapis/release-please) from
-[Conventional Commits](https://www.conventionalcommits.org/) on `main`:
+Every change merged to `main` through a pull request runs `publish.yml`. Conventional Commits choose the release bump; other commit types, including `docs` and `chore`, produce a patch release:
 
-| Commit prefix | Version bump |
+| Commit | Version bump |
 | --- | --- |
 | `fix:` | patch |
 | `feat:` | minor |
 | `feat!:` or `BREAKING CHANGE:` | major |
+| Other commit types | patch |
 
-Release Please opens a release PR that updates `package.json` and `CHANGELOG.md`; merging it tags the commit (`vX.Y.Z`) and creates the GitHub release. The same workflow run publishes through npm Trusted Publishing with OIDC; no npm token is required.
+The workflow does not open a release PR or commit a version back to `main`. The source `package.json` may keep its development version; the release runner sets the calculated version in the npm artifact. The `vX.Y.Z` tag and GitHub release identify the same source commit and version. `CHANGELOG.md` remains historical.
 
-For a one-off release, run **Actions → Publish → Run workflow** from `main` and enter a new stable `X.Y.Z` version without a `v` prefix. The workflow updates the package, lockfile, and Release Please manifest versions, runs checks, pushes the version commit and tag, publishes the package, and creates the GitHub release. Do not edit version files by hand.
+If automatic publishing fails after semantic-release creates a tag, dispatch **Actions → Publish → Run workflow** from `main` with the exact `X.Y.Z` from that existing `vX.Y.Z` tag. Recovery builds the tagged commit, requires it to be an ancestor of `main`, and skips an existing npm version only when its registry `gitHead` matches that commit. A manual version without an existing tag must exceed both the highest stable git tag and npm `latest`. The workflow never pushes a version commit to `main`.
 
-In npm package settings, add GitHub Actions trusted publishers for user `eduardez`, repository `n8n-checkmk-connector`, with filename `publish.yml` for manual/direct publishing and filename `release-please.yml` for the reusable Release Please call. Leave **Environment name** blank unless a matching GitHub environment is configured. Allow direct `npm publish`; Node 22.14+ and npm 11.5.1+ are configured in the workflows. No `NPM_TOKEN` is needed.
-
-New trusted-publisher configurations must complete a successful publish within two days.
-
-The manual release pushes a version commit and tag to `main`. This repository requires pull requests and status checks on `main`, so the GitHub Actions token must be permitted by the branch rules to make that push; otherwise the workflow stops before npm publishing.
+Configure the npm **Trusted Publisher** for owner `eduardez`, repository `n8n-checkmk-connector`, and workflow filename `publish.yml` only. Leave the environment blank and allow direct `npm publish`; the workflow uses Node 22 and npm 11.19.0 with OIDC, not an npm token.
 
 ## Development
 
@@ -259,8 +259,7 @@ again (recursively). The test is skipped when the four connection variables are 
 `CHECKMK_EXPECTED_VERSION` defaults to `2.4.0p37.cre`.
 
 CI runs build, lint, unit tests, and `npm pack --dry-run` on Node 20 and 22
-(`.github/workflows/ci.yml`). The integration suite is a manual workflow that reads the
-`CHECKMK_*` repository secrets.
+(`.github/workflows/ci.yml`). To run the integration suite against a disposable site, manually dispatch CI with `run_integration` enabled and configure the `CHECKMK_*` repository secrets.
 
 ### Agent skills
 
@@ -270,13 +269,9 @@ Repo-scoped skills for coding agents live in `.claude/skills/`:
   ETags, pagination, Custom API limits.
 - [`catalog-regeneration`](.claude/skills/catalog-regeneration/SKILL.md) – generator usage and
   review checklist.
-- [`release`](.claude/skills/release/SKILL.md) – Conventional Commits, release-please, npm
-  publishing, required secrets.
+- [`release`](.claude/skills/release/SKILL.md) – Conventional Commits, protected-main publishing, npm Trusted Publishing, and recovery.
 
 
-## Repository and contributions
-
-Source: [n8n-checkmk-connector](https://github.com/eduardez/n8n-checkmk-connector). Report bugs or request features in [GitHub Issues](https://github.com/eduardez/n8n-checkmk-connector/issues). Contributions are welcome—feel free to contribute!
 
 ## License
 
