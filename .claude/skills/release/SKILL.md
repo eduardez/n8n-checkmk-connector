@@ -1,38 +1,61 @@
 ---
 name: release
-description: Use when preparing a release or changing CI/CD for this package - covers Conventional Commits, release-please, npm trusted publishing, and the release checklist.
+description: Covers Conventional Commits, protected-main publishing, npm Trusted Publishing, and recovery for this package.
 ---
 
 # Release and CI/CD
 
 ## Versioning
 
-Versions are normally derived from Conventional Commits on `main`. For an explicitly requested one-off release, use the `Publish` workflow's manual dispatch; do not edit version files by hand.
+Every change merged to `main` through a pull request triggers `.github/workflows/publish.yml`.
+Conventional Commits select the version bump; every other commit type falls back to a patch:
 
 | Commit | Bump |
 |---|---|
 | `fix: ...` | patch |
 | `feat: ...` | minor |
 | `feat!: ...` or `BREAKING CHANGE:` | major |
+| Other types, including `docs:` and `chore:` | patch |
 
-`release-please-config.json` and `.release-please-manifest.json` drive the bot. On every push to `main`, `.github/workflows/release-please.yml` opens or updates a release PR that bumps `package.json`, prepends `CHANGELOG.md`, and — once merged — creates the git tag (`vX.Y.Z`) and GitHub release. It then calls `publish.yml` in the same run: a release created with `GITHUB_TOKEN` does not trigger other workflows.
+The workflow does not create a release PR or commit version changes to `main`. The source
+`package.json` may retain its development version; the release runner writes the calculated
+version into the npm artifact. The `vX.Y.Z` tag and GitHub release identify the same source
+commit and version. `CHANGELOG.md` is historical and is not updated by the release workflow.
 
 ## Publishing
 
-`.github/workflows/publish.yml` is a reusable workflow called by `release-please.yml` when a release is created. It also accepts manual dispatch with a new stable version number and listens to `release: published`. All paths publish through npm Trusted Publishing (OIDC); no npm token secret is used. The manual path updates `package.json`, `package-lock.json`, and `.release-please-manifest.json`, then pushes the version commit and tag before publishing and creating the GitHub release.
+On a `main` push, `publish.yml` runs semantic-release with the checked-in `.releaserc.json`.
+It tests and publishes the calculated npm version, then creates the matching tag and GitHub
+release. Stable externally published `vX.Y.Z` releases are also handled by this workflow.
 
-Configure npm Trusted Publishers for GitHub Actions with owner `eduardez` and repository `n8n-checkmk-connector`. npm validates the caller workflow filename: register both `publish.yml` (manual/direct publishing) and `release-please.yml` (the reusable workflow caller). Leave the environment blank unless a matching GitHub Actions environment is configured; allow direct `npm publish`. The workflows grant `id-token: write` and use Node 22.14+ with npm 11.5.1+.
+For recovery after semantic-release has created a tag but npm publishing failed, dispatch
+**Actions → Publish → Run workflow** from `main` with the exact `X.Y.Z` from that existing tag.
+The workflow builds the tagged commit, requires it to be an ancestor of `main`, and skips an
+existing npm version only when its registry `gitHead` matches that commit. A manual version
+without an existing tag must exceed both the highest stable git tag and npm `latest`. Manual
+publishing changes `package.json` only in the runner and never pushes to `main`.
 
-CI: `.github/workflows/ci.yml` runs build, lint, tests, and `npm pack --dry-run` on Node 20 and 22. Dependencies install with `--ignore-scripts` because `isolated-vm` has no prebuilt binary for every Node release.
+Configure the npm **Trusted Publisher** for owner `eduardez`, repository
+`n8n-checkmk-connector`, and workflow filename `publish.yml` only. Leave the environment blank
+and allow direct `npm publish`. The workflow uses Node 22 and npm 11.19.0 with OIDC; no npm
+token is used.
 
-Manual integration: `.github/workflows/integration.yml` uses repository secrets `CHECKMK_BASE_URL`, `CHECKMK_SITE`, `CHECKMK_USERNAME`, `CHECKMK_PASSWORD` and must target a disposable site.
+## CI and integration
 
-## Before merging a release PR
+`.github/workflows/ci.yml` runs build, lint, tests, and `npm pack --dry-run` on Node 20 and 22.
+Dependencies install with `--ignore-scripts` because `isolated-vm` has no prebuilt binary for
+every Node release.
 
-1. `PATH=/usr/bin:$PATH npm run build && npm run lint && npm test`
-2. Integration suite against a matching Checkmk version when the catalog or transport changed.
-3. Confirm the PR's version and changelog entries match the commits.
-4. Merge; verify the release job published `dist`-only tarball content and `npm view n8n-nodes-checkmk-connector dist-tags`.
+To run integration tests, manually dispatch CI with `run_integration` enabled and configure
+`CHECKMK_BASE_URL`, `CHECKMK_SITE`, `CHECKMK_USERNAME`, and `CHECKMK_PASSWORD` for a disposable
+site.
+
+## Before merging changes
+
+1. Run `npm ci --ignore-scripts`, `npm run build`, `npm run lint`, and `npm test`.
+2. Run integration tests against a matching Checkmk version when the catalog or transport changes.
+3. Submit changes with a Conventional Commit PR and merge after required checks pass.
+4. Verify the post-merge publish run and the published npm version/source SHA.
 
 ## Local dry run
 
@@ -40,4 +63,5 @@ Manual integration: `.github/workflows/integration.yml` uses repository secrets 
 npm pack --dry-run --json
 ```
 
-Every path must be under `dist/`, plus package metadata. Never publish from a working tree that fails lint or tests; `prepublishOnly` runs both.
+Every path must be under `dist/`, plus package metadata. Never publish from a working tree that
+fails lint or tests; `prepublishOnly` runs both.

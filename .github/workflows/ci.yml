@@ -4,6 +4,13 @@ on:
   push:
     branches: [main, develop]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      run_integration:
+        description: Run integration tests against a disposable Checkmk site
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -28,3 +35,22 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm pack --dry-run
+
+  checkmk:
+    if: github.event_name == 'workflow_dispatch' && inputs.run_integration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      # Point these repository secrets at a disposable Checkmk site. The suite
+      # creates and deletes its own folder, host and activation changes.
+      - run: npm run test:integration
+        env:
+          CHECKMK_BASE_URL: ${{ secrets.CHECKMK_BASE_URL }}
+          CHECKMK_SITE: ${{ secrets.CHECKMK_SITE }}
+          CHECKMK_USERNAME: ${{ secrets.CHECKMK_USERNAME }}
+          CHECKMK_PASSWORD: ${{ secrets.CHECKMK_PASSWORD }}

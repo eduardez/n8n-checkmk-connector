@@ -61,7 +61,9 @@ Hard invariants for this repository. A change that breaks one is wrong even if t
 
 22. Update `README.md` (user-facing behaviour) and `DOCUMENTATION.md` (design, generated-field
     table, dispatch list) in the same change that alters them.
-23. Commits use Conventional Commits; release-please derives `CHANGELOG.md` and the version.
-    NEVER edit `CHANGELOG.md` or bump the version by hand.
+23. Commits use Conventional Commits; `publish.yml` derives releases from every change merged
+    to `main`. The source `package.json` may retain its development version while the published
+    artifact gets the calculated release version. `CHANGELOG.md` is historical; never edit it
+    or bump package versions by hand.
 24. Regenerate the catalog only against the Checkmk version the repo claims to support; record
     an unsupported `info.version` as a deliberate decision.

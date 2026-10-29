@@ -230,5 +230,6 @@ CHECKMK_OPENAPI_URL=https://checkmk.example.com/production/check_mk/api/1.0/open
 npm run build && npm run lint && npm test
 ```
 
-Review the diff of `operations.generated.ts` and `docs/operations.md`, then bump the package
-version and add a `CHANGELOG.md` entry.
+Review the diff of `operations.generated.ts` and `docs/operations.md`, then submit the verified
+regeneration in a Conventional Commit pull request. After CI passes and it merges to `main`,
+`publish.yml` derives the release. Do not bump the package version or add a changelog entry by hand.
