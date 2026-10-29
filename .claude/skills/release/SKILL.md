@@ -19,7 +19,7 @@ Versions are normally derived from Conventional Commits on `main`. For an explic
 
 ## Publishing
 
-`.github/workflows/publish.yml` is a reusable workflow called by `release-please.yml` when a release is created. It also accepts manual dispatch with a new stable version number and listens to `release: published`. All paths publish through npm Trusted Publishing (OIDC); no npm token secret is used. The manual path updates `package.json`, `package-lock.json`, and `.release-please-manifest.json`, then publishes, pushes the tag, and creates the GitHub release.
+`.github/workflows/publish.yml` is a reusable workflow called by `release-please.yml` when a release is created. It also accepts manual dispatch with a new stable version number and listens to `release: published`. All paths publish through npm Trusted Publishing (OIDC); no npm token secret is used. The manual path updates `package.json`, `package-lock.json`, and `.release-please-manifest.json`, then pushes the version commit and tag before publishing and creating the GitHub release.
 
 Configure npm Trusted Publishers for GitHub Actions with owner `eduardez` and repository `n8n-checkmk-connector`. npm validates the caller workflow filename: register both `publish.yml` (manual/direct publishing) and `release-please.yml` (the reusable workflow caller). Leave the environment blank unless a matching GitHub Actions environment is configured; allow direct `npm publish`. The workflows grant `id-token: write` and use Node 22.14+ with npm 11.5.1+.
 

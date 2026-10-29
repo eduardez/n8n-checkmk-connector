@@ -219,11 +219,13 @@ Releases are automated with [release-please](https://github.com/googleapis/relea
 
 Release Please opens a release PR that updates `package.json` and `CHANGELOG.md`; merging it tags the commit (`vX.Y.Z`) and creates the GitHub release. The same workflow run publishes through npm Trusted Publishing with OIDC; no npm token is required.
 
-For a one-off release, run **Actions → Publish → Run workflow** from `main` and enter a new stable `X.Y.Z` version without a `v` prefix. The workflow updates the package, lockfile, and Release Please manifest versions, verifies and publishes the package, pushes the version tag, and creates the GitHub release. Do not edit version files by hand.
+For a one-off release, run **Actions → Publish → Run workflow** from `main` and enter a new stable `X.Y.Z` version without a `v` prefix. The workflow updates the package, lockfile, and Release Please manifest versions, runs checks, pushes the version commit and tag, publishes the package, and creates the GitHub release. Do not edit version files by hand.
 
 In npm package settings, add GitHub Actions trusted publishers for user `eduardez`, repository `n8n-checkmk-connector`, with filename `publish.yml` for manual/direct publishing and filename `release-please.yml` for the reusable Release Please call. Leave **Environment name** blank unless a matching GitHub environment is configured. Allow direct `npm publish`; Node 22.14+ and npm 11.5.1+ are configured in the workflows. No `NPM_TOKEN` is needed.
 
 New trusted-publisher configurations must complete a successful publish within two days.
+
+The manual release pushes a version commit and tag to `main`. This repository requires pull requests and status checks on `main`, so the GitHub Actions token must be permitted by the branch rules to make that push; otherwise the workflow stops before npm publishing.
 
 ## Development
 
