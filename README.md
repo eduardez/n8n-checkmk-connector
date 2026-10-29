@@ -217,13 +217,13 @@ Releases are automated with [release-please](https://github.com/googleapis/relea
 | `feat:` | minor |
 | `feat!:` or `BREAKING CHANGE:` | major |
 
-Release please opens a release PR that updates `package.json` and `CHANGELOG.md`; merging it tags
-the commit (`vX.Y.Z`) and creates the GitHub release. The same workflow run then calls
-`.github/workflows/publish.yml`, which publishes the tarball to npm with provenance and skips
-versions that already exist. Do not edit the version or `CHANGELOG.md` by hand.
+Release Please opens a release PR that updates `package.json` and `CHANGELOG.md`; merging it tags the commit (`vX.Y.Z`) and creates the GitHub release. The same workflow run publishes through npm Trusted Publishing with OIDC; no npm token is required.
 
-Required repository secret: `NPM_TOKEN` (npm automation token allowed to publish
-`n8n-nodes-checkmk-connector`).
+For a one-off release, run **Actions → Publish → Run workflow** from `main` and enter a new stable `X.Y.Z` version without a `v` prefix. The workflow updates the package, lockfile, and Release Please manifest versions, verifies and publishes the package, pushes the version tag, and creates the GitHub release. Do not edit version files by hand.
+
+In npm package settings, add GitHub Actions trusted publishers for user `eduardez`, repository `n8n-checkmk-connector`, with filename `publish.yml` for manual/direct publishing and filename `release-please.yml` for the reusable Release Please call. Leave **Environment name** blank unless a matching GitHub environment is configured. Allow direct `npm publish`; Node 22.14+ and npm 11.5.1+ are configured in the workflows. No `NPM_TOKEN` is needed.
+
+New trusted-publisher configurations must complete a successful publish within two days.
 
 ## Development
 
@@ -270,6 +270,11 @@ Repo-scoped skills for coding agents live in `.claude/skills/`:
   review checklist.
 - [`release`](.claude/skills/release/SKILL.md) – Conventional Commits, release-please, npm
   publishing, required secrets.
+
+
+## Repository and contributions
+
+Source: [n8n-checkmk-connector](https://github.com/eduardez/n8n-checkmk-connector). Report bugs or request features in [GitHub Issues](https://github.com/eduardez/n8n-checkmk-connector/issues). Contributions are welcome—feel free to contribute!
 
 ## License
 
