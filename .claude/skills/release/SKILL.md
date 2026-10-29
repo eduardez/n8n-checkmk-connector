@@ -36,7 +36,7 @@ without an existing tag must exceed both the highest stable git tag and npm `lat
 publishing changes `package.json` only in the runner and never pushes to `main`.
 
 Configure the npm **Trusted Publisher** for owner `eduardez`, repository
-`n8n-checkmk-connector`, and workflow filename `publish.yml` only. Leave the environment blank
+`n8n-nodes-checkmk-connector`, and workflow filename `publish.yml` only. Leave the environment blank
 and allow direct `npm publish`. The workflow uses Node 22 and npm 11.19.0 with OIDC; no npm
 token is used.
 

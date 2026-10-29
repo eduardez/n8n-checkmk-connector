@@ -9,16 +9,16 @@
     "monitoring"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/eduardez/n8n-checkmk-connector#readme",
+  "homepage": "https://github.com/eduardez/n8n-nodes-checkmk-connector#readme",
   "author": {
     "name": "eduardez"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eduardez/n8n-checkmk-connector.git"
+    "url": "git+https://github.com/eduardez/n8n-nodes-checkmk-connector.git"
   },
   "bugs": {
-    "url": "https://github.com/eduardez/n8n-checkmk-connector/issues"
+    "url": "https://github.com/eduardez/n8n-nodes-checkmk-connector/issues"
   },
   "publishConfig": {
     "access": "public"
@@ -63,6 +63,11 @@
     "semantic-release": "25.0.9",
     "typescript": "^5.8.2",
     "yaml": "^2.6.1"
+  },
+  "overrides": {
+    "@semantic-release/release-notes-generator": {
+      "conventional-changelog-writer": "^9.0.0"
+    }
   },
   "peerDependencies": {
     "n8n-workflow": "*"
